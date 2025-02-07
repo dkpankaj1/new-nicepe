@@ -1,3 +1,5 @@
 # Custom Dictionary Words
+APICLIENT
 endsection
 keytable
+SUPERDISTRIBUTOR

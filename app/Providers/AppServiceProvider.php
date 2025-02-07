@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Enums\UserType;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+
     }
 
     /**
@@ -19,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerBladeDirective();
+    }
+
+    protected function registerBladeDirective(): void
+    {
+        Blade::if('isAdmin', fn() => Auth::check() && Auth::user()->type === UserType::ADMIN->value);
     }
 }

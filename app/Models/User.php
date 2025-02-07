@@ -20,7 +20,22 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'country',
+        'postal_code',
+        'avatar',
+        'wallet',
+        'api_key',
+        'api_secret',
+        'type',
+        'active',
+        'parent',
+        'plan_id',
     ];
 
     /**
@@ -44,5 +59,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getAvatarAttribute($attribute){
+        return $attribute ? $attribute : 'https://placehold.co/200x200';
     }
 }
