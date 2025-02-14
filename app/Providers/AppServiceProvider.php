@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use App\Enums\UserType;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
+use App\Contracts\PlanServiceInterface;
+use App\Models\BrandSetting;
+use App\Models\GeneralSetting;
+use App\Service\PlanService;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
 
+        $this->app->bind(PlanServiceInterface::class, PlanService::class);
+
     }
 
     /**
@@ -22,11 +27,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('superAdmin') ? true : null;
+        });
+
         $this->registerBladeDirective();
+        $this->registerViewShare();
     }
 
     protected function registerBladeDirective(): void
     {
-        Blade::if('isAdmin', fn() => Auth::check() && Auth::user()->type === UserType::ADMIN->value);
+
+    }
+    protected function registerViewShare(): void
+    {
+        View::share('brandSetting', BrandSetting::first());
+        View::share('generalSetting', GeneralSetting::first());
     }
 }

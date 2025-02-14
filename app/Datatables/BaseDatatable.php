@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Datatables;
 
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
-abstract class DataTableService
+abstract class BaseDatatable
 {
     protected Model|Builder $query;
 
@@ -17,7 +17,6 @@ abstract class DataTableService
         $this->query = $query;
     }
 
-    abstract protected function configure($dataTable);
 
     public function get(): JsonResponse
     {
@@ -26,4 +25,5 @@ abstract class DataTableService
 
         return $dataTable->make(true);
     }
+    abstract protected function configure($dataTable);
 }

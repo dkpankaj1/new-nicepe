@@ -18,26 +18,10 @@ return new class extends Migration
             $table->decimal('fee', 10, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('active')->default(true);
+            $table->boolean('enable')->default(true);
             $table->timestamps();
         });
 
-        Schema::create('plans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('image')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('plan_details', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('plan_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('feature_id')->constrained();
-            $table->decimal('fee', 10, 2)->default(0);
-            $table->timestamps();
-        });
     }
 
     /**
@@ -45,8 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plan_details');
-        Schema::dropIfExists('plans');
         Schema::dropIfExists('features');
     }
 };

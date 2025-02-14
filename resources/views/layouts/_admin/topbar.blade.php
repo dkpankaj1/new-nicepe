@@ -39,14 +39,12 @@
 
                         <div class="noti-scroll" data-simplebar>
 
-                           
+
 
                             <!-- item-->
-                            <a href="javascript:void(0);"
-                                class="dropdown-item notify-item text-muted link-primary">
+                            <a href="javascript:void(0);" class="dropdown-item notify-item text-muted link-primary">
                                 <div class="notify-icon">
-                                    <img src="{{Auth::user()->avatar}}" class="img-fluid rounded-circle"
-                                        alt="" />
+                                    <img src="{{Auth::user()->avatar}}" class="img-fluid rounded-circle" alt="" />
                                 </div>
                                 <div class="notify-content">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -54,8 +52,8 @@
                                         <small class="text-muted">1 min ago</small>
                                     </div>
                                     <p class="mb-1 user-msg">
-                                        <small class="fs-14">Added file to <span
-                                                class="text-reset text-truncate">Create dark mode for our
+                                        <small class="fs-14">Added file to <span class="text-reset text-truncate">Create
+                                                dark mode for our
                                                 iOS</span></small>
                                     </p>
 
@@ -86,8 +84,8 @@
                 </li>
 
                 <li class="dropdown notification-list topbar-dropdown">
-                    <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#"
-                        role="button" aria-haspopup="false" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="false" aria-expanded="false">
                         <img src="{{Auth::user()->avatar}}" alt="user-image" class="rounded-circle">
                         <span class="pro-user-name ms-1">{{Auth::user()->name}}<i class="mdi mdi-chevron-down"></i>
                         </span>
@@ -99,24 +97,32 @@
                         </div>
 
                         <!-- item-->
-                        <a href="pages-profile.html" class="dropdown-item notify-item">
+                        <a href="{{route('admin.account.index')}}" class="dropdown-item notify-item">
                             <i class="mdi mdi-account-circle-outline fs-16 align-middle"></i>
                             <span>My Account</span>
                         </a>
 
                         <!-- item-->
-                        <a href="auth-lock-screen.html" class="dropdown-item notify-item">
+                        <a href="{{route('admin.account.update')}}" class="dropdown-item notify-item">
                             <i class="mdi mdi-lock-outline fs-16 align-middle"></i>
-                            <span>Lock Screen</span>
+                            <span>Profile Update</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="{{route('admin.account.password')}}" class="dropdown-item notify-item">
+                            <i class="mdi mdi-lock-outline fs-16 align-middle"></i>
+                            <span>Change Password</span>
                         </a>
 
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <a href="auth-logout.html" class="dropdown-item notify-item">
-                            <i class="mdi mdi-location-exit fs-16 align-middle"></i>
+                        <button class="dropdown-item notify-item"
+                            onclick="document.getElementById('adminLogoutForm').submit();">
+                            <i class="mdi mdi-logout fs-16 align-middle"></i>
+
                             <span>Logout</span>
-                        </a>
+                        </button>
 
                     </div>
                 </li>
@@ -124,6 +130,9 @@
             </ul>
         </div>
 
+        <form action="{{route('admin.logout')}}" method="post" id="adminLogoutForm">
+            @csrf
+        </form>
     </div>
 
 </div>

@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Starter | Kadso - Responsive Admin Dashboard Template</title>
+    <title>@yield('title') | Admin Dashboard Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
     <meta name="author" content="Zoyothemes" />
@@ -57,17 +57,12 @@
 
                     <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                         <div class="flex-grow-1">
-                            <h4 class="fs-18 fw-semibold m-0">Starter</h4>
-                        </div>
-
+                            <h4 class="fs-18 fw-semibold m-0">@yield('page-title')</h4>
+                        </div>        
                         <div class="text-end">
-                            <ol class="breadcrumb m-0 py-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                                <li class="breadcrumb-item active">Starter</li>
-                            </ol>
+                            @yield('breadcrumb')
                         </div>
                     </div>
-
 
                     {{$slot}}
 

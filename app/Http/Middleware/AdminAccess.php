@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserType;
-use App\Services\ToasterService;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +20,6 @@ class AdminAccess
         $user = Auth::user();
 
         if ($type === 'auth' && (!$user || $user->type !== UserType::ADMIN->value)) {
-            ToasterService::error('Access denied. Admins only.');
             return redirect()->route('admin.login');
         }
 

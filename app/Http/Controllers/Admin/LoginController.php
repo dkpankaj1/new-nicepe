@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Auth\LoginAction;
+use App\Actions\Auth\LogoutAction;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Services\ToasterService;
@@ -18,7 +20,7 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request, LoginAction $loginAction): \Illuminate\Http\RedirectResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -31,7 +33,7 @@ class LoginController extends Controller
             $this->throwThrottleException($key);
         }
 
-        if (!Auth::attempt($request->only('email', 'password') + ['active' => true, 'type' => UserType::ADMIN->value], $request->boolean('remember'))) {
+        if (!$loginAction->execute($request, UserType::ADMIN)) {
             RateLimiter::hit($key);
             throw ValidationException::withMessages(['email' => trans('auth.failed')]);
         }
@@ -42,12 +44,9 @@ class LoginController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    public function destroy(Request $request): \Illuminate\Http\RedirectResponse
+    public function destroy(Request $request, LogoutAction $logoutAction): \Illuminate\Http\RedirectResponse
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
+        $logoutAction->execute($request);
         ToasterService::success('Logout Successful');
         return redirect()->route('admin.login');
     }

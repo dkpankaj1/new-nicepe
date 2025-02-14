@@ -1,5 +1,22 @@
 # Custom Dictionary Words
+Andhra
 APICLIENT
+Arunachal
+Chhattisgarh
+Diglactic
 endsection
+Haryana
+Himachal
+Jharkhand
+Karnataka
 keytable
+Madhya
+Meghalaya
+Mizoram
+Nadu
+Odisha
+Pradesh
 SUPERDISTRIBUTOR
+Telangana
+Uttar
+Uttarakhand

@@ -27,6 +27,7 @@
                 deleteUrl = $(this).data('url');
                 $('#deleteModal').modal('show');
             });
+            
             // Confirm delete
             $('#confirmDelete').on('click', function () {
                 $.ajax({

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserType;
 use App\Models\Feature;
+use App\Models\Plan;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,21 +16,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //    default feature
+        // default feature
         Feature::create([
             'code' => "FTR001",
             'name' => "Feature 001",
             'fee' => 100,
             'description' => fake()->paragraph(),
-            'active' => true,
+            'enable' => true,
         ]);
         Feature::create([
             'code' => "FTR002",
             'name' => "Feature 002",
             'fee' => 120,
             'description' => fake()->paragraph(),
-            'active' => true,
+            'enable' => true,
         ]);
+
+
+        $this->call(DefaultSettingSeeder::class);
+        $this->call(RolePermissionSeeder::class);
 
         //  default user
         $users = [
@@ -117,5 +122,24 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             User::create($user);
         }
+
+        // define super admin
+        User::first()->assignRole('superAdmin');
+
+        // create default plan
+        $plan = Plan::create([
+            'user_id' => 1,
+            'name' => "Default Plan",
+            'description' => "default plan",
+        ]);
+
+        $allFeature = Feature::all();
+        $allFeature->each(function ($feature) use ($plan) {
+            $plan->planDetails()->create([
+                "feature_id" => $feature->id,
+                "fee" => $feature->fee,
+            ]);
+        });
+
     }
 }

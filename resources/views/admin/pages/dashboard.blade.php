@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('title', 'Dashboard')
+    @section('page-title', 'Dashboard')
+    @section('breadcrumb',Breadcrumbs::render('admin.dashboard'))
+
     <div class="row">
         <div class="col-md-6 col-xl-3">
             <div class="card">

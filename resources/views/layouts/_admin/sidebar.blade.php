@@ -77,7 +77,7 @@
                 <li class="menu-title">Services</li>
 
                 <li>
-                    <a href="{{route('admin.dashboard')}}">
+                    <a href="{{route('admin.features.index')}}">
                         <i data-feather="cpu"></i>
                         <span> Features </span>
                     </a>
@@ -92,10 +92,10 @@
                     <div class="collapse" id="planMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#">List</a>
+                                <a href="{{route('admin.plans.index')}}">List</a>
                             </li>
                             <li>
-                                <a href="#">Create</a>
+                                <a href="{{route('admin.plans.create')}}">Create</a>
                             </li>
                         </ul>
                     </div>
@@ -121,7 +121,25 @@
                             </li>
 
                             <li>
-                                <a href="#">Role & Permissions</a>
+                                <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#apiClientMenu" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Api Client </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="apiClientMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="#">List</a>
+                            </li>
+                            <li>
+                                <a href="#">Create</a>
                             </li>
                         </ul>
                     </div>
@@ -192,10 +210,13 @@
                     <div class="collapse" id="settingMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="#">Brand Setting</a>
+                                <a href="{{route('admin.setting.brand')}}">Brand Setting</a>
                             </li>
                             <li>
-                                <a href="#">Email Configuration</a>
+                                <a href="{{route('admin.setting.general')}}">General Setting</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.setting.email')}}">Email Configuration</a>
                             </li>
                         </ul>
                     </div>
@@ -223,6 +244,28 @@
                         </ul>
                     </div>
                 </li>
+
+                <li>
+                    <a href="#myAccountMenu" data-bs-toggle="collapse">
+                        <i data-feather="layout"></i>
+                        <span> My Account </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myAccountMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('admin.account.index')}}">Account</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.account.update')}}">Update Profile</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.account.password')}}">Change Password</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
             </ul>
 
