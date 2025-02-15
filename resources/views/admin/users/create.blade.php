@@ -1,10 +1,10 @@
 <x-app-layout>
-    @section('title', 'Create Distributor')
-    @section('page-title', 'Create Distributor')
-    @section('breadcrumb',Breadcrumbs::render('admin.distributors.create'))
+    @section('title', 'Create User')
+    @section('page-title', 'Create User')
+    @section('breadcrumb',Breadcrumbs::render('admin.users.create'))
     <!-- Start Content-->
     <div class="container-fluid">
-        <form action="{{ route('admin.distributors.store') }}" method="post">
+        <form action="{{ route('admin.users.store') }}" method="post">
             @csrf
             <div class="card">
 
@@ -113,24 +113,16 @@
                             <h5>Additional Information</h5>
                         </div>
 
-                        <div class="col-md-4 mb-3">
-                            <label for="city" class="form-label">Wallet</label>
-                            <input type="text" class="form-control" name="wallet" value="{{ old('wallet') }}"
-                                placeholder="Enter amount">
-                            @error('wallet')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
 
                         <div class="col-md-4 mb-3">
-                            <label for="plan" class="form-label">Plans</label>
-                            <select name="plan" class="form-control">
+                            <label for="role" class="form-label">Role</label>
+                            <select name="role" class="form-control">
                                 <option value="" disabled selected>---select---</option>
-                                @foreach ($plans as $plan )
-                                <option value="{{$plan->id}}" @if(old('plans') == $plan->id) selected @endif>{{$plan->name}}</option>
+                                @foreach ($roles as $role )
+                                <option value="{{$role->name}}" @if(old('role') == $role->name) selected @endif>{{$role->name}}</option>
                                 @endforeach
                             </select>
-                            @error('plan')
+                            @error('role')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>

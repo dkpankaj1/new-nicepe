@@ -1,10 +1,10 @@
 <x-app-layout>
-    @section('title', 'Edit Api Client')
-    @section('page-title', 'Edit Api Client')
-    @section('breadcrumb',Breadcrumbs::render('admin.api-clients.edit',$user))
+    @section('title', 'Edit Retailer')
+    @section('page-title', 'Edit Retailer')
+    @section('breadcrumb',Breadcrumbs::render('admin.retailers.edit',$user))
     <!-- Start Content-->
     <div class="container-fluid">
-        <form action="{{ route('admin.api-clients.update',$user) }}" method="post">
+        <form action="{{ route('admin.retailers.update',$user) }}" method="post">
             @csrf
             @method('put')
             

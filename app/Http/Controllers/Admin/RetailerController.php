@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Datatables\RetailerDatatable;
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use App\Models\Plan;
+use App\Models\User;
+use App\Services\PlanService;
+use App\Services\ToasterService;
 use App\Services\UserService;
 use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class RetailerController extends Controller
 {
@@ -27,16 +36,16 @@ class RetailerController extends Controller
         ]);
 
     }
-    public function index(Request $request, ApiClientDatatable $apiClientDatatable)
+    public function index(Request $request, RetailerDatatable $retailerDatatable)
     {
         return $request->expectsJson()
-            ? $apiClientDatatable->get()
-            : view('admin.apiclient.index');
+            ? $retailerDatatable->get()
+            : view('admin.retailer.index');
     }
 
     public function create(Request $request, PlanService $planService)
     {
-        return view('admin.apiclient.create', [
+        return view('admin.retailer.create', [
             'plans' => $planService->selectPlans($request->user()->id),
             'country' => Country::with('states')->first()
         ]);
@@ -46,9 +55,9 @@ class RetailerController extends Controller
     {
         $data = $request->validate($this->rules());
         try {
-            $this->userService->createUser($data, UserType::APICLIENT->value);
+            $this->userService->createUser($data, UserType::RETAILER->value);
             ToasterService::success('Create success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->route('admin.retailers.index');
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -59,7 +68,7 @@ class RetailerController extends Controller
 
     public function show(user $user)
     {
-        return view('admin.apiclient.show', ['user' => $user]);
+        return view('admin.retailer.show', ['user' => $user]);
     }
 
     /**
@@ -67,7 +76,7 @@ class RetailerController extends Controller
      */
     public function edit(user $api_client, PlanService $planService)
     {
-        return view('admin.apiclient.edit', [
+        return view('admin.retailer.edit', [
             'user' => $api_client,
             'plans' => $planService->selectPlans(Auth::user()->id),
             'country' => Country::with('states')->first(),
@@ -83,7 +92,7 @@ class RetailerController extends Controller
         try {
             $this->userService->updateUser($api_client, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->route('admin.retailers.index');
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();

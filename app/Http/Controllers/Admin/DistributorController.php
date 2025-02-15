@@ -3,10 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Datatables\DistributorDatatable;
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use App\Models\Plan;
+use App\Models\User;
+use App\Services\PlanService;
+use App\Services\ToasterService;
 use App\Services\UserService;
 use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules;
 
 class DistributorController extends Controller
 {
@@ -26,16 +35,16 @@ class DistributorController extends Controller
         ]);
 
     }
-    public function index(Request $request, ApiClientDatatable $apiClientDatatable)
+    public function index(Request $request, DistributorDatatable $distributorDatatable)
     {
         return $request->expectsJson()
-            ? $apiClientDatatable->get()
-            : view('admin.apiclient.index');
+            ? $distributorDatatable->get()
+            : view('admin.distributor.index');
     }
 
     public function create(Request $request, PlanService $planService)
     {
-        return view('admin.apiclient.create', [
+        return view('admin.distributor.create', [
             'plans' => $planService->selectPlans($request->user()->id),
             'country' => Country::with('states')->first()
         ]);
@@ -45,9 +54,9 @@ class DistributorController extends Controller
     {
         $data = $request->validate($this->rules());
         try {
-            $this->userService->createUser($data, UserType::APICLIENT->value);
+            $this->userService->createUser($data, UserType::DISTRIBUTOR->value);
             ToasterService::success('Create success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->route('admin.distributors.index');
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -56,18 +65,18 @@ class DistributorController extends Controller
 
     }
 
-    public function show(user $user)
+    public function show(User $user)
     {
-        return view('admin.apiclient.show', ['user' => $user]);
+        return view('admin.distributor.show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(user $api_client, PlanService $planService)
+    public function edit(user $distributor, PlanService $planService)
     {
-        return view('admin.apiclient.edit', [
-            'user' => $api_client,
+        return view('admin.distributor.edit', [
+            'user' => $distributor,
             'plans' => $planService->selectPlans(Auth::user()->id),
             'country' => Country::with('states')->first(),
         ]);
@@ -76,13 +85,13 @@ class DistributorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, user $api_client)
+    public function update(Request $request, user $distributor)
     {
-        $data = $request->validate($this->rules($api_client->id));
+        $data = $request->validate($this->rules($distributor->id));
         try {
-            $this->userService->updateUser($api_client, $data);
+            $this->userService->updateUser($distributor, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->route('admin.distributors.index');
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -92,10 +101,10 @@ class DistributorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(user $api_client)
+    public function destroy(user $distributor)
     {
         try {
-            $this->userService->deleteUser($api_client);
+            $this->userService->deleteUser($distributor);
             return response()->json([
                 'message' => 'User deactivated successfully.',
                 'status' => 'success',

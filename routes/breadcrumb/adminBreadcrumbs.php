@@ -70,7 +70,7 @@ Breadcrumbs::for('admin.distributors.show', function (BreadcrumbTrail $trail, $u
     $trail->parent('admin.distributors.index');
     $trail->push('Show', route('admin.distributors.show', $user));
 });
-Breadcrumbs::for('admin.api-clientsdistributors.edit', function (BreadcrumbTrail $trail, $user) {
+Breadcrumbs::for('admin.distributors.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('admin.distributors.index');
     $trail->push('Edit', route('admin.distributors.edit', $user));
 });

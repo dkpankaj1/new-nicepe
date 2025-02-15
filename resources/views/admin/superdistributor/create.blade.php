@@ -1,10 +1,10 @@
 <x-app-layout>
-    @section('title', 'Create Api Client')
-    @section('page-title', 'Create Api Client')
-    @section('breadcrumb',Breadcrumbs::render('admin.api-clients.create'))
+    @section('title', 'Create Super Distributor')
+    @section('page-title', 'Create  Super Distributor')
+    @section('breadcrumb',Breadcrumbs::render('admin.super-distributors.create'))
     <!-- Start Content-->
     <div class="container-fluid">
-        <form action="{{ route('admin.api-clients.store') }}" method="post">
+        <form action="{{ route('admin.super-distributors.store') }}" method="post">
             @csrf
             <div class="card">
 

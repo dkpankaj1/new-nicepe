@@ -33,9 +33,9 @@ class RetailerDatatable extends BaseDatatable
             })
 
             ->addColumn('action', function ($user) {
-                return view('components.show-btn', ['url' => route('admin.api-clients.show', $user->id), 'permission' => 'api-clients.read']) .
-                    view('components.edit-btn', ['url' => route('admin.api-clients.edit', $user->id), 'permission' => 'api-clients.edit']) .
-                    view('components.delete-btn', ['url' => route('admin.api-clients.destroy', $user->id), 'permission' => 'api-clients.delete']);
+                return view('components.show-btn', ['url' => route('admin.retailers.show', $user->id), 'permission' => 'retailers.read']) .
+                    view('components.edit-btn', ['url' => route('admin.retailers.edit', $user->id), 'permission' => 'retailers.edit']) .
+                    view('components.delete-btn', ['url' => route('admin.retailers.destroy', $user->id), 'permission' => 'retailers.delete']);
             });
     }
 }

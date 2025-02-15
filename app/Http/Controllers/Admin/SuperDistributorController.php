@@ -20,7 +20,6 @@ use Illuminate\Validation\Rules;
 class SuperDistributorController extends Controller
 {
     use AuthorizationFilter;
-
     protected $userService;
     public function __construct(UserService $userService)
     {
@@ -66,7 +65,6 @@ class SuperDistributorController extends Controller
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
         }
-
     }
 
     public function show(user $user)
@@ -85,7 +83,6 @@ class SuperDistributorController extends Controller
             'country' => Country::with('states')->first(),
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -95,13 +92,12 @@ class SuperDistributorController extends Controller
         try {
             $this->userService->updateUser($super_distributor, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->route('admin.super-distributors.index');
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
         }
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -120,7 +116,6 @@ class SuperDistributorController extends Controller
             ]);
         }
     }
-
     private function rules($userId = null)
     {
         return [
