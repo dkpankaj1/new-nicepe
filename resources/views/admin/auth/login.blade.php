@@ -1,4 +1,6 @@
 <x-guest-layout>
+    @section('title', 'Admin Login')
+    @section('page-title', 'Admin Login')
     <!-- Begin page -->
     <div class="container-fluid">
         <div class="d-flex align-items-center justify-content-center vh-100">
@@ -26,7 +28,8 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="email" class="form-label">Email address</label>
-                                <input class="form-control" type="email" placeholder="Enter your email" name="email" value="{{old('email')}}">
+                                <input class="form-control" type="email" placeholder="Enter your email" name="email"
+                                    value="{{old('email')}}">
                                 @error('email')
                                     <small class="text-danger mt-2">{{$message}}</small>
                                 @enderror
@@ -44,7 +47,8 @@
                             <div class="form-group d-flex mb-3">
                                 <div class="col-sm-6">
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" name="remember" checked>
+                                        <input type="checkbox" class="form-check-input" id="checkbox-signin"
+                                            name="remember" checked>
                                         <label class="form-check-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>

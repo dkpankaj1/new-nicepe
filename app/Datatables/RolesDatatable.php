@@ -27,9 +27,9 @@ class RolesDatatable extends BaseDatatable
             })
 
             ->addColumn('action', function ($roles) {
-                return view('components.show-btn', ['url' => route('admin.roles.show', $roles->id)]) .
-                    view('components.edit-btn', ['url' => route('admin.roles.edit', $roles->id)]) .
-                    view('components.delete-btn', ['url' => route('admin.roles.destroy', $roles->id)]);
+                return view('components.show-btn', ['url' => route('admin.roles.show', $roles->id),'permission' => 'roles.read']) .
+                    view('components.edit-btn', ['url' => route('admin.roles.edit', $roles->id),'permission' => 'roles.edit']) .
+                    view('components.delete-btn', ['url' => route('admin.roles.destroy', $roles->id),'permission' => 'roles.delete']);
             });
     }
 }

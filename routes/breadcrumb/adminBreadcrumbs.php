@@ -23,6 +23,74 @@ Breadcrumbs::for('admin.account.password', function (BreadcrumbTrail $trail) {
     $trail->push('Change Password', route('admin.account.password'));
 });
 
+// api client
+Breadcrumbs::for('admin.api-clients.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Api Client', route('admin.api-clients.index'));
+});
+Breadcrumbs::for('admin.api-clients.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.api-clients.index');
+    $trail->push('Create', route('admin.api-clients.create'));
+});
+Breadcrumbs::for('admin.api-clients.show', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.api-clients.index');
+    $trail->push('Show', route('admin.api-clients.show', $user));
+});
+Breadcrumbs::for('admin.api-clients.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.api-clients.index');
+    $trail->push('Edit', route('admin.api-clients.edit', $user));
+});
+// super-distributor
+Breadcrumbs::for('admin.super-distributors.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Super Distributor', route('admin.super-distributors.index'));
+});
+Breadcrumbs::for('admin.super-distributors.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.super-distributors.index');
+    $trail->push('Create', route('admin.super-distributors.create'));
+});
+Breadcrumbs::for('admin.super-distributors.show', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.super-distributors.index');
+    $trail->push('Show', route('admin.super-distributors.show', $user));
+});
+Breadcrumbs::for('admin.super-distributors.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.super-distributors.index');
+    $trail->push('Edit', route('admin.super-distributors.edit', $user));
+});
+// distributor
+Breadcrumbs::for('admin.distributors.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Distributor', route('admin.distributors.index'));
+});
+Breadcrumbs::for('admin.distributors.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.distributors.index');
+    $trail->push('Create', route('admin.distributors.create'));
+});
+Breadcrumbs::for('admin.distributors.show', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.distributors.index');
+    $trail->push('Show', route('admin.distributors.show', $user));
+});
+Breadcrumbs::for('admin.api-clientsdistributors.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.distributors.index');
+    $trail->push('Edit', route('admin.distributors.edit', $user));
+});
+// retailer
+Breadcrumbs::for('admin.retailers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Retailer', route('admin.retailers.index'));
+});
+Breadcrumbs::for('admin.retailers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.retailers.index');
+    $trail->push('Create', route('admin.retailers.create'));
+});
+Breadcrumbs::for('admin.retailers.show', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.retailers.index');
+    $trail->push('Show', route('admin.retailers.show', $user));
+});
+Breadcrumbs::for('admin.retailers.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.retailers.index');
+    $trail->push('Edit', route('admin.retailers.edit', $user));
+});
 
 // Plans
 Breadcrumbs::for('admin.plans.index', function (BreadcrumbTrail $trail) {
@@ -62,6 +130,23 @@ Breadcrumbs::for('admin.roles.edit', function (BreadcrumbTrail $trail, $role) {
     $trail->push('Edit', route('admin.roles.edit', $role));
 });
 
+
+Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Users', route('admin.users.index'));
+});
+Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.users.index');
+    $trail->push('Create', route('admin.users.create'));
+});
+Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.users.index');
+    $trail->push('Show', route('admin.users.show', $user));
+});
+Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('admin.users.index');
+    $trail->push('Edit', route('admin.users.edit', $user));
+});
 
 
 

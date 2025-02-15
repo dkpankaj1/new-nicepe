@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->decimal('fee', 10, 2)->default(0);
+            $table->decimal('activation_fee', 10, 2)->default(0);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->boolean('enable')->default(true);

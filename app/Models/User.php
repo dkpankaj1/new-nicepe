@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +37,7 @@ class User extends Authenticatable
         'active',
         'parent',
         'plan_id',
+        'deleted_at'
     ];
 
     /**
@@ -59,6 +60,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'deleted_at' => 'datetime',
         ];
     }
 
@@ -67,8 +69,8 @@ class User extends Authenticatable
         return $attribute ? asset($attribute) : 'https://placehold.co/200x200';
     }
 
-    public function plans()
+    public function plan()
     {
-        return $this->hasMany(Plan::class);
+        return $this->belongsTo(Plan::class);
     }
 }

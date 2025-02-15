@@ -10,6 +10,7 @@ class Feature extends Model
         'code',
         'name',
         'fee',
+        'activation_fee',
         'description',
         'image',
         'enable',

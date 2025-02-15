@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Contracts\PlanServiceInterface;
 use App\Models\BrandSetting;
 use App\Models\GeneralSetting;
-use App\Service\PlanService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -17,9 +16,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
-        $this->app->bind(PlanServiceInterface::class, PlanService::class);
-
     }
 
     /**

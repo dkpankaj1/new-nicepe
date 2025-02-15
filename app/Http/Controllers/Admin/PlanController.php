@@ -7,16 +7,29 @@ use App\Datatables\PlansDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\Feature;
 use App\Models\Plan;
+use App\Services\PlanService;
 use App\Services\ToasterService;
+use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
+    use AuthorizationFilter;
     protected $planService;
-    public function __construct(PlanServiceInterface $planService)
+    public function __construct(PlanService $planService)
     {
         $this->planService = $planService;
+
+        $this->applyAuthorization([
+            'index' => 'plans.read',
+            'show' => 'plans.read',
+            'create' => 'plans.create',
+            'store' => 'plans.create',
+            'edit' => 'plans.edit',
+            'update' => 'plans.edit',
+            'destroy' => 'plans.delete',
+        ]);
     }
     /**
      * Display a listing of the resource.
@@ -151,7 +164,7 @@ class PlanController extends Controller
         try {
             throw_if($plan->id == 1, "could not be delete");
 
-            $plan->delete();
+            $this->planService->delete($plan);
 
             return response()->json([
                 'message' => 'Delete success.',

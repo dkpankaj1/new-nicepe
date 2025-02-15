@@ -76,128 +76,175 @@
 
                 <li class="menu-title">Services</li>
 
+                @role('superAdmin')
                 <li>
                     <a href="{{route('admin.features.index')}}">
                         <i data-feather="cpu"></i>
                         <span> Features </span>
                     </a>
                 </li>
+                @endrole
 
-                <li>
-                    <a href="#planMenu" data-bs-toggle="collapse">
-                        <i data-feather="box"></i>
-                        <span> Plans </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="planMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="{{route('admin.plans.index')}}">List</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.plans.create')}}">Create</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @canany(['plans.read', 'plans.create'])
+                    <li>
+                        <a href="#planMenu" data-bs-toggle="collapse">
+                            <i data-feather="box"></i>
+                            <span> Plans </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="planMenu">
+                            <ul class="nav-second-level">
+                                @can('plans.read')
+                                    <li>
+                                        <a href="{{route('admin.plans.index')}}">List</a>
+                                    </li>
+                                @endcan
 
+                                @can('plans.create')
+                                    <li>
+                                        <a href="{{route('admin.plans.create')}}">Create</a>
+                                    </li>
+                                @endcan
 
-
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
                 <li class="menu-title">Peoples</li>
 
-                <li>
-                    <a href="#userMenu" data-bs-toggle="collapse">
-                        <i data-feather="users"></i>
-                        <span> Users </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="userMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">Create</a>
-                            </li>
+                @canany(['users.read', 'users.create', 'roles.read'])
+                    <li>
+                        <a href="#userMenu" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> Users </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="userMenu">
+                            <ul class="nav-second-level">
 
-                            <li>
-                                <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                @can('users.read')
+                                    <li>
+                                        <a href="{{route('admin.users.index')}}">List</a>
+                                    </li>
+                                @endcan
 
-                <li>
-                    <a href="#apiClientMenu" data-bs-toggle="collapse">
-                        <i data-feather="users"></i>
-                        <span> Api Client </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="apiClientMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">Create</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                @can('users.create')
+                                    <li>
+                                        <a href="{{route('admin.users.create')}}">Create</a>
+                                    </li>
+                                @endcan
 
-                <li>
-                    <a href="#superDistributorMenu" data-bs-toggle="collapse">
-                        <i data-feather="users"></i>
-                        <span> Super Distributor </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="superDistributorMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">Create</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                @can('roles.read')
+                                    <li>
+                                        <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
+                                    </li>
+                                @endcan 
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
 
-                <li>
-                    <a href="#distributorMenu" data-bs-toggle="collapse">
-                        <i data-feather="users"></i>
-                        <span> Distributor </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="distributorMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">Create</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @canany(['api-clients.read', 'api-clients.create'])
+                    <li>
+                        <a href="#apiClientMenu" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> Api Client </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="apiClientMenu">
+                            <ul class="nav-second-level">
+                                @can('api-clients.read')
+                                    <li>
+                                        <a href="{{route('admin.api-clients.index')}}">List</a>
+                                    </li>
+                                @endcan
+                                @can('api-clients.create')
+                                    <li>
+                                        <a href="{{route('admin.api-clients.create')}}">Create</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
 
-                <li>
-                    <a href="#retailerMenu" data-bs-toggle="collapse">
-                        <i data-feather="users"></i>
-                        <span> Retailer </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="retailerMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">Create</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @canany(['super-distributors.read', 'super-distributors.create'])
+                    <li>
+                        <a href="#superDistributorMenu" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> Super Distributor </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="superDistributorMenu">
+                            <ul class="nav-second-level">
+                                @can('super-distributors.read')
+                                    <li>
+                                        <a href="{{route('admin.super-distributors.index')}}">List</a>
+                                    </li>
+                                @endcan
+                                @can('super-distributors.create')
+                                    <li>
+                                        <a href="{{route('admin.super-distributors.create')}}">Create</a>
+                                    </li>
+                                @endcan
+
+
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
+
+                @canany(['distributors.read', 'distributors.create'])  
+                    <li>
+                        <a href="#distributorMenu" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> Distributor </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="distributorMenu">
+                            <ul class="nav-second-level">
+                                @can('distributors.read')
+                                    <li>
+                                        <a href="{{route('admin.distributors.index')}}">List</a>
+                                    </li>
+                                @endcan
+                                @can('distributors.create')
+                                    <li>
+                                        <a href="{{route('admin.distributors.create')}}">Create</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
+
+                @canany(['retailers.read', 'retailers.create'])  
+                    <li>
+                        <a href="#retailerMenu" data-bs-toggle="collapse">
+                            <i data-feather="users"></i>
+                            <span> Retailer </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="retailerMenu">
+                            <ul class="nav-second-level">
+                                @can('retailers.read')
+                                    <li>
+                                        <a href="{{route('admin.retailers.index')}}">List</a>
+                                    </li>
+                                @endcan
+
+                                @can('retailers.create')
+                                    <li>
+                                        <a href="{{route('admin.retailers.create')}}">Create</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
+
+
+
 
                 <li class="menu-title">Settings</li>
 

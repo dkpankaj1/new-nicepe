@@ -34,6 +34,7 @@ return new class extends Migration {
             $table->foreignId('plan_id')->nullable()->constrained('plans')->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

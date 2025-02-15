@@ -9,11 +9,13 @@ use App\Models\Currency;
 use App\Models\EmailConfiguration;
 use App\Models\GeneralSetting;
 use App\Services\ToasterService;
+use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class SettingController extends Controller
 {
+    use AuthorizationFilter;
     public function brandSetting()
     {
         return view('admin.settings.brand', [

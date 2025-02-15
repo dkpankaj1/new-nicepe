@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\FileUploader;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Service\UserProfileService;
+use App\Services\UserProfileService;
 use App\Services\ToasterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

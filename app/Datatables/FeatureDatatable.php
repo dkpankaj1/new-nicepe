@@ -21,8 +21,14 @@ class FeatureDatatable extends BaseDatatable
             ]))
             ->addColumn('action', function ($feature) {
                 return
-                    view('components.show-btn', ['url' => route('admin.features.show', $feature)]).
-                    view('components.edit-btn', ['url' => route('admin.features.edit', $feature)]);
+                    view('components.show-btn', [
+                        'url' => route('admin.features.show', $feature),
+                        'permission' => 'features.read'
+                    ]) .
+                    view('components.edit-btn', [
+                        'url' => route('admin.features.edit', $feature),
+                        'permission' => 'features.edit'
+                    ]);
             });
     }
 }

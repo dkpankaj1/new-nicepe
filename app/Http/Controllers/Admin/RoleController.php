@@ -6,19 +6,32 @@ use App\Datatables\RolesDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\permissionGroup;
 use App\Services\ToasterService;
+use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
+    use AuthorizationFilter;
+    public function __construct()
+    {
+        $this->applyAuthorization([
+            'index' => 'roles.read',
+            'show' => 'roles.read',
+            'create' => 'roles.create',
+            'store' => 'roles.create',
+            'edit' => 'roles.edit',
+            'update' => 'roles.edit',
+            'destroy' => 'roles.delete',
+        ]);
 
+    }
     public function index(Request $request, RolesDatatable $rolesDatatable)
     {
         if ($request->expectsJson()) {
             return $rolesDatatable->get();
         }
-
         return view('admin.roles.index');
     }
     public function create()

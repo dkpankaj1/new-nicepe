@@ -27,6 +27,7 @@ return new class extends Migration {
                 ->onDelete('cascade'); // Ensures plan details are deleted when plan is deleted
             $table->foreignId('feature_id')->constrained(); // Ensure features exist in the referenced table
             $table->double('fee');
+            $table->boolean('activete')->default(false);
             $table->timestamps();
         });
     }

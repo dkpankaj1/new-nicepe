@@ -10,6 +10,7 @@ class PlanDetail extends Model
         "plan_id",
         "feature_id",
         "fee",
+        "activete"
     ];
     public function feature()
     {

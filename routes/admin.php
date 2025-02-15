@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\ApiClientController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DistributorController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RetailerController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SuperDistributorController;
+use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:guest']], function () {
@@ -21,11 +26,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:gue
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:auth']], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // resource route
-    Route::resource('features', FeatureController::class)->only(['index', 'show', 'edit', 'update']);
-    Route::resource('plans', PlanController::class);
+    // Resource routes
     Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('api-clients', ApiClientController::class);
+    Route::resource('super-distributors', SuperDistributorController::class);
+    Route::resource('distributors', DistributorController::class);
+    Route::resource('retailers', RetailerController::class);
+    Route::resource('features', FeatureController::class)
+        ->only(['index', 'show', 'edit', 'update']);
+    Route::resource('plans', PlanController::class);
 
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');

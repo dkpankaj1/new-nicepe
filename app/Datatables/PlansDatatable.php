@@ -18,9 +18,9 @@ class PlansDatatable extends BaseDatatable
             ->addColumn('created_at', fn($feature) => $feature->created_at->diffForHumans())
             ->addColumn('updated_at', fn($feature) => $feature->updated_at->diffForHumans())
             ->addColumn('action', function ($plan) {
-                return view('components.show-btn', ['url' => route('admin.plans.show', $plan)]) .
-                    view('components.edit-btn', ['url' => route('admin.plans.edit', $plan)]) .
-                    view('components.delete-btn', ['url' => route('admin.plans.destroy', $plan)]);
+                return view('components.show-btn', ['url' => route('admin.plans.show', $plan),'permission' => 'plans.read']) .
+                    view('components.edit-btn', ['url' => route('admin.plans.edit', $plan),'permission' => 'plans.edit']) .
+                    view('components.delete-btn', ['url' => route('admin.plans.destroy', $plan),'permission' => 'plans.delete']);
             });
     }
 }

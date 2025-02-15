@@ -7,15 +7,27 @@ use App\Helpers\FileUploader;
 use App\Http\Controllers\Controller;
 use App\Models\Feature;
 use App\Services\ToasterService;
+use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
 
 class FeatureController extends Controller
 {
+    use AuthorizationFilter;
     protected $featureDatatable;
 
     public function __construct(FeatureDatatable $featureDatatable)
     {
         $this->featureDatatable = $featureDatatable;
+
+        $this->applyAuthorization([
+            'index' => 'features.read',
+            'show' => 'features.read',
+            'create' => 'features.create',
+            'store' => 'features.create',
+            'edit' => 'features.edit',
+            'update' => 'features.edit',
+            'destroy' => 'features.delete',
+        ]);
     }
 
     /**
@@ -34,7 +46,6 @@ class FeatureController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -42,7 +53,6 @@ class FeatureController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -78,32 +88,21 @@ class FeatureController extends Controller
         ]);
 
         try {
-
             if ($request->has('thumbnail')) {
-
                 $fileUploader = new FileUploader();
-
                 $fileUploader->deleteFile($feature->getRawOriginal('image'));
-
                 $validated['image'] = $fileUploader
                     ->setHeight(200)
                     ->setWidth(200)
                     ->setDirectory('feature')
                     ->uploadImage($request->file('thumbnail'));
             }
-
-
             $feature->update($validated);
-
             ToasterService::success('update success.!');
             return redirect()->route('admin.features.index');
-
         } catch (\Exception $e) {
-
-            // ToasterService::error('Failed to update service. Please try again.');
-            ToasterService::error($e->getMessage());
+            ToasterService::error('Failed to update service. Please try again.');
             return redirect()->back();
-
         }
     }
 
@@ -112,6 +111,5 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
     }
 }

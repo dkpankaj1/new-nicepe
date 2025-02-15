@@ -44,22 +44,22 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'api-clients.delete', 'permission_group_id' => $apiClientsManagement->id]);
 
         $superDistributorManagement = permissionGroup::create(['name' => 'Super Distributor Management']);
-        Permission::create(['name' => 'super-distributor.read', 'permission_group_id' => $superDistributorManagement->id]);
-        Permission::create(['name' => 'super-distributor.create', 'permission_group_id' => $superDistributorManagement->id]);
-        Permission::create(['name' => 'super-distributor.edit', 'permission_group_id' => $superDistributorManagement->id]);
-        Permission::create(['name' => 'super-distributor.delete', 'permission_group_id' => $superDistributorManagement->id]);
+        Permission::create(['name' => 'super-distributors.read', 'permission_group_id' => $superDistributorManagement->id]);
+        Permission::create(['name' => 'super-distributors.create', 'permission_group_id' => $superDistributorManagement->id]);
+        Permission::create(['name' => 'super-distributors.edit', 'permission_group_id' => $superDistributorManagement->id]);
+        Permission::create(['name' => 'super-distributors.delete', 'permission_group_id' => $superDistributorManagement->id]);
 
         $distributorManagement = permissionGroup::create(['name' => 'Distributor Management']);
-        Permission::create(['name' => 'distributor.read', 'permission_group_id' => $distributorManagement->id]);
-        Permission::create(['name' => 'distributor.create', 'permission_group_id' => $distributorManagement->id]);
-        Permission::create(['name' => 'distributor.edit', 'permission_group_id' => $distributorManagement->id]);
-        Permission::create(['name' => 'distributor.delete', 'permission_group_id' => $distributorManagement->id]);
+        Permission::create(['name' => 'distributors.read', 'permission_group_id' => $distributorManagement->id]);
+        Permission::create(['name' => 'distributors.create', 'permission_group_id' => $distributorManagement->id]);
+        Permission::create(['name' => 'distributors.edit', 'permission_group_id' => $distributorManagement->id]);
+        Permission::create(['name' => 'distributors.delete', 'permission_group_id' => $distributorManagement->id]);
 
         $retailerManagement = permissionGroup::create(['name' => 'Retailer Management']);
-        Permission::create(['name' => 'retailer.read', 'permission_group_id' => $retailerManagement->id]);
-        Permission::create(['name' => 'retailer.create', 'permission_group_id' => $retailerManagement->id]);
-        Permission::create(['name' => 'retailer.edit', 'permission_group_id' => $retailerManagement->id]);
-        Permission::create(['name' => 'retailer.delete', 'permission_group_id' => $retailerManagement->id]);
+        Permission::create(['name' => 'retailers.read', 'permission_group_id' => $retailerManagement->id]);
+        Permission::create(['name' => 'retailers.create', 'permission_group_id' => $retailerManagement->id]);
+        Permission::create(['name' => 'retailers.edit', 'permission_group_id' => $retailerManagement->id]);
+        Permission::create(['name' => 'retailers.delete', 'permission_group_id' => $retailerManagement->id]);
 
 
     }
