@@ -17,7 +17,7 @@ enum TransactionEnum: string
     case TYPE_INTERNAL = 'internal';
     case TYPE_EXTERNAL = 'external';
 
-    case VENDOR_INTERNAL = 'internal';
+    case VENDOR_LOCAL = 'local';
     case VENDOR_RAZORPAY = 'razorpay';
     case VENDOR_PHONEPE = 'phonepe';
     case VENDOR_NICEPE = 'nicepe';

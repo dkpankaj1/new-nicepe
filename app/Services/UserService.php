@@ -2,6 +2,9 @@
 namespace App\Services;
 
 use App\Contracts\UserServiceInterface;
+use App\Enums\TransactionEnum;
+use App\Enums\UserType;
+use App\Helpers\TransactionHelper;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -9,7 +12,7 @@ class UserService implements UserServiceInterface
 {
     public function createUser(array $data, string $type): User
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -24,6 +27,28 @@ class UserService implements UserServiceInterface
             'plan_id' => $data['plan'],
             'active' => $data['is_active'],
         ]);
+        if ($user->type != UserType::ADMIN->value) {
+            $user->transactions()->create([
+                "transaction_type" => TransactionEnum::TYPE_INTERNAL->value,
+                "transaction_direction" => TransactionEnum::DIRECTION_CREDIT->value,
+                "vendor" => TransactionEnum::VENDOR_LOCAL->value,
+                "transaction_id" => TransactionHelper::generateTransactionId(),
+                "opening_balance" => $user->wallet,
+                "amount" => $data['wallet'],
+                "fee" => 0,
+                "tax" => 0,
+                "closing_balance" => $user->wallet + $data['wallet'],
+                "currency_id" => TransactionHelper::getCurrency()->id,
+                "payment_method" => TransactionEnum::METHOD_WALLET,
+                "status" => TransactionEnum::STATUS_COMPLETE,
+                "metadata" => ['message' => "initial balance"],
+                "ip_address" => request()->ip(),
+                "user_agent" => request()->userAgent(),
+                "processed_at" => now(),
+            ]);
+        }
+        
+        return $user;
     }
 
     public function updateUser(User $user, array $data): User

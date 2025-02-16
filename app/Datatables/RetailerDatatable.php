@@ -9,7 +9,11 @@ class RetailerDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(User::query()->where('type', UserType::RETAILER->value));
+        parent::__construct(
+            User::query()
+                ->where('type', UserType::RETAILER->value)
+                ->latest()
+        );
     }
 
     public function configure($datatable): DataTableAbstract

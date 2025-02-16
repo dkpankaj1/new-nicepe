@@ -16,6 +16,11 @@ use Illuminate\Validation\Rule;
 class SettingController extends Controller
 {
     use AuthorizationFilter;
+
+    public function __construct()
+    {
+        $this->isSuperAdmin();
+    }
     public function brandSetting()
     {
         return view('admin.settings.brand', [

@@ -2,6 +2,7 @@
 namespace App\Traits;
 
 use App\Exceptions\Unauthorize;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 
@@ -20,4 +21,11 @@ trait AuthorizationFilter
             throw new Unauthorize();
         }
     }
+    protected function isSuperAdmin()
+    {
+        if (!Auth::check() || !request()->user()->hasRole('superAdmin')) {
+            throw new Unauthorize();
+        }
+    }
+
 }

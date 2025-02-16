@@ -10,7 +10,7 @@ class UserDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(User::query()->where('type', UserType::ADMIN->value));
+        parent::__construct(User::query()->where('type', UserType::ADMIN->value)->latest());
     }
 
     public function configure($datatable): DataTableAbstract

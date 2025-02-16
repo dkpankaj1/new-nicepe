@@ -8,7 +8,11 @@ class RolesDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(Role::query()->where('id', '!=', 1));
+        parent::__construct(
+            Role::query()
+                ->latest()
+                ->where('id', '!=', 1)
+        );
     }
 
     public function configure($datatable): DataTableAbstract
@@ -27,9 +31,9 @@ class RolesDatatable extends BaseDatatable
             })
 
             ->addColumn('action', function ($roles) {
-                return view('components.show-btn', ['url' => route('admin.roles.show', $roles->id),'permission' => 'roles.read']) .
-                    view('components.edit-btn', ['url' => route('admin.roles.edit', $roles->id),'permission' => 'roles.edit']) .
-                    view('components.delete-btn', ['url' => route('admin.roles.destroy', $roles->id),'permission' => 'roles.delete']);
+                return view('components.show-btn', ['url' => route('admin.roles.show', $roles->id), 'permission' => 'roles.read']) .
+                    view('components.edit-btn', ['url' => route('admin.roles.edit', $roles->id), 'permission' => 'roles.edit']) .
+                    view('components.delete-btn', ['url' => route('admin.roles.destroy', $roles->id), 'permission' => 'roles.delete']);
             });
     }
 }

@@ -15,17 +15,9 @@ class FeatureController extends Controller
     use AuthorizationFilter;
     public function __construct()
     {
-        $this->applyAuthorization([
-            'index' => 'features.read',
-            'show' => 'features.read',
-            'create' => 'features.create',
-            'store' => 'features.create',
-            'edit' => 'features.edit',
-            'update' => 'features.edit',
-            'destroy' => 'features.delete',
-        ]);
+        $this->isSuperAdmin();
     }
-    
+
     /**
      * Display a listing of the resource.
      */

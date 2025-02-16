@@ -23,6 +23,26 @@ Breadcrumbs::for('admin.account.password', function (BreadcrumbTrail $trail) {
     $trail->push('Change Password', route('admin.account.password'));
 });
 
+
+// balance transfer
+Breadcrumbs::for('admin.balance-transfers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Balance Transfer', route('admin.balance-transfers.index'));
+});
+Breadcrumbs::for('admin.balance-transfers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.balance-transfers.index');
+    $trail->push('Create', route('admin.balance-transfers.create'));
+});
+Breadcrumbs::for('admin.balance-transfers.show', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('admin.balance-transfers.index');
+    $trail->push('Show', route('admin.balance-transfers.show', $transfer));
+});
+Breadcrumbs::for('admin.balance-transfers.edit', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('admin.balance-transfers.index');
+    $trail->push('Edit', route('admin.balance-transfers.edit', $transfer));
+});
+
+
 // api client
 Breadcrumbs::for('admin.api-clients.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
@@ -110,17 +130,15 @@ Breadcrumbs::for('admin.plans.show', function (BreadcrumbTrail $trail, $plan) {
     $trail->push('Show', route('admin.plans.show', $plan));
 });
 
-
+// roles
 Breadcrumbs::for('admin.roles.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Roles', route('admin.roles.index'));
 });
-
 Breadcrumbs::for('admin.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.roles.index');
     $trail->push('Create', route('admin.roles.create'));
 });
-
 Breadcrumbs::for('admin.roles.show', function (BreadcrumbTrail $trail, $role) {
     $trail->parent('admin.roles.index');
     $trail->push('Show', route('admin.roles.show', $role));
@@ -130,7 +148,17 @@ Breadcrumbs::for('admin.roles.edit', function (BreadcrumbTrail $trail, $role) {
     $trail->push('Edit', route('admin.roles.edit', $role));
 });
 
+// transaction
+Breadcrumbs::for('admin.transactions.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Transaction', route('admin.transactions.index'));
+});
+Breadcrumbs::for('admin.transactions.show', function (BreadcrumbTrail $trail, $transaction) {
+    $trail->parent('admin.transactions.index');
+    $trail->push('Show', route('admin.transactions.show', $transaction));
+});
 
+// users
 Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Users', route('admin.users.index'));
@@ -147,7 +175,6 @@ Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('admin.users.index');
     $trail->push('Edit', route('admin.users.edit', $user));
 });
-
 
 
 

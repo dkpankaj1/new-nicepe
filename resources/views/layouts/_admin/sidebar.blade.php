@@ -37,41 +37,53 @@
 
                 <li class="menu-title">Accounting</li>
 
-                <li>
-                    <a href="#transfer" data-bs-toggle="collapse">
-                        <i data-feather="arrow-up-circle"></i>
-                        <span> Transfer </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="transfer">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">List</a>
-                            </li>
-                            <li>
-                                <a href="#">New Transfer</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
 
-                <li>
-                    <a href="#transactionMenu" data-bs-toggle="collapse">
-                        <i data-feather="bar-chart-2"></i>
-                        <span> Transaction </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="transactionMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">History</a>
-                            </li>
-                            <li>
-                                <a href="#">Report</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @canany(['balance-transfers.index', 'balance-transfers.create'])
+                    <li>
+                        <a href="#transfer" data-bs-toggle="collapse">
+                            <i data-feather="arrow-up-circle"></i>
+                            <span> Balance Transfer </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="transfer">
+                            <ul class="nav-second-level">
+
+                                @can('balance-transfers.index')
+                                    <li>
+                                        <a href="{{route('admin.balance-transfers.index')}}">List</a>
+                                    </li>
+                                @endcan
+
+                                @can('balance-transfers.create')
+                                    <li>
+                                        <a href="{{route('admin.balance-transfers.create')}}">New Transfer</a>
+                                    </li>
+                                @endcan
+
+                            </ul>
+                        </div>
+                    </li>
+                @endcanany
+
+                @can('transactions.read')
+                    <li>
+                        <a href="#transactionMenu" data-bs-toggle="collapse">
+                            <i data-feather="bar-chart-2"></i>
+                            <span> Transaction </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="transactionMenu">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{route('admin.transactions.index')}}">History</a>
+                                </li>
+                                <li>
+                                    <a href="#">Report</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
 
 
                 <li class="menu-title">Services</li>
@@ -110,6 +122,7 @@
                         </div>
                     </li>
                 @endcanany
+
                 <li class="menu-title">Peoples</li>
 
                 @canany(['users.read', 'users.create', 'roles.read'])
@@ -186,8 +199,6 @@
                                         <a href="{{route('admin.super-distributors.create')}}">Create</a>
                                     </li>
                                 @endcan
-
-
                             </ul>
                         </div>
                     </li>
@@ -225,7 +236,9 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="retailerMenu">
+
                             <ul class="nav-second-level">
+                                
                                 @can('retailers.read')
                                     <li>
                                         <a href="{{route('admin.retailers.index')}}">List</a>
@@ -237,7 +250,9 @@
                                         <a href="{{route('admin.retailers.create')}}">Create</a>
                                     </li>
                                 @endcan
+
                             </ul>
+
                         </div>
                     </li>
                 @endcanany
@@ -249,11 +264,13 @@
                 <li class="menu-title">Settings</li>
 
                 <li>
+
                     <a href="#settingMenu" data-bs-toggle="collapse">
                         <i data-feather="settings"></i>
                         <span> Setting </span>
                         <span class="menu-arrow"></span>
                     </a>
+
                     <div class="collapse" id="settingMenu">
                         <ul class="nav-second-level">
                             <li>
@@ -267,7 +284,9 @@
                             </li>
                         </ul>
                     </div>
+
                 </li>
+
                 @endrole
 
                 <li class="menu-title">Other</li>
@@ -313,7 +332,6 @@
                         </ul>
                     </div>
                 </li>
-
 
             </ul>
 

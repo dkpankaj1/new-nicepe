@@ -9,7 +9,11 @@ class DistributorDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(User::query()->where('type', UserType::DISTRIBUTOR->value));
+        parent::__construct(
+            User::query()
+                ->where('type', UserType::DISTRIBUTOR->value)
+                ->latest()
+        );
     }
 
     public function configure($datatable): DataTableAbstract

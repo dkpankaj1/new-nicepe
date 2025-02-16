@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('transaction_type')->comment('internal or external');
             $table->enum('transaction_direction', ['credit', 'debit'])->comment('credit: increase balance, debit: decrease balance');
-            $table->string('vendor')->default(TransactionEnum::VENDOR_INTERNAL);
+            $table->string('vendor')->default(TransactionEnum::VENDOR_LOCAL);
             $table->string('transaction_id')->nullable()->comment('External reference ID');
             $table->decimal('opening_balance', 15, 2)->comment('Balance before the transaction');
             $table->decimal('amount', 15, 2)->comment('Transaction amount');

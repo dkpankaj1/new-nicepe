@@ -9,7 +9,11 @@ class ApiClientDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(User::query()->where('type', UserType::APICLIENT->value));
+        parent::__construct(
+            User::query()
+                ->where('type', UserType::APICLIENT->value)
+                ->latest()
+        );
     }
 
     public function configure($datatable): DataTableAbstract

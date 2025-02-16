@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ApiClientController;
+use App\Http\Controllers\Admin\BalanceTransferController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistributorController;
 use App\Http\Controllers\Admin\FeatureController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Admin\RetailerController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SuperDistributorController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +29,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:aut
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Resource routes
+    Route::resource('balance-transfers', BalanceTransferController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('api-clients', ApiClientController::class);
@@ -36,6 +39,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:aut
     Route::resource('features', FeatureController::class)
         ->only(['index', 'show', 'edit', 'update']);
     Route::resource('plans', PlanController::class);
+    Route::resource('transactions', TransactionController::class)
+        ->only(['index', 'show']);
 
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');

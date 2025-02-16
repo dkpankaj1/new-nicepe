@@ -19,6 +19,12 @@ class RolePermissionSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'employee']);
 
+        $balanceTransferManagement = permissionGroup::create(['name' => 'Balance Transfer']);
+        Permission::create(['name' => 'balance-transfers.read', 'permission_group_id' => $balanceTransferManagement->id]);
+        Permission::create(['name' => 'balance-transfers.create', 'permission_group_id' => $balanceTransferManagement->id]);
+        Permission::create(['name' => 'balance-transfers.edit', 'permission_group_id' => $balanceTransferManagement->id]);
+        Permission::create(['name' => 'balance-transfers.delete', 'permission_group_id' => $balanceTransferManagement->id]);
+
         $roleManagement = permissionGroup::create(['name' => 'Roles Management']);
         Permission::create(['name' => 'roles.read', 'permission_group_id' => $roleManagement->id]);
         Permission::create(['name' => 'roles.create', 'permission_group_id' => $roleManagement->id]);
@@ -61,6 +67,8 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'retailers.edit', 'permission_group_id' => $retailerManagement->id]);
         Permission::create(['name' => 'retailers.delete', 'permission_group_id' => $retailerManagement->id]);
 
+        $transactionManagement = permissionGroup::create(['name' => 'Transactions Management']);
+        Permission::create(['name' => 'transaction.read', 'permission_group_id' => $transactionManagement->id]);
 
     }
 }
