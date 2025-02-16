@@ -37,6 +37,18 @@
                             @enderror
                         </div>
 
+                        <!-- Activation Fee Input -->
+                        <div class="mb-3">
+                            <label for="fee" class="form-label">Activation Fee
+                                ( {{$generalSetting->currency->symbol}} )</label>
+                            <input type="number" class="form-control" name="activation_fee"
+                                value="{{ old('activation_fee', $feature->activation_fee) }}"
+                                placeholder="Enter Activation Fee">
+                            @error('activation_fee')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <!-- Service Enable (Yes/No) Dropdown -->
                         <div class="mb-3">
                             <label for="enable" class="form-label">Enable</label>

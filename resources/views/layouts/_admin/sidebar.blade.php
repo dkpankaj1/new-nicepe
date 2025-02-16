@@ -138,8 +138,7 @@
                                     <li>
                                         <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
                                     </li>
-                                @endcan 
-                            </ul>
+                                @endcan                         </ul>
                         </div>
                     </li>
                 @endcanany
@@ -245,6 +244,7 @@
 
 
 
+                @role('superAdmin')
 
                 <li class="menu-title">Settings</li>
 
@@ -268,10 +268,11 @@
                         </ul>
                     </div>
                 </li>
+                @endrole
 
                 <li class="menu-title">Other</li>
 
-                <li>
+                {{-- <li>
                     <a href="#websiteMenu" data-bs-toggle="collapse">
                         <i data-feather="layout"></i>
                         <span> Website </span>
@@ -290,7 +291,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="#myAccountMenu" data-bs-toggle="collapse">

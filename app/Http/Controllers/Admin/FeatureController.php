@@ -13,12 +13,8 @@ use Illuminate\Http\Request;
 class FeatureController extends Controller
 {
     use AuthorizationFilter;
-    protected $featureDatatable;
-
-    public function __construct(FeatureDatatable $featureDatatable)
+    public function __construct()
     {
-        $this->featureDatatable = $featureDatatable;
-
         $this->applyAuthorization([
             'index' => 'features.read',
             'show' => 'features.read',
@@ -29,14 +25,14 @@ class FeatureController extends Controller
             'destroy' => 'features.delete',
         ]);
     }
-
+    
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, FeatureDatatable $featureDatatable)
     {
         if ($request->expectsJson()) {
-            return $this->featureDatatable->get();
+            return $featureDatatable->get();
         }
         return view('admin.feature.index');
     }
@@ -84,6 +80,7 @@ class FeatureController extends Controller
             "description" => ['nullable', 'string'],
             "thumbnail" => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             "fee" => ['required', 'numeric', 'min:0'],
+            "activation_fee" => ['required', 'numeric', 'min:0'],
             "enable" => ['required', 'boolean'],
         ]);
 

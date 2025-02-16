@@ -74,10 +74,10 @@ class RetailerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(user $api_client, PlanService $planService)
+    public function edit(user $retailer, PlanService $planService)
     {
         return view('admin.retailer.edit', [
-            'user' => $api_client,
+            'user' => $retailer,
             'plans' => $planService->selectPlans(Auth::user()->id),
             'country' => Country::with('states')->first(),
         ]);
@@ -86,11 +86,11 @@ class RetailerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, user $api_client)
+    public function update(Request $request, user $retailer)
     {
-        $data = $request->validate($this->rules($api_client->id));
+        $data = $request->validate($this->rules($retailer->id));
         try {
-            $this->userService->updateUser($api_client, $data);
+            $this->userService->updateUser($retailer, $data);
             ToasterService::success('Update success');
             return redirect()->route('admin.retailers.index');
         } catch (\Exception $e) {
@@ -102,10 +102,10 @@ class RetailerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(user $api_client)
+    public function destroy(user $retailer)
     {
         try {
-            $this->userService->deleteUser($api_client);
+            $this->userService->deleteUser($retailer);
             return response()->json([
                 'message' => 'User deactivated successfully.',
                 'status' => 'success',
