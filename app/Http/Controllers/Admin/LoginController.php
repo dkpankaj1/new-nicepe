@@ -6,15 +6,19 @@ use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LogoutAction;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Services\ThrottleService;
 use App\Services\ToasterService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
+    private ThrottleService $throttleService;
+
+    public function __construct(ThrottleService $throttleService)
+    {
+        $this->throttleService = $throttleService;
+    }
     public function create(): \Illuminate\View\View
     {
         return view('admin.auth.login');
@@ -22,23 +26,20 @@ class LoginController extends Controller
 
     public function store(Request $request, LoginAction $loginAction): \Illuminate\Http\RedirectResponse
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $this->validateLoginRequest($request);
 
-        $key = $this->throttleKey($request);
+        $key = $this->throttleService->generateKey($request);
 
-        if (RateLimiter::tooManyAttempts($key, 5)) {
-            $this->throwThrottleException($key);
+        if ($this->throttleService->tooManyAttempts($key, 5)) {
+            $this->throttleService->throwThrottleException($key);
         }
 
         if (!$loginAction->execute($request, UserType::ADMIN)) {
-            RateLimiter::hit($key);
+            $this->throttleService->hit($key);
             throw ValidationException::withMessages(['email' => trans('auth.failed')]);
         }
 
-        RateLimiter::clear($key);
+        $this->throttleService->clear($key);
 
         ToasterService::success('Login Successful');
         return redirect()->route('admin.dashboard');
@@ -51,19 +52,11 @@ class LoginController extends Controller
         return redirect()->route('admin.login');
     }
 
-    private function throttleKey(Request $request): string
+    private function validateLoginRequest(Request $request): void
     {
-        return Str::lower($request->email) . '|' . $request->ip();
-    }
-
-    private function throwThrottleException(string $key): void
-    {
-        $seconds = RateLimiter::availableIn($key);
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
     }
 }

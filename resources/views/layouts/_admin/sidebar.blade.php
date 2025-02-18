@@ -4,24 +4,9 @@
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
-            <div class="logo-box">
-                <a href="{{route('admin.dashboard')}}" class="logo logo-light">
-                    <span class="logo-sm">
-                        <img src="{{asset('backend/images/logo-sm.png')}}" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{asset('backend/images/logo-light.png')}}" alt="" height="24">
-                    </span>
-                </a>
-                <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img src="{{asset('backend/images/logo-sm.png')}}" alt="" height="22">
-                    </span>
-                    <span class="logo-lg">
-                        <img src="{{asset('backend/images/logo-dark.png')}}" alt="" height="24">
-                    </span>
-                </a>
-            </div>
+           <!-- LogoBox :: Begin-->
+           <x-logo-box />
+           <!-- LogoBox :: End-->
 
             <ul id="side-menu">
 
@@ -35,8 +20,9 @@
                     </a>
                 </li>
 
-                <li class="menu-title">Accounting</li>
-
+                @canany(['balance-transfers.index', 'balance-transfers.create', 'transactions.read'])
+                    <li class="menu-title">Accounting</li>
+                @endcanany
 
                 @canany(['balance-transfers.index', 'balance-transfers.create'])
                     <li>
@@ -85,8 +71,9 @@
                     </li>
                 @endcan
 
-
-                <li class="menu-title">Services</li>
+                @canany(['plans.read', 'plans.create'])
+                    <li class="menu-title">Services</li>
+                @endcanany
 
                 @role('superAdmin')
                 <li>
@@ -123,15 +110,32 @@
                     </li>
                 @endcanany
 
-                <li class="menu-title">Peoples</li>
+                @canany([
+                    'users.read',
+                    'users.create',
+                    'roles.read',
+                    'api-clients.read',
+                    'api-clients.create',
+                    'super-distributors.read',
+                    'super-distributors.create',
+                    'distributors.read',
+                    'distributors.create',
+                    'retailers.read',
+                    'retailers.create'
+                ])
+                                <li class="menu-title">Peoples</li>
+                @endcanany
+
 
                 @canany(['users.read', 'users.create', 'roles.read'])
                     <li>
+
                         <a href="#userMenu" data-bs-toggle="collapse">
                             <i data-feather="users"></i>
                             <span> Users </span>
                             <span class="menu-arrow"></span>
                         </a>
+
                         <div class="collapse" id="userMenu">
                             <ul class="nav-second-level">
 
@@ -152,7 +156,9 @@
                                         <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
                                     </li>
                                 @endcan                         </ul>
+
                         </div>
+
                     </li>
                 @endcanany
 
@@ -238,7 +244,7 @@
                         <div class="collapse" id="retailerMenu">
 
                             <ul class="nav-second-level">
-                                
+
                                 @can('retailers.read')
                                     <li>
                                         <a href="{{route('admin.retailers.index')}}">List</a>
@@ -290,27 +296,6 @@
                 @endrole
 
                 <li class="menu-title">Other</li>
-
-                {{-- <li>
-                    <a href="#websiteMenu" data-bs-toggle="collapse">
-                        <i data-feather="layout"></i>
-                        <span> Website </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="websiteMenu">
-                        <ul class="nav-second-level">
-                            <li>
-                                <a href="#">HomePage</a>
-                            </li>
-                            <li>
-                                <a href="#">About Page</a>
-                            </li>
-                            <li>
-                                <a href="#">Policies</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li> --}}
 
                 <li>
                     <a href="#myAccountMenu" data-bs-toggle="collapse">

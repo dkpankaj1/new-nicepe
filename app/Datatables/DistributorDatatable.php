@@ -21,6 +21,8 @@ class DistributorDatatable extends BaseDatatable
         return $datatable
             ->addIndexColumn()
 
+            ->addColumn('avatar',fn($user) => view('components.user-avatar',['src' => $user->avatar]))
+            
             ->addColumn('status', fn($user) => $user->active == 1
                 ? view('components.badges', ['type' => 'success', 'text' => 'active'])
                 : view('components.badges', ['type' => 'danger', 'text' => 'in-active']))

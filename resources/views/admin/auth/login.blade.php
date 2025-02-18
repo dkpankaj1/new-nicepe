@@ -1,6 +1,5 @@
 <x-guest-layout>
     @section('title', 'Admin Login')
-    @section('page-title', 'Admin Login')
     <!-- Begin page -->
     <div class="container-fluid">
         <div class="d-flex align-items-center justify-content-center vh-100">

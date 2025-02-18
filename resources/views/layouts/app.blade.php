@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>@yield('title') | Admin Dashboard Template</title>
+    <title>@yield('title') | {{$brandSetting->name}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
     <meta name="author" content="Zoyothemes" />
@@ -37,12 +37,43 @@
         @if (Auth::user()->type == App\Enums\UserType::ADMIN->value)
             @include('layouts._admin.topbar')
         @endif
+        @if (Auth::user()->type == App\Enums\UserType::APICLIENT->value)
+            @include('layouts._apiclient.topbar')
+        @endif
+        @if (Auth::user()->type == App\Enums\UserType::SUPERDISTRIBUTOR->value)
+            @include('layouts._superdistributor.topbar')
+        @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::DISTRIBUTOR->value)
+            @include('layouts._distributor.topbar')
+        @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::RETAILER->value)
+            @include('layouts._retailer.topbar')
+        @endif
         <!-- end Topbar -->
 
         <!-- Left Sidebar Start -->
         @if (Auth::user()->type == App\Enums\UserType::ADMIN->value)
             @include('layouts._admin.sidebar')
         @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::APICLIENT->value)
+            @include('layouts._apiclient.sidebar')
+        @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::SUPERDISTRIBUTOR->value)
+            @include('layouts._superdistributor.sidebar')
+        @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::DISTRIBUTOR->value)
+            @include('layouts._distributor.sidebar')
+        @endif
+
+        @if (Auth::user()->type == App\Enums\UserType::RETAILER->value)
+            @include('layouts._retailer.sidebar')
+        @endif
+
         <!-- Left Sidebar End -->
 
         <!-- ============================================================== -->

@@ -16,6 +16,7 @@
             <div class="card-body">
                 <x-datatable id="datatable" ajaxUrl="{{route('admin.distributors.index')}}" :columns="[
         ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'orderable' => false],
+        ['data' => 'avatar', 'name' => 'avatar', 'title' => 'Avatar'],
         ['data' => 'name', 'name' => 'name', 'title' => 'Name'],
         ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
         ['data' => 'phone', 'name' => 'phone', 'title' => 'Phone'],

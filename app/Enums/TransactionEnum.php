@@ -8,6 +8,8 @@ enum TransactionEnum: string
     case STATUS_PROCESSING = 'processing';
     case STATUS_COMPLETE = 'complete';
     case STATUS_FAILED = 'failed';
+    case STATUS_REFUND = 'refunded';
+    case STATUS_REVERT = 'revert';
 
     case DIRECTION_CREDIT = 'credit';
     case DIRECTION_DEBIT = 'debit';

@@ -193,8 +193,9 @@ class BalanceTransferController extends Controller
         try {
 
             DB::beginTransaction();
+            
             $user = User::lockForUpdate()->findOrFail($balance_transfer->to_user);
-            // Revert previous transaction
+
             $this->handleTransaction(
                 $user,
                 $balance_transfer->amount,
@@ -202,7 +203,9 @@ class BalanceTransferController extends Controller
                 'Reversal of previous balance transfer',
                 request()
             );
+
             $balance_transfer->delete();
+
             DB::commit();
 
             return response()->json([
