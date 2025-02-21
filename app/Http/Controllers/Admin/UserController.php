@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Datatables\UserDatatable;
+use App\Datatables\Admin\UserDatatable;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Models\Country;

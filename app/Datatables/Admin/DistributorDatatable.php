@@ -1,6 +1,7 @@
 <?php
-namespace App\Datatables;
+namespace App\Datatables\Admin;
 
+use App\Datatables\BaseDatatable;
 use App\Enums\UserType;
 use App\Models\User;
 use Yajra\DataTables\DataTableAbstract;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Datatables\RolesDatatable;
+use App\Datatables\Admin\RolesDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\permissionGroup;
 use App\Services\ToasterService;

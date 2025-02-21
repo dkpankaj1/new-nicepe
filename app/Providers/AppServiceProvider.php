@@ -6,10 +6,11 @@ use App\Models\BalanceTransfer;
 use App\Models\BrandSetting;
 use App\Models\GeneralSetting;
 use App\Models\Plan;
+use App\Models\Transaction;
 use App\Models\User;
-use App\Policies\ApiClientPolicy;
 use App\Policies\BalanceTransferPolicy;
 use App\Policies\PlanPolicy;
+use App\Policies\TransactionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -34,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(BalanceTransfer::class, BalanceTransferPolicy::class);
         Gate::policy(Plan::class, PlanPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
+        Gate::policy(Transaction::class, TransactionPolicy::class);
         // ------------------------------
 
         Gate::before(function ($user, $ability) {

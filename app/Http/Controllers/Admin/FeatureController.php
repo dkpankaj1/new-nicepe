@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Datatables\FeatureDatatable;
+use App\Datatables\Admin\FeatureDatatable;
 use App\Helpers\FileUploader;
 use App\Http\Controllers\Controller;
 use App\Models\Feature;

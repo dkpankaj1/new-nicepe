@@ -7,6 +7,22 @@ Breadcrumbs::for('distributor.dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('distributor.dashboard'));
 });
 
+// wallet 
+Breadcrumbs::for('distributor.wallet.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.dashboard');
+    $trail->push('Wallet', route('distributor.wallet.index'));
+});
+Breadcrumbs::for('distributor.wallet.show', function (BreadcrumbTrail $trail,$transaction) {
+    $trail->parent('distributor.wallet.index');
+    $trail->push('Show', route('distributor.wallet.show',$transaction));
+});
+
+// recharge
+Breadcrumbs::for('distributor.wallet-recharge.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.dashboard');
+    $trail->push('Recharge', route('distributor.wallet-recharge.create'));
+});
+
 // Account
 Breadcrumbs::for('distributor.account.index', function (BreadcrumbTrail $trail) {
     $trail->parent('distributor.dashboard');

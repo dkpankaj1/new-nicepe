@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts\PlanServiceInterface;
-use App\Datatables\PlansDatatable;
+use App\Datatables\Admin\PlansDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\Feature;
 use App\Models\Plan;

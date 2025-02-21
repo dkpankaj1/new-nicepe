@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Datatables\BalanceTransferDatatable;
+
+use App\Datatables\Admin\BalanceTransferDatatable;
 use App\Enums\TransactionEnum;
 use App\Enums\UserType;
 use App\Helpers\TransactionHelper;

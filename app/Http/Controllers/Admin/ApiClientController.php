@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Datatables\ApiClientDatatable;
+use App\Datatables\Admin\ApiClientDatatable;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Models\Country;

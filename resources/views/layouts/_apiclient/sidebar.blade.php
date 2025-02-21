@@ -20,6 +20,26 @@
                     </a>
                 </li>
 
+                
+                <li class="menu-title">Account</li>
+                <li>
+                    <a href="#myWalletMenu" data-bs-toggle="collapse">
+                        <i data-feather="credit-card"></i>
+                        <span> Wallet </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myWalletMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('apiclient.wallet.index')}}">History</a>
+                            </li>
+                            <li>
+                                <a href="{{route('apiclient.wallet-recharge.create')}}">Recharge</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
                 <li class="menu-title">Other</li>
 
                 <li>

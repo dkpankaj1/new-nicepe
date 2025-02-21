@@ -1,6 +1,7 @@
 <?php
-namespace App\Datatables;
+namespace App\Datatables\Admin;
 
+use App\Datatables\BaseDatatable;
 use App\Models\Plan;
 use Yajra\DataTables\DataTableAbstract;
 

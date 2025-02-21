@@ -7,6 +7,24 @@ Breadcrumbs::for('apiclient.dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('apiclient.dashboard'));
 });
 
+// wallet 
+Breadcrumbs::for('apiclient.wallet.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('apiclient.dashboard');
+    $trail->push('Wallet', route('apiclient.wallet.index'));
+});
+Breadcrumbs::for('apiclient.wallet.show', function (BreadcrumbTrail $trail,$transaction) {
+    $trail->parent('apiclient.wallet.index');
+    $trail->push('Show', route('apiclient.wallet.show',$transaction));
+});
+
+
+// recharge
+Breadcrumbs::for('apiclient.wallet-recharge.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('apiclient.dashboard');
+    $trail->push('Recharge', route('apiclient.wallet-recharge.create'));
+});
+
+
 // Account
 Breadcrumbs::for('apiclient.account.index', function (BreadcrumbTrail $trail) {
     $trail->parent('apiclient.dashboard');

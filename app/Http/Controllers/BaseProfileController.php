@@ -32,33 +32,36 @@ abstract class BaseProfileController extends Controller
     }
     public function accountUpdate(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required'],
             'email' => [
                 'required',
                 Rule::unique(User::class, 'email')
                     ->ignore(Auth::user()->id)
             ],
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:100',
+            'state' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'postal_code' => 'nullable|string|max:20',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        $user = User::find(Auth::user()->id)->first();
         try {
 
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-            ];
             if ($request->hasFile('avatar')) {
                 $fileUpload = new FileUploader();
-                if (Auth::user()->getRawOriginal('avatar')) {
-                    $fileUpload->deleteFile(Auth::user()->getRawOriginal('avatar'));
+                if ($user->getRawOriginal('avatar')) {
+                    $fileUpload->deleteFile($user->getRawOriginal('avatar'));
                 }
-                $data['avatar'] = $fileUpload->setDirectory('avatar')
+                $validated['avatar'] = $fileUpload->setDirectory('avatar')
                     ->setHeight(200)
                     ->setWidth(200)
                     ->uploadImage($request->file('avatar'));
             }
 
-            $this->userProfileService->updateProfile($request->user(), $data);
+            $this->userProfileService->updateProfile($request->user(), $validated);
             ToasterService::success('Profile update success.!');
             return redirect()->back();
 

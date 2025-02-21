@@ -1,17 +1,18 @@
 <?php
-namespace App\Datatables;
+namespace App\Datatables\Admin;
 
+use App\Datatables\BaseDatatable;
 use App\Enums\UserType;
 use App\Models\User;
 use Yajra\DataTables\DataTableAbstract;
 
-class ApiClientDatatable extends BaseDatatable
+class SuperDistributorDatatable extends BaseDatatable
 {
     public function __construct()
     {
         parent::__construct(
             User::query()
-                ->where('type', UserType::APICLIENT->value)
+                ->where('type', UserType::SUPERDISTRIBUTOR->value)
                 ->latest()
         );
     }
@@ -22,7 +23,7 @@ class ApiClientDatatable extends BaseDatatable
             ->addIndexColumn()
 
             ->addColumn('avatar',fn($user) => view('components.user-avatar',['src' => $user->avatar]))
-
+            
             ->addColumn('status', fn($user) => $user->active == 1
                 ? view('components.badges', ['type' => 'success', 'text' => 'active'])
                 : view('components.badges', ['type' => 'danger', 'text' => 'in-active']))
@@ -39,9 +40,9 @@ class ApiClientDatatable extends BaseDatatable
             })
 
             ->addColumn('action', function ($user) {
-                return view('components.show-btn', ['url' => route('admin.api-clients.show', $user->id), 'permission' => 'api-clients.read']) .
-                    view('components.edit-btn', ['url' => route('admin.api-clients.edit', $user->id), 'permission' => 'api-clients.edit']) .
-                    view('components.delete-btn', ['url' => route('admin.api-clients.destroy', $user->id), 'permission' => 'api-clients.delete']);
+                return view('components.show-btn', ['url' => route('admin.super-distributors.show', $user->id), 'permission' => 'super-distributors.read']) .
+                    view('components.edit-btn', ['url' => route('admin.super-distributors.edit', $user->id), 'permission' => 'super-distributors.edit']) .
+                    view('components.delete-btn', ['url' => route('admin.super-distributors.destroy', $user->id), 'permission' => 'super-distributors.delete']);
             });
     }
 }

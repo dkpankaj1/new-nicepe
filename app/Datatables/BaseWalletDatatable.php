@@ -1,25 +1,28 @@
 <?php
 namespace App\Datatables;
 
+use App\Enums\TransactionEnum;
 use App\Models\Transaction;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTableAbstract;
-use Illuminate\Support\Str;
 
-class TransactionDatatable extends BaseDatatable
+class BaseWalletDatatable extends BaseDatatable
 {
-    public function __construct()
+    protected $showBtnRouteName;
+    public function __construct(string $routeName)
     {
-        parent::__construct(Transaction::query()->latest('id'));
+        parent::__construct(Transaction::query()
+            ->where('user_id', Auth::user()->id)
+            ->whereNot('status', TransactionEnum::STATUS_PENDING)
+            ->latest());
+        $this->showBtnRouteName = $routeName;
     }
 
     public function configure($datatable): DataTableAbstract
     {
         return $datatable
             ->addIndexColumn()
-
-            ->addColumn('user', fn($transaction) => $transaction->user->name)
-            ->addColumn('user_type', fn($transaction) => Str::of($transaction->user->type)->replace('_', ' ')->title())
-            ->addColumn('email', fn($transaction) => $transaction->user->email)
             ->addColumn('transaction_direction', fn($transaction) => ucfirst($transaction->transaction_direction))
             ->addColumn('opening_balance', function ($transaction) {
                 return "{$transaction->currency->code} {$transaction->opening_balance}";
@@ -48,15 +51,15 @@ class TransactionDatatable extends BaseDatatable
                     'text' => ucfirst($transaction->status),
                 ]);
             })
-
             ->addColumn('created_at', fn($feature) => $feature->created_at->diffForHumans())
-
             ->addColumn('updated_at', fn($feature) => $feature->updated_at->diffForHumans())
-
             ->addColumn('action', function ($transaction) {
-                return view('components.show-btn', ['url' => route('admin.transactions.show', $transaction->id), 'permission' => 'transactions.read']);
-            })
-        ;
-        // Implement your action logic here
+                return view('components.link', [
+                    'href' => route($this->showBtnRouteName, $transaction->id),
+                    'class' => 'btn btn-info btn-sm',
+                    'label' => 'Show',
+                ]);
+            });
+
     }
 }

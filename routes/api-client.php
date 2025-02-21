@@ -3,6 +3,8 @@
 use App\Http\Controllers\ApiClient\DashboardController;
 use App\Http\Controllers\ApiClient\LoginController;
 use App\Http\Controllers\ApiClient\ProfileController;
+use App\Http\Controllers\ApiClient\WalletController;
+use App\Http\Controllers\ApiClient\WalletRechargeController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
@@ -13,10 +15,27 @@ Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
         Route::get('login', [LoginController::class, 'create'])->name('login');
         Route::post('login', [LoginController::class, 'store']);
 
+        Route::group(['prefix' => 'wallet-recharge', 'as' => 'wallet-recharge.'], function () {
+            Route::any('nicepe/redirect', [WalletRechargeController::class, 'response'])
+                ->withoutMiddleware(['web'])->name('nicepe.redirect');
+        });
+
     });
     Route::group(['middleware' => ['apiclinet:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+        Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {
+            Route::get('/', [WalletController::class, 'index'])->name('index');
+            Route::get('{transaction}/show', [WalletController::class, 'show'])->name('show');
+        });
+
+        Route::group(['prefix' => 'wallet-recharge', 'as' => 'wallet-recharge.'], function () {
+            Route::get('/', [WalletRechargeController::class, 'create'])->name('create');
+            Route::post('/', [WalletRechargeController::class, 'store'])->name('store');
+        });
+
 
         Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
             Route::get('/', [ProfileController::class, 'index'])->name('index');
