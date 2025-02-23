@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RetailerController;
 use App\Http\Controllers\Admin\RewardController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SuperDistributorController;
 use App\Http\Controllers\Admin\TransactionController;
@@ -29,7 +30,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:gue
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:auth']], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
+
     // Resource routes :: BEGIN
     Route::resource('balance-transfers', BalanceTransferController::class);
     Route::resource('roles', RoleController::class);
@@ -63,6 +64,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:aut
         Route::put('/email-setting', [SettingController::class, 'emailConfigrutionUpdate']);
     });
 
+    // server 
+    Route::group(['prefix' => 'server', 'as' => 'server.'], function () {
+        Route::get('command', [ServerController::class, 'command'])->name('command');
+        Route::post('command', [ServerController::class, 'commandExecute']);
+    });
 
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 

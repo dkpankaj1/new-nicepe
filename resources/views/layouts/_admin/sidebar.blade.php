@@ -4,9 +4,9 @@
         <!--- Sidemenu -->
         <div id="sidebar-menu">
 
-           <!-- LogoBox :: Begin-->
-           <x-logo-box />
-           <!-- LogoBox :: End-->
+            <!-- LogoBox :: Begin-->
+            <x-logo-box />
+            <!-- LogoBox :: End-->
 
             <ul id="side-menu">
 
@@ -84,7 +84,7 @@
                     </a>
                     <div class="collapse" id="featureMenu">
                         <ul class="nav-second-level">
-                            
+
                             @can('admin.features.index')
                                 <li>
                                     <a href="{{route('admin.features.index')}}">Features</a>
@@ -173,7 +173,8 @@
                                     <li>
                                         <a href="{{route('admin.roles.index')}}">Role & Permissions</a>
                                     </li>
-                                @endcan                         </ul>
+                                @endcan 
+                           </ul>
 
                         </div>
 
@@ -288,13 +289,11 @@
                 <li class="menu-title">Settings</li>
 
                 <li>
-
                     <a href="#settingMenu" data-bs-toggle="collapse">
                         <i data-feather="settings"></i>
                         <span> Setting </span>
                         <span class="menu-arrow"></span>
                     </a>
-
                     <div class="collapse" id="settingMenu">
                         <ul class="nav-second-level">
                             <li>
@@ -308,9 +307,25 @@
                             </li>
                         </ul>
                     </div>
-
                 </li>
 
+                @endrole
+
+                @role('superAdmin')
+                <li>
+                    <a href="#sserverMenu" data-bs-toggle="collapse">
+                        <i data-feather="server"></i>
+                        <span> Server </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sserverMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{route('admin.server.command')}}">Command</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 @endrole
 
                 <li class="menu-title">Other</li>
