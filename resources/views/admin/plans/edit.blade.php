@@ -35,46 +35,45 @@
                         <div id="plan-details">
                             <h5 class="mb-3">Plan Details</h5>
 
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-md-8">
-                                   <label>Feature</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Current Fee ( {{$generalSetting->currency->symbol}} )</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Fee ( {{$generalSetting->currency->symbol}} )</label>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>Current Fee ( {{$generalSetting->currency->symbol}} )</th>
+                                            <th>Fee ( {{$generalSetting->currency->symbol}} )</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($plan->planDetails as $detail)
+                                            <tr>
+                                                <td>
+                                                    <input type="text"
+                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}"
+                                                        value="{{ $detail->feature->name }}" disabled
+                                                        title="{{ $detail->feature->enable ? '' : 'This feature is disabled.' }}">
+                                                </td>
+                                                <td>
+                                                    <input type="number"
+                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}"
+                                                        value="{{ $detail->feature->fee }}" disabled>
+                                                </td>
+                                                <td>
+                                                    <input type="number" step="0.01"
+                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }} @error("detail.{$detail->id}.fee") is-invalid @enderror"
+                                                        name="detail[{{ $detail->id }}][fee]"
+                                                        value="{{ old("detail.{$detail->id}.fee", $detail->fee ?? 0) }}">
+                                                    @error("detail.{$detail->id}.fee")
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-
-                            @foreach($plan->planDetails as $detail)
-                                <div class="row mb-3 align-items-center">
-                                    <!-- Feature Name -->
-                                    <div class="col-md-8">
-                                        <input type="text"
-                                            class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}"
-                                            value="{{ $detail->feature->name }}" disabled
-                                            title="{{ $detail->feature->enable ? '' : 'This feature is disabled.' }}">
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <input type="number" class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}" value="{{ $detail->feature->fee }}"
-                                            disabled>
-                                    </div>
-
-                                    <!-- Feature Fee -->
-                                    <div class="col-md-2">
-                                        <input type="number" step="0.01"
-                                            class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }} @error("detail.{$detail->id}.fee") is-invalid @enderror"
-                                            name="detail[{{ $detail->id }}][fee]"
-                                            value="{{ old("detail.{$detail->id}.fee", $detail->fee ?? 0) }}">
-                                        @error("detail.{$detail->id}.fee")
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
+
 
                         <hr>
 

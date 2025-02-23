@@ -33,51 +33,62 @@
                         <!-- Feature -->
                         <div id="plan-details">
                             <h5 class="mb-3">Plan Details</h5>
-
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-md-8">
-                                    <label>Feature</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Current Fee ( {{$generalSetting->currency->symbol}} )</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <label>Fee ( {{$generalSetting->currency->symbol}} )</label>
-                                </div>
+                        
+                            <div class="table-responsive">
+                                <table class="table table-sm table-striped text-center align-middle">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="text-nowrap">Select</th>
+                                            <th class="text-nowrap">Feature</th>
+                                            <th class="text-nowrap">Current Fee ({{$generalSetting->currency->symbol}})</th>
+                                            <th class="text-nowrap">Fee ({{$generalSetting->currency->symbol}})</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($featurs as $feature)
+                                            <tr class="plan-detail-item">
+                                                <!-- Enable Checkbox -->
+                                                <td class="text-nowrap">
+                                                    <input type="checkbox"
+                                                        class="form-check-input {{ $feature->enable ? '' : 'text-danger' }}"
+                                                        name="feature[{{ $feature->id }}][select]"
+                                                        {{ old("feature.{$feature->id}.select") ? 'checked' : '' }}>
+                                                </td>
+                        
+                                                <!-- Feature Name -->
+                                                <td class="text-nowrap">
+                                                    <input type="text"
+                                                        class="form-control text-center {{ $feature->enable ? '' : 'text-danger' }}"
+                                                        value="{{ $feature->name }}" disabled
+                                                        title="{{ $feature->enable ? '' : 'This feature is disabled.' }}">
+                                                </td>
+                        
+                                                <!-- Current Fee -->
+                                                <td class="text-nowrap">
+                                                    <input type="number"
+                                                        class="form-control text-center {{ $feature->enable ? '' : 'text-danger' }}"
+                                                        value="{{ $feature->fee }}" disabled>
+                                                </td>
+                        
+                                                <!-- Editable Fee -->
+                                                <td class="text-nowrap">
+                                                    <input type="number" step="0.01"
+                                                        class="form-control text-center @error("feature.{$feature->id}.fee") is-invalid @enderror {{ $feature->enable ? '' : 'text-danger' }}"
+                                                        name="feature[{{ $feature->id }}][fee]"
+                                                        value="{{ old("feature.{$feature->id}.fee", 0.0) }}"
+                                                        title="{{ $feature->enable ? '' : 'This feature is disabled.' }}">
+                                                    @error("feature.{$feature->id}.fee")
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            @foreach($featurs as $feature)
-                                <div class="row mb-3 align-items-center plan-detail-item">
-                                    <!-- Feature Name -->
-                                    <div class="col-md-8">
-                                        <input type="text"
-                                            class="form-control {{ $feature->enable ? '' : 'text-danger' }}"
-                                            value="{{ $feature->name }}" disabled
-                                            title="{{ $feature->enable ? '' : 'This feature is disabled.' }}">
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <input type="number"
-                                            class="form-control {{ $feature->enable ? '' : 'text-danger' }}"
-                                            value="{{ $feature->fee }}" disabled>
-                                    </div>
-
-                                    <!-- Feature Fee -->
-                                    <div class="col-md-2">
-                                        <input type="number" step="0.01"
-                                            class="form-control @error("feature.{$feature->id}.fee") is-invalid @enderror {{ $feature->enable ? '' : 'text-danger' }}"
-                                            name="feature[{{ $feature->id }}][fee]"
-                                            value="{{ old("feature.{$feature->id}.fee", $feature->fee) }}"
-                                            title="{{ $feature->enable ? '' : 'This feature is disabled.' }}">
-                                        @error("feature.{$feature->id}.fee")
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            @endforeach
                         </div>
-
+                        
                         <hr>
-
                         <!-- Submit Button -->
                         <div class="d-flex justify-content-start">
                             <button type="submit" class="btn btn-primary px-4">Create</button>

@@ -63,17 +63,14 @@ class User extends Authenticatable
             'deleted_at' => 'datetime',
         ];
     }
-
     public function getAvatarAttribute($attribute)
     {
         return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/200x200';
     }
-
     public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
-
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

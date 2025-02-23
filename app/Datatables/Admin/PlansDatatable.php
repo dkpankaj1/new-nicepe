@@ -9,18 +9,18 @@ class PlansDatatable extends BaseDatatable
 {
     public function __construct()
     {
-        parent::__construct(
-            Plan::query()
-                ->latest()
-        );
+        parent::__construct(Plan::query()->latest());
     }
 
     public function configure($datatable): DataTableAbstract
     {
         return $datatable
             ->addIndexColumn()
-            ->addColumn('created_at', fn($feature) => $feature->created_at->diffForHumans())
-            ->addColumn('updated_at', fn($feature) => $feature->updated_at->diffForHumans())
+            ->addColumn('created_at', fn($plan) => $plan->created_at->diffForHumans())
+            ->addColumn('updated_at', fn($plan) => $plan->updated_at->diffForHumans())
+            ->addColumn('status', fn($plan) => $plan->deleted_at == null
+                ? view('components.badges', ['type' => 'success', 'text' => 'active'])
+                : view('components.badges', ['type' => 'danger', 'text' => 'deleted']))
             ->addColumn('action', function ($plan) {
                 return view('components.show-btn', ['url' => route('admin.plans.show', $plan), 'permission' => 'plans.read']) .
                     view('components.edit-btn', ['url' => route('admin.plans.edit', $plan), 'permission' => 'plans.edit']) .

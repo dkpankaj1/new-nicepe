@@ -11,6 +11,7 @@ use App\Services\ToasterService;
 use App\Traits\AuthorizationFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PlanController extends Controller
 {
@@ -54,13 +55,13 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-
         $validated = $request->validate(
             [
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'feature' => 'required|array',
                 'feature.*.fee' => 'required|numeric|min:0',
+                'feature.*.select' => 'nullable',
             ],
             [
                 'feature.*.fee.required_if' => 'The fee for feature is required when the feature is enabled.',
@@ -77,10 +78,13 @@ class PlanController extends Controller
 
             // Create Plan Details
             foreach ($validated['feature'] as $featureId => $feature) {
-                $plan->planDetails()->create([
-                    'feature_id' => $featureId,
-                    'fee' => $feature['fee'],
-                ]);
+                // Check if the feature is selected
+                if (isset($feature['select'])) {
+                    $plan->planDetails()->create([
+                        'feature_id' => $featureId,
+                        'fee' => $feature['fee'],
+                    ]);
+                }
             }
 
             ToasterService::success('Create success');

@@ -32,9 +32,6 @@ class RewardDataTable extends BaseDatatable
                 ->addColumn('updated_at', function ($reward) {
                     return $reward->updated_at ? $reward->updated_at->diffForHumans() : 'N/A';
                 })
-                ->addColumn('status', function ($reward) {
-                    return $reward->updated_at ? $reward->updated_at->diffForHumans() : 'N/A';
-                })
                 ->addColumn('status', fn($reward) => $reward->enable
                     ? view('components.badges', ['type' => 'success', 'text' => 'active'])
                     : view('components.badges', ['type' => 'danger', 'text' => 'in-active']))

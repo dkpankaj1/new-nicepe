@@ -18,6 +18,7 @@
         ['data' => 'name', 'name' => 'name', 'title' => 'Name'],
         ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Create At'],
         ['data' => 'updated_at', 'name' => 'updated_at', 'title' => 'Update At'],
+        ['data' => 'status', 'name' => 'status', 'title' => 'Status'],
         ['data' => 'action', 'name' => 'action', 'title' => 'Action', 'orderable' => false, 'searchable' => false]
     ]" />
         </div>
