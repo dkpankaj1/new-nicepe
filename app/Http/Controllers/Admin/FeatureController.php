@@ -88,7 +88,7 @@ class FeatureController extends Controller
             }
             $feature->update($validated);
             ToasterService::success('update success.!');
-            return redirect()->route('admin.features.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Failed to update service. Please try again.');
             return redirect()->back();

@@ -19,14 +19,22 @@ class DatabaseSeeder extends Seeder
         // default feature
         Feature::create([
             'code' => "FTR001",
-            'name' => "Feature 001",
+            'name' => "Mobile Recharge",
             'fee' => 100,
             'description' => fake()->paragraph(),
             'enable' => true,
         ]);
         Feature::create([
             'code' => "FTR002",
-            'name' => "Feature 002",
+            'name' => "Nsdl PAN Application",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+
+        Feature::create([
+            'code' => "FTR003",
+            'name' => "Adhar Email/Mobile Update",
             'fee' => 120,
             'description' => fake()->paragraph(),
             'enable' => true,

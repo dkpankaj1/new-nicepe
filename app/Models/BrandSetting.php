@@ -18,21 +18,21 @@ class BrandSetting extends Model
         "contact_phone",
     ];
 
-    public function getLogoAttribute($value)
+    public function getLogoAttribute($attribute)
     {
-        return $value ? asset($value) : 'https://placehold.co/94x99';
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/94x99';
     }
 
-    public function getLogoLightAttribute($value)
+    public function getLogoLightAttribute($attribute)
     {
-        return $value ? asset($value) : 'https://placehold.co/244x68';
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/244x68';
     }
-    public function getLogoDarkAttribute($value)
+    public function getLogoDarkAttribute($attribute)
     {
-        return $value ? asset($value) : 'https://placehold.co/244x68';
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/244x68';
     }
-    public function getFaviconAttribute($value)
+    public function getFaviconAttribute($attribute)
     {
-        return $value ? asset($value) : 'https://placehold.co/32x32';
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/32x32';
     }
 }

@@ -97,11 +97,11 @@ class BalanceTransferController extends Controller
             DB::commit();
 
             ToasterService::success('Transfer created successfully.');
-            return redirect()->route('admin.balance-transfers.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
             ToasterService::error('Error: ' . $e->getMessage());
-            return redirect()->back()->withInput();
+            return redirect()->back();
         }
     }
 
@@ -177,11 +177,11 @@ class BalanceTransferController extends Controller
             DB::commit();
 
             ToasterService::success('Transfer updated successfully.');
-            return redirect()->route('admin.balance-transfers.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
             ToasterService::error('Error: ' . $e->getMessage());
-            return redirect()->back()->withInput();
+            return redirect()->back();
         }
     }
 
@@ -210,13 +210,13 @@ class BalanceTransferController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'Delete successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

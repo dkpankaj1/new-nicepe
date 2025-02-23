@@ -4,20 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlanDetail extends Model
+class Reward extends Model
 {
     protected $fillable = [
-        "plan_id",
-        "feature_id",
-        "fee",
-        "deleted_at"
+        'feature_id',
+        'name',
+        'description',
+        'point',
+        'reward_type',
+        'expiry_date',
+        'enable',
     ];
+
     public function feature()
     {
         return $this->belongsTo(Feature::class);
-    }
-    public function plan()
-    {
-        return $this->belongsTo(Plan::class);
     }
 }

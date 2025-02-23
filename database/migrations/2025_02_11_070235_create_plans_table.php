@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
 
         Schema::create('plan_details', function (Blueprint $table) {
@@ -27,8 +28,8 @@ return new class extends Migration {
                 ->onDelete('cascade'); // Ensures plan details are deleted when plan is deleted
             $table->foreignId('feature_id')->constrained(); // Ensure features exist in the referenced table
             $table->double('fee');
-            $table->boolean('activete')->default(false);
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

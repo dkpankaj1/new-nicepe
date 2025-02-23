@@ -10,6 +10,7 @@ class Plan extends Model
         'user_id',
         'name',
         'description',
+        'deleted_at'
     ];
 
     public function planDetails()

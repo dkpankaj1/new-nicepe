@@ -20,10 +20,12 @@ class PlanService implements PlanServiceInterface
 
     public function delete(Plan $plan): bool
     {
-        return $plan->delete() ? true : false;
+        return $plan->update(['deleted_at' => now()]) ? true : false;
     }
     public function selectPlans(int $userid): ?Collection
     {
-        return Plan::where('user_id', $userid)->get();
+        return Plan::where('user_id', $userid)
+            ->where('deleted_at', null)
+            ->get();
     }
 }

@@ -20,8 +20,7 @@ class RolesDatatable extends BaseDatatable
     {
         return $datatable
             ->addIndexColumn()
-
-            ->addColumn('users', function (Role $role) {
+            ->addColumn('users', function ($role) {
                 return $role->users->count();
             })
             ->addColumn('created_at', function ($roles) {
@@ -30,7 +29,6 @@ class RolesDatatable extends BaseDatatable
             ->addColumn('updated_at', function ($roles) {
                 return $roles->updated_at ? $roles->updated_at->diffForHumans() : 'N/A';
             })
-
             ->addColumn('action', function ($roles) {
                 return view('components.show-btn', ['url' => route('admin.roles.show', $roles->id), 'permission' => 'roles.read']) .
                     view('components.edit-btn', ['url' => route('admin.roles.edit', $roles->id), 'permission' => 'roles.edit']) .

@@ -66,7 +66,7 @@ class User extends Authenticatable
 
     public function getAvatarAttribute($attribute)
     {
-        return $attribute ? asset($attribute) : 'https://placehold.co/200x200';
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/200x200';
     }
 
     public function plan()

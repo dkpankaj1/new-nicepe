@@ -10,19 +10,17 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('features', function (Blueprint $table) {
+        Schema::create('rewards', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
+            $table->foreignId('feature_id')->constrained();
             $table->string('name');
-            $table->decimal('fee', 10, 2)->default(0);
-            $table->decimal('activation_fee', 10, 2)->default(0);
             $table->text('description')->nullable();
-            $table->string('image')->nullable();            
+            $table->double('point')->default(0);
+            $table->tinyInteger('reward_type')->default(0)->comment('0: Fixed, 1: percent');
+            $table->date('expiry_date')->nullable();
             $table->boolean('enable')->default(true);
             $table->timestamps();
-            $table->index(['code', 'name']);
         });
-
     }
 
     /**
@@ -30,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('features');
+        Schema::dropIfExists('rewards');
     }
 };

@@ -59,7 +59,7 @@ class SuperDistributorController extends Controller
         try {
             $this->userService->createUser($data, UserType::SUPERDISTRIBUTOR->value);
             ToasterService::success('Create success');
-            return redirect()->route('admin.super-distributors.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -92,7 +92,7 @@ class SuperDistributorController extends Controller
         try {
             $this->userService->updateUser($super_distributor, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.super-distributors.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -106,12 +106,12 @@ class SuperDistributorController extends Controller
         try {
             $this->userService->deleteUser($super_distributor);
             return response()->json([
-                'message' => 'User deactivated successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

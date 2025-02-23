@@ -9,11 +9,12 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RetailerController;
+use App\Http\Controllers\Admin\RewardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SuperDistributorController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:guest']], function () {
@@ -28,7 +29,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:gue
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:auth']], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Resource routes
+    
+    // Resource routes :: BEGIN
     Route::resource('balance-transfers', BalanceTransferController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -41,6 +43,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['admin:aut
     Route::resource('plans', PlanController::class);
     Route::resource('transactions', TransactionController::class)
         ->only(['index', 'show']);
+    Route::resource('rewards', RewardController::class);
+    // resource routes :: END
 
     Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');

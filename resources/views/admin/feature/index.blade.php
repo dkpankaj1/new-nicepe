@@ -7,7 +7,7 @@
 
     <div class="card">
         <div class="card-body">
-            <x-data-table id="usersTable" ajax-url="{{route('admin.features.index')}}" :columns="[
+            <x-datatable id="datatable" ajax-url="{{route('admin.features.index')}}" :columns="[
                 ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'title' => '#', 'searchable' => false, 'orderable' => false],
                 ['data' => 'code', 'name' => 'code', 'title' => 'Code'],
                 ['data' => 'name', 'name' => 'name', 'title' => 'Name'],

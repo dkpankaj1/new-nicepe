@@ -57,7 +57,7 @@ class RetailerController extends Controller
         try {
             $this->userService->createUser($data, UserType::RETAILER->value);
             ToasterService::success('Create success');
-            return redirect()->route('admin.retailers.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -92,7 +92,7 @@ class RetailerController extends Controller
         try {
             $this->userService->updateUser($retailer, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.retailers.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -107,12 +107,12 @@ class RetailerController extends Controller
         try {
             $this->userService->deleteUser($retailer);
             return response()->json([
-                'message' => 'User deactivated successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

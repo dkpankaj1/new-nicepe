@@ -54,7 +54,7 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
 
             ToasterService::success('Create success');
-            return redirect()->route('admin.roles.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -101,7 +101,7 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
 
             ToasterService::success('Update success');
-            return redirect()->route('admin.roles.index');
+            return redirect()->back();
         } catch (\Exception $e) {
 
             ToasterService::error('Something went wrong.Please try again.');
@@ -115,14 +115,14 @@ class RoleController extends Controller
             $role->delete();
 
             return response()->json([
-                'message' => 'Delete successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
 
         } catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

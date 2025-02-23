@@ -6,12 +6,15 @@ use App\Models\BalanceTransfer;
 use App\Models\BrandSetting;
 use App\Models\GeneralSetting;
 use App\Models\Plan;
+use App\Models\PlanDetail;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Policies\BalanceTransferPolicy;
+use App\Policies\PlanDetailPolicy;
 use App\Policies\PlanPolicy;
 use App\Policies\TransactionPolicy;
 use App\Policies\UserPolicy;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        Blade::if('featureEnabled', function () {
+            return false;
+        });
     }
 
     /**
@@ -30,10 +36,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
         // boot policy ------------------
         Gate::policy(BalanceTransfer::class, BalanceTransferPolicy::class);
         Gate::policy(Plan::class, PlanPolicy::class);
+        Gate::policy(PlanDetail::class, PlanDetailPolicy::class);
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Transaction::class, TransactionPolicy::class);
         // ------------------------------

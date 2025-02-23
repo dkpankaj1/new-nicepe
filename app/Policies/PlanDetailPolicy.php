@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Transaction;
+use App\Models\PlanDetail;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
-class TransactionPolicy
+class PlanDetailPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,9 +19,9 @@ class TransactionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Transaction $transaction): bool
+    public function view(User $user, PlanDetail $planDetail): bool
     {
-        return $user->id == $transaction->user_id;
+        return false;
     }
 
     /**
@@ -34,15 +35,15 @@ class TransactionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Transaction $transaction): bool
+    public function update(User $user, PlanDetail $planDetail): bool
     {
-        return false;
+        return $user->id == $planDetail->plan->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Transaction $transaction): bool
+    public function delete(User $user, PlanDetail $planDetail): bool
     {
         return false;
     }
@@ -50,7 +51,7 @@ class TransactionPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Transaction $transaction): bool
+    public function restore(User $user, PlanDetail $planDetail): bool
     {
         return false;
     }
@@ -58,7 +59,7 @@ class TransactionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Transaction $transaction): bool
+    public function forceDelete(User $user, PlanDetail $planDetail): bool
     {
         return false;
     }

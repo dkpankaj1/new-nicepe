@@ -56,7 +56,7 @@ class ApiClientController extends Controller
         try {
             $this->userService->createUser($data, UserType::APICLIENT->value);
             ToasterService::success('Create success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -91,7 +91,7 @@ class ApiClientController extends Controller
         try {
             $this->userService->updateUser($api_client, $data);
             ToasterService::success('Update success');
-            return redirect()->route('admin.api-clients.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -106,12 +106,12 @@ class ApiClientController extends Controller
         try {
             $this->userService->deleteUser($api_client);
             return response()->json([
-                'message' => 'User deactivated successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

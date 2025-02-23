@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('notes')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
 
     }

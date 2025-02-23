@@ -72,15 +72,33 @@
                 @endcan
 
                 @canany(['plans.read', 'plans.create'])
-                    <li class="menu-title">Services</li>
+                    <li class="menu-title">Services & Plans</li>
                 @endcanany
 
                 @role('superAdmin')
                 <li>
-                    <a href="{{route('admin.features.index')}}">
+                    <a href="#featureMenu" data-bs-toggle="collapse">
                         <i data-feather="cpu"></i>
-                        <span> Features </span>
+                        <span> Features & Reward</span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <div class="collapse" id="featureMenu">
+                        <ul class="nav-second-level">
+                            
+                            @can('admin.features.index')
+                                <li>
+                                    <a href="{{route('admin.features.index')}}">Features</a>
+                                </li>
+                            @endcan
+
+                            @can('admin.rewards.index')
+                                <li>
+                                    <a href="{{route('admin.rewards.index')}}">Rewards</a>
+                                </li>
+                            @endcan
+
+                        </ul>
+                    </div>
                 </li>
                 @endrole
 

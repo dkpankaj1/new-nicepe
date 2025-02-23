@@ -69,7 +69,7 @@ class UserController extends Controller
             $user->assignRole($request->role);
 
             ToasterService::success('Create success');
-            return redirect()->route('admin.users.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -130,7 +130,7 @@ class UserController extends Controller
             $user->syncRoles($request->role);
 
             ToasterService::success('Update success');
-            return redirect()->route('admin.users.index');
+            return redirect()->back();
 
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
@@ -147,17 +147,17 @@ class UserController extends Controller
 
             throw_if($user->id == 1, 'An error occurred. Please try again.');
 
-            $user->update(['active' => false]);
+            $user->update(['active' => false, 'deleted_at' => now()]);
 
             return response()->json([
-                'message' => 'User deactivated successfully.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
 
         } catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

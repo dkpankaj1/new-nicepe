@@ -14,6 +14,7 @@ class BalanceTransfer extends Model
         'amount',
         'notes',
         'status',
+        'deleted_at'
     ];
 
     /**

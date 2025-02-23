@@ -6,10 +6,8 @@
 
     <div class="card">
         <div class="card-body">
-
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
 
                     <form action="{{route('admin.features.update', $feature)}}" method="post"
                         enctype="multipart/form-data">
@@ -53,10 +51,10 @@
                         <div class="mb-3">
                             <label for="enable" class="form-label">Enable</label>
                             <select name="enable" class="form-control">
-                                <option value="">---select---</option>
-                                <option value="1" @if (old('enable', $feature->enable) === 1) selected @endif>Yes
+                                <option disabled >---select---</option>
+                                <option value="1" @if (old('enable', $feature->enable) == 1) selected @endif>Yes
                                 </option>
-                                <option value="0" @if (old('enable', $feature->enable) === 0) selected @endif>No
+                                <option value="0" @if (old('enable', $feature->enable) == 0) selected @endif>No
                                 </option>
                             </select>
                             @error('enable')
@@ -90,8 +88,7 @@
                         <button class="btn btn-primary px-5">{{"Update"}}</button>
                     </form>
 
-                </div>
-                <div class="col-md-4"></div>
+                </div>         
             </div>
 
         </div>

@@ -84,7 +84,7 @@ class PlanController extends Controller
             }
 
             ToasterService::success('Create success');
-            return redirect()->route('admin.plans.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -148,7 +148,7 @@ class PlanController extends Controller
             }
 
             ToasterService::success('Update success');
-            return redirect()->route('admin.plans.index');
+            return redirect()->back();
         } catch (\Exception $e) {
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
@@ -166,14 +166,14 @@ class PlanController extends Controller
             $this->planService->delete($plan);
 
             return response()->json([
-                'message' => 'Delete success.',
+                'message' => __('message.success.default'),
                 'status' => 'success',
             ]);
 
         } catch (\Exception $e) {
 
             return response()->json([
-                'message' => 'An error occurred. Please try again.',
+                'message' => __('message.error.default'),
                 'status' => 'error',
             ]);
         }

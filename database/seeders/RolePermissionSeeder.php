@@ -31,6 +31,12 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'roles.edit', 'permission_group_id' => $roleManagement->id]);
         Permission::create(['name' => 'roles.delete', 'permission_group_id' => $roleManagement->id]);
 
+        $rewardManagement = permissionGroup::create(['name' => 'Reward Management']);
+        Permission::create(['name' => 'rewards.read', 'permission_group_id' => $rewardManagement->id]);
+        Permission::create(['name' => 'rewards.create', 'permission_group_id' => $rewardManagement->id]);
+        Permission::create(['name' => 'rewards.edit', 'permission_group_id' => $rewardManagement->id]);
+        Permission::create(['name' => 'rewards.delete', 'permission_group_id' => $rewardManagement->id]);
+
         $userManagement = permissionGroup::create(['name' => 'Users Management']);
         Permission::create(['name' => 'users.read', 'permission_group_id' => $userManagement->id]);
         Permission::create(['name' => 'users.create', 'permission_group_id' => $userManagement->id]);

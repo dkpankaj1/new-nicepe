@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Retailer\DashboardController;
 use App\Http\Controllers\Retailer\LoginController;
+use App\Http\Controllers\Retailer\PlanActivationController;
 use App\Http\Controllers\Retailer\ProfileController;
 use App\Http\Controllers\Retailer\WalletController;
 use App\Http\Controllers\Retailer\WalletRechargeController;
@@ -26,6 +27,9 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
     Route::group(['middleware' => ['retailer:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('activation', PlanActivationController::class)
+            ->only(['edit', 'update'])->parameter('activation','planDetail');
 
         Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {
             Route::get('/', [WalletController::class, 'index'])->name('index');

@@ -19,7 +19,7 @@
 
                     <div class="row justify-content-center">
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
 
                             <div class="mb-3">
                                 <label for="user" class="form-label">User</label>

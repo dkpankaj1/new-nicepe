@@ -18,11 +18,14 @@ class Feature extends Model
 
     public function getImageAttribute($attribute)
     {
-        return $attribute ? asset($attribute) : 'https://placehold.co/200x200';
+        return $attribute ? asset('storage/' . $attribute): 'https://placehold.co/200x200';
     }
 
     public function planDetails()
     {
         return $this->hasMany(PlanDetail::class);
+    }
+    public function rewards(){
+        return $this->hasMany(Reward::class);
     }
 }
