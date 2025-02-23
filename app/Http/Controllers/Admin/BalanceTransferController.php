@@ -73,7 +73,7 @@ class BalanceTransferController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::lockForUpdate()->findOrFail($validatedData['user']);
+            $user = User::lockForUpdate()->where('id', $validatedData['user'])->first();
 
             // Create new transaction
             $transaction = $this->handleTransaction(
@@ -194,7 +194,7 @@ class BalanceTransferController extends Controller
         try {
 
             DB::beginTransaction();
-            
+
             $user = User::lockForUpdate()->findOrFail($balance_transfer->to_user);
 
             $this->handleTransaction(
@@ -242,7 +242,7 @@ class BalanceTransferController extends Controller
             'currency_id' => TransactionHelper::getCurrency()->id,
             'payment_method' => TransactionEnum::METHOD_WALLET,
             'status' => TransactionEnum::STATUS_COMPLETE,
-            'metadata' => ['message' => $message],
+            'metadata' => ['message' => $message, 'sender_by' => Auth::user()->name,'sender_id' => Auth::user()->name],
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);

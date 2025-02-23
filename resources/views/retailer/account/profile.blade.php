@@ -21,7 +21,7 @@
 
                         <div class="mb-3 text-center">
                             <input type="file" name="avatar" class="form-control my-2">
-                            @error('name')
+                            @error('avatar')
                                 <div class="invalid-feedback text-danger d-block">{{ $message }}</div>
                             @enderror
                         </div>
