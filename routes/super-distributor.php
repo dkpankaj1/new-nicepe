@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\SuperDistributor\DashboardController;
 use App\Http\Controllers\SuperDistributor\LoginController;
+use App\Http\Controllers\SuperDistributor\MyPlanController;
 use App\Http\Controllers\SuperDistributor\ProfileController;
 use App\Http\Controllers\SuperDistributor\WalletController;
 use App\Http\Controllers\SuperDistributor\WalletRechargeController;
@@ -24,6 +25,14 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
     Route::group(['middleware' => ['superdistributor:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+        Route::prefix('my-plan')->name('myplan.')->group(function () {
+            Route::get('/', [MyPlanController::class, 'index'])->name('index');
+            Route::get('{planDetail}/activation', [MyPlanController::class, 'activation'])->name('activation');
+            Route::put('{planDetail}/activation', [MyPlanController::class, 'processActivation'])->name('processActivation');
+        });
+
 
         Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {
             Route::get('/', [WalletController::class, 'index'])->name('index');

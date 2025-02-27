@@ -2,7 +2,10 @@
 
 use App\Http\Middleware\AdminAccess;
 use App\Http\Middleware\ApiClientAccess;
+use App\Http\Middleware\AutoLoggerMiddleware;
 use App\Http\Middleware\DistributorAccess;
+use App\Http\Middleware\FeatureActive;
+use App\Http\Middleware\FeatureEnable;
 use App\Http\Middleware\RetailerAccess;
 use App\Http\Middleware\SuperDistributorAccess;
 use Illuminate\Foundation\Application;
@@ -23,15 +26,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(
-            [
-                'admin' => AdminAccess::class,
-                'apiclinet' => ApiClientAccess::class,
-                'superdistributor' => SuperDistributorAccess::class,
-                'distributor' => DistributorAccess::class,
-                'retailer' => RetailerAccess::class
-            ],
-        );
+        $middleware
+            ->alias(
+                [
+                    'admin' => AdminAccess::class,
+                    'apiclinet' => ApiClientAccess::class,
+                    'superdistributor' => SuperDistributorAccess::class,
+                    'distributor' => DistributorAccess::class,
+                    'retailer' => RetailerAccess::class,
+                    'feature.enable' => FeatureEnable::class,
+                    'feature.active' => FeatureActive::class
+                ],
+            )
+            ->append(AutoLoggerMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

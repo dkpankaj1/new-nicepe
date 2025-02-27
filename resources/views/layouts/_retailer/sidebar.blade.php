@@ -20,6 +20,27 @@
                     </a>
                 </li>
 
+                <li class="menu-title">Services</li>
+
+                @mobileRechargeFeatureEnabled
+                <li>
+                    <a href="#myRechargeMenu" data-bs-toggle="collapse">
+                        <i data-feather="phone"></i>
+                        <span> Mobile/DTH Recharge</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myRechargeMenu">
+                        <ul class="nav-second-level">
+
+                            <li><a href="{{route('apiclient.recharge')}}">DTH Recharge</a></li>
+                            <li><a href="#">Mobile Recharge</a></li>
+                            <li><a href="#">History</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                @endmobileRechargeFeatureEnabled
+
                 <li class="menu-title">Account</li>
                 <li>
                     <a href="#myWalletMenu" data-bs-toggle="collapse">
@@ -37,6 +58,13 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+
+                <li>
+                    <a href="{{route('retailer.myplan.index')}}">
+                        <i data-feather="list"></i>
+                        <span> Plans </span>
+                    </a>
                 </li>
 
                 <li class="menu-title">Other</li>

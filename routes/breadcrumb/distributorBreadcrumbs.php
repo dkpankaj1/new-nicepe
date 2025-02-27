@@ -23,6 +23,17 @@ Breadcrumbs::for('distributor.wallet-recharge.create', function (BreadcrumbTrail
     $trail->push('Recharge', route('distributor.wallet-recharge.create'));
 });
 
+// plan
+Breadcrumbs::for('distributor.myplan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.dashboard');
+    $trail->push('My Plan', route('apiclient.myplan.index'));
+});
+Breadcrumbs::for('distributor.myplan.activation', function (BreadcrumbTrail $trail,$planDetail) {
+    $trail->parent('distributor.myplan.index');
+    $trail->push('Activation', route('distributor.myplan.activation',$planDetail));
+});
+
+
 // Account
 Breadcrumbs::for('distributor.account.index', function (BreadcrumbTrail $trail) {
     $trail->parent('distributor.dashboard');

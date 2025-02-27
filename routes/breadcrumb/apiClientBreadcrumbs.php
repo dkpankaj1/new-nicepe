@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -12,9 +12,9 @@ Breadcrumbs::for('apiclient.wallet.index', function (BreadcrumbTrail $trail) {
     $trail->parent('apiclient.dashboard');
     $trail->push('Wallet', route('apiclient.wallet.index'));
 });
-Breadcrumbs::for('apiclient.wallet.show', function (BreadcrumbTrail $trail,$transaction) {
+Breadcrumbs::for('apiclient.wallet.show', function (BreadcrumbTrail $trail, $transaction) {
     $trail->parent('apiclient.wallet.index');
-    $trail->push('Show', route('apiclient.wallet.show',$transaction));
+    $trail->push('Show', route('apiclient.wallet.show', $transaction));
 });
 
 
@@ -24,6 +24,15 @@ Breadcrumbs::for('apiclient.wallet-recharge.create', function (BreadcrumbTrail $
     $trail->push('Recharge', route('apiclient.wallet-recharge.create'));
 });
 
+// plan
+Breadcrumbs::for('apiclient.myplan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('apiclient.dashboard');
+    $trail->push('My Plan', route('apiclient.myplan.index'));
+});
+Breadcrumbs::for('apiclient.myplan.activation', function (BreadcrumbTrail $trail,$planDetail) {
+    $trail->parent('apiclient.myplan.index');
+    $trail->push('Activation', route('apiclient.myplan.activation',$planDetail));
+});
 
 // Account
 Breadcrumbs::for('apiclient.account.index', function (BreadcrumbTrail $trail) {

@@ -1,7 +1,9 @@
 <?php
 
+use App\Features\MobileRechargeFeature;
 use App\Http\Controllers\ApiClient\DashboardController;
 use App\Http\Controllers\ApiClient\LoginController;
+use App\Http\Controllers\ApiClient\MyPlanController;
 use App\Http\Controllers\ApiClient\ProfileController;
 use App\Http\Controllers\ApiClient\WalletController;
 use App\Http\Controllers\ApiClient\WalletRechargeController;
@@ -24,6 +26,20 @@ Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
     Route::group(['middleware' => ['apiclinet:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        if (MobileRechargeFeature::isEnabled()) {
+            Route::get('recharge', function () {
+                return "ok";
+            })->name('recharge')
+                ->middleware('feature.enable:FTR001')
+                ->middleware('feature.active:FTR001');
+        }
+
+        Route::prefix('my-plan')->name('myplan.')->group(function () {
+            Route::get('/', [MyPlanController::class, 'index'])->name('index');
+            Route::get('{planDetail}/activation', [MyPlanController::class, 'activation'])->name('activation');
+            Route::put('{planDetail}/activation', [MyPlanController::class, 'processActivation'])->name('processActivation');
+        });
 
 
         Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {

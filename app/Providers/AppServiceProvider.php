@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Features\MobileRechargeFeature;
 use App\Models\BalanceTransfer;
 use App\Models\BrandSetting;
 use App\Models\GeneralSetting;
@@ -54,6 +55,9 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerBladeDirective(): void
     {
+        Blade::if('mobileRechargeFeatureEnabled', function () {
+            return MobileRechargeFeature::isEnableForUser();
+        });
 
     }
     protected function registerViewShare(): void

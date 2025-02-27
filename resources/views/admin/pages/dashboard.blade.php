@@ -2,7 +2,7 @@
 
     @section('title', 'Dashboard')
     @section('page-title', 'Dashboard')
-    @section('breadcrumb',Breadcrumbs::render('admin.dashboard'))
+    @section('breadcrumb', Breadcrumbs::render('admin.dashboard'))
 
     <div class="row">
         <div class="col-md-6 col-xl-3">
@@ -11,16 +11,16 @@
                     <div class="row">
                         <div class="col-8">
                             <p class="text-muted mb-3 fw-semibold">User</p>
-                            <h4 class="m-0 mb-3 fs-18">New Users</h4>
-                            <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i>+
-                                    12%</span>Last month
-                            </p>
+                            <h4 class="m-0 mb-3 fs-18">Api Client
+                                <a href="{{route('admin.api-clients.index')}}"> ( {{$apiClientCount}} )</a>
+                            </h4>
                         </div>
 
-                        <div class="col-4">
-                            <div class="d-flex justify-content-center">
-                                <div id="total_space" class="me-2"></div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <div class="widget-box">
+                                <div class="widget-icon mb-2 bg-success-subtle">
+                                    <i class="mdi mdi-folder-account icons text-success"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -34,16 +34,18 @@
                     <div class="row">
                         <div class="col-8">
                             <p class="text-muted mb-3 fw-semibold">User</p>
-                            <h4 class="m-0 mb-3 fs-18">Super Distributor</h4>
-                            <p class="mb-0 text-muted">
-                                <span class="text-danger me-2"><i class="mdi mdi-arrow-bottom-left text-danger"></i>-
-                                    25%</span>Last month
-                            </p>
+                            <h4 class="m-0 mb-3 fs-18">Super Distributor
+                                <a href="{{route('admin.super-distributors.index')}}">
+                                    ( {{$superDistributorCount}} )
+                                </a>
+                            </h4>
                         </div>
 
-                        <div class="col-4">
-                            <div class="d-flex justify-content-center">
-                                <div id="video_space" class="me-2"></div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <div class="widget-box">
+                                <div class="widget-icon mb-2 bg-info-subtle">
+                                    <i class="mdi mdi-folder-account icons text-info"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,16 +59,18 @@
                     <div class="row">
                         <div class="col-8">
                             <p class="text-muted mb-3 fw-semibold">user</p>
-                            <h4 class="m-0 mb-3 fs-18">Distributor</h4>
-                            <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i> +
-                                    45%</span>last month
-                            </p>
+                            <h4 class="m-0 mb-3 fs-18">Distributor
+                                <a href="{{route('admin.distributors.index')}}">
+                                    ( {{$distributorCount}} )
+                                </a>
+                            </h4>
                         </div>
 
-                        <div class="col-4">
-                            <div class="d-flex justify-content-center">
-                                <div id="music_space" class="me-2"></div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <div class="widget-box">
+                                <div class="widget-icon mb-2 bg-primary-subtle">
+                                    <i class="mdi mdi-folder-account icons text-primary"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,16 +84,17 @@
                     <div class="row">
                         <div class="col-8">
                             <p class="text-muted mb-3 fw-semibold">User</p>
-                            <h4 class="m-0 mb-3 fs-18">Retailer</h4>
-                            <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-top-right text-success"></i> +
-                                    25%</span>last month
-                            </p>
+                            <h4 class="m-0 mb-3 fs-18">Retailer
+                                <a href="{{route('admin.retailers.index')}}">
+                                    ( {{$retailerCount}} )
+                                </a>
+                            </h4>
                         </div>
-
-                        <div class="col-4">
-                            <div class="d-flex justify-content-center">
-                                <div id="document_space" class="me-2"></div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <div class="widget-box">
+                                <div class="widget-icon mb-2 bg-warning-subtle">
+                                    <i class="mdi mdi-folder-account icons text-warning"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,98 +133,30 @@
                         <div class="table-responsive card-table">
                             <table class="table align-middle table-nowrap mb-0">
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center my-1">
-                                                <div
-                                                    class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
-                                                    <img src="assets/images/users/user-11.jpg"
-                                                        class="img-fluid rounded-circle" alt="">
+                                    @foreach ($recentUsers as $recentUser)                                        
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center my-1">
+                                                    <div
+                                                        class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
+                                                        <img src="{{$recentUser->avatar}}" class="img-fluid rounded-circle"
+                                                            alt="">
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="fs-14 mb-1">{{$recentUser->name}} ({{$recentUser->type}})
+                                                        </h5>
+                                                        <span class="text-muted">{{$recentUser->email}}</span>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <h5 class="fs-14 mb-1">Noam Henson</h5>
-                                                    <span class="text-muted">14 Verified Purchases</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fw-normal my-1">$88K</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center my-1">
-                                                <div
-                                                    class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
-                                                    <img src="assets/images/users/user-12.jpg"
-                                                        class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5 class="fs-14 mb-1">Israel Faizul</h5>
-                                                    <span class="text-muted">23 Verified Purchases</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fw-normal my-1">$104K</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center my-1">
-                                                <div
-                                                    class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
-                                                    <img src="assets/images/users/user-13.jpg"
-                                                        class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5 class="fs-14 mb-1">Pascal Kremp</h5>
-                                                    <span class="text-muted">13 Verified Purchases</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fw-normal my-1">$67K</p>
-                                        </td>
+                                            </td>
+                                            <td>
+                                                <p class="fw-normal my-1">{{$generalSetting->currency->symbol}}
+                                                    {{$recentUser->wallet}}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center my-1">
-                                                <div
-                                                    class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
-                                                    <img src="assets/images/users/user-14.jpg"
-                                                        class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5 class="fs-14 mb-1">Jenny Dubois</h5>
-                                                    <span class="text-muted">08 Verified Purchases</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fw-normal my-1">$48K</p>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td class="border-0">
-                                            <div class="d-flex align-items-center my-1">
-                                                <div
-                                                    class="avatar-sm rounded me-3 align-items-center justify-content-center d-flex">
-                                                    <img src="assets/images/users/user-15.jpg"
-                                                        class="img-fluid rounded-circle" alt="">
-                                                </div>
-                                                <div>
-                                                    <h5 class="fs-14 mb-1">Felipa Silva</h5>
-                                                    <span class="text-muted">08 Verified Purchases</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="border-0">
-                                            <p class="fw-normal my-1">$95K</p>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -244,132 +181,35 @@
                             <table class="table align-middle table-nowrap mb-0">
                                 <thead class="table-light">
                                     <tr>
-                                        <th class="py-2 border-0">Date</th>
-                                        <th class="py-2 border-0">Payload</th>
+                                        <th class="py-2 border-0">Date/Time</th>
+                                        <th class="py-2 border-0">Type</th>
                                         <th class="py-2 border-0">Ip Address</th>
+                                        <th class="py-2 border-0">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
 
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
+                                    @foreach ($activityLogs as $activityLog)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div>
+                                                        <h5 class="fs-14 my-1">{{$activityLog->created_at->diffForHumans()}}</h5>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div>
-                                                    <h5 class="fs-14 my-1">02-02-2025</h5>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-14 my-1 fw-normal">NAN</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle fs-13 px-2 rounded-5 text-success fw-medium">192.168.0.158</span>
-                                        </td>
-                                    </tr>
-
+                                            </td>
+                                            <td>
+                                                <p class="fs-14 my-1 fw-normal">{{$activityLog->action}}</p>
+                                            </td>
+                                            <td>
+                                                {{$activityLog->ip_address}}
+                                            </td>
+                                            <td>
+                                               <a href="" class="btn btn-sm btn-primary">show</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -407,5 +247,5 @@
         <!-- Widgets Init Js -->
         <script src="{{asset('backend/js/pages/dashboard.init.js')}}"></script>
 
-    @endpush)
+    @endpush
 </x-app-layout>

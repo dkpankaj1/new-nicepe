@@ -23,28 +23,47 @@
 
         </div>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">My Plans</h5>
+
+
+        <div class="row">
+            <div class="col-12 py-1">
+                <h4>Plans</h4>
             </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    @forelse (Auth::user()->plan?->planDetails ?? [] as $planDetail)
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{$planDetail->feature->name}} ({{$planDetail->fee}} {{$generalSetting->currency->code}})
-                            @if ($planDetail->status)
-                                <span class="badge bg-info">Active</span>
-                            @else
-                                <a href="{{route('retailer.activation.edit',$planDetail->id)}}" class="btn btn-sm btn-success">Activate</a>
-                            @endif
-                        </li>
-                    @empty
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @forelse($plan->details ?? [] as $detail)
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <img src="{{$detail->icon}}" alt="icon" width="32" height="32" style="border-radius: 50%">
+                                </div>
+                                <div class="flex-grow-1 ms-3 text-truncate">
+                                    <h6 class="my-0 fw-medium text-dark fs-15"> {{$detail->feature_name}}</h6>
+                                    @if ($detail->isactive == true)
+                                        <small class="text-success fs-13 fw-medium mb-0">Active</small>
+                                    @else
+                                        <small class="text-muted fs-13 fw-medium mb-0">
+                                            <a href="{{route('retailer.myplan.activation',$detail->id)}}"
+                                                class="link text-decoration-underline text-primary">
+                                                Click To Activate
+                                            </a>
+                                        </small>
+                                    @endif
+
+                                </div>
+                            </div>
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+            @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
                             No Active Plans
-                        </li>
-                    @endforelse
-                </ul>
-            </div>
+                        </div> <!-- end card-body -->
+                    </div>
+                </div>
+            @endforelse
         </div>
 
         <!-- Latest Transactions Section -->
@@ -64,11 +83,10 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         @forelse ($transactions as $transaction)
                             <tr>
                                 <td>{{$transaction->transaction_id}}</td>
-                                <td>{{$transaction->amount}}</td>
+                                <td>{{$transaction->amount}} {{$generalSetting->currency->code}}</td>
                                 <td>{{$transaction->status}}</td>
                                 <td>{{$transaction->transaction_direction}}</td>
                                 <td>{{$transaction->created_at->diffForHumans()}}</td>

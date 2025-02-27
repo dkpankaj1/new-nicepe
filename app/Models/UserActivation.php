@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class UserActivation extends Model
+{
+    protected $fillable = ['user_id', 'feature_id', 'fee', 'activation_date', 'expiry_date'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function feature()
+    {
+        return $this->belongsTo(Feature::class);
+    }
+}

@@ -4,6 +4,7 @@ namespace App\Features;
 
 use App\Models\Feature;
 use App\Models\User;
+use App\Models\UserActivation;
 use Illuminate\Support\Facades\Auth;
 
 abstract class BaseFeature
@@ -28,7 +29,14 @@ abstract class BaseFeature
     {
         $user = User::find(Auth::user()->id);
         return $user->plan?->planDetails()->whereHas('feature', function ($query) {
-            $query->where('code', static::$code);
+            $query->where('code', static::$code)->where('enable', true);
         })->exists() ?? false;
+    }
+
+    public static function isActiveForUser(): bool
+    {
+        return UserActivation::where('user_id', Auth::id())
+            ->where('code', static::$code)
+            ->exists() ?? false;
     }
 }

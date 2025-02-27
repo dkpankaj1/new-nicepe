@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Retailer\DashboardController;
 use App\Http\Controllers\Retailer\LoginController;
-use App\Http\Controllers\Retailer\PlanActivationController;
+use App\Http\Controllers\Retailer\MyPlanController;
 use App\Http\Controllers\Retailer\ProfileController;
 use App\Http\Controllers\Retailer\WalletController;
 use App\Http\Controllers\Retailer\WalletRechargeController;
@@ -28,8 +28,11 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('activation', PlanActivationController::class)
-            ->only(['edit', 'update'])->parameter('activation','planDetail');
+        Route::prefix('my-plan')->name('myplan.')->group(function () {
+            Route::get('/', [MyPlanController::class, 'index'])->name('index');
+            Route::get('{planDetail}/activation', [MyPlanController::class, 'activation'])->name('activation');
+            Route::put('{planDetail}/activation', [MyPlanController::class, 'processActivation'])->name('processActivation');
+        });
 
         Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {
             Route::get('/', [WalletController::class, 'index'])->name('index');

@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -12,9 +12,9 @@ Breadcrumbs::for('retailer.wallet.index', function (BreadcrumbTrail $trail) {
     $trail->parent('retailer.dashboard');
     $trail->push('Wallet', route('retailer.wallet.index'));
 });
-Breadcrumbs::for('retailer.wallet.show', function (BreadcrumbTrail $trail,$transaction) {
+Breadcrumbs::for('retailer.wallet.show', function (BreadcrumbTrail $trail, $transaction) {
     $trail->parent('retailer.wallet.index');
-    $trail->push('Show', route('retailer.wallet.show',$transaction));
+    $trail->push('Show', route('retailer.wallet.show', $transaction));
 });
 
 // recharge
@@ -22,6 +22,18 @@ Breadcrumbs::for('retailer.wallet-recharge.create', function (BreadcrumbTrail $t
     $trail->parent('retailer.dashboard');
     $trail->push('Recharge', route('retailer.wallet-recharge.create'));
 });
+
+
+// plan
+Breadcrumbs::for('retailer.myplan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('retailer.dashboard');
+    $trail->push('My Plan', route('retailer.myplan.index'));
+});
+Breadcrumbs::for('retailer.myplan.activation', function (BreadcrumbTrail $trail,$planDetail) {
+    $trail->parent('retailer.myplan.index');
+    $trail->push('Activation', route('retailer.myplan.activation',$planDetail));
+});
+
 
 
 // Account

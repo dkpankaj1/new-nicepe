@@ -15,7 +15,7 @@ class ActivityLogger
         array $requestData = []
     ) {
         ActivityLog::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::user()->id ?? null,
             'action' => $action,
             'module' => $module,
             'description' => $description,

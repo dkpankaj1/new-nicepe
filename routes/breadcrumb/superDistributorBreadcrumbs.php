@@ -24,6 +24,17 @@ Breadcrumbs::for('superdistributor.wallet-recharge.create', function (Breadcrumb
 });
 
 
+// plan
+Breadcrumbs::for('superdistributor.myplan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.dashboard');
+    $trail->push('My Plan', route('superdistributor.myplan.index'));
+});
+Breadcrumbs::for('superdistributor.myplan.activation', function (BreadcrumbTrail $trail,$planDetail) {
+    $trail->parent('superdistributor.myplan.index');
+    $trail->push('Activation', route('superdistributor.myplan.activation',$planDetail));
+});
+
+
 // Account
 Breadcrumbs::for('superdistributor.account.index', function (BreadcrumbTrail $trail) {
     $trail->parent('superdistributor.dashboard');

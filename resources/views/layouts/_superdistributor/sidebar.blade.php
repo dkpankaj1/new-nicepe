@@ -39,6 +39,13 @@
                     </div>
                 </li>
 
+                <li>
+                    <a href="{{route('superdistributor.myplan.index')}}">
+                        <i data-feather="list"></i>
+                        <span> Plans </span>
+                    </a>
+                </li>
+
                 <li class="menu-title">Other</li>
 
                 <li>
