@@ -39,4 +39,17 @@ abstract class BaseFeature
             ->where('code', static::$code)
             ->exists() ?? false;
     }
+    public static function isFeatureAvailableForUser(): bool
+    {
+        $userId = Auth::id();
+
+        return UserActivation::where('user_id', $userId)
+            ->where('code', static::$code)
+            ->exists() &&
+            User::find($userId)?->plan?->planDetails()
+                ->whereHas('feature', function ($query) {
+                    $query->where('code', static::$code)->where('enable', true);
+                })->exists() ?? false;
+    }
+
 }

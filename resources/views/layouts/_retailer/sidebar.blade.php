@@ -13,7 +13,7 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="{{route('retailer.dashboard')}}">
+                    <a href="{{ route('retailer.dashboard') }}">
                         <i data-feather="home"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span> Dashboard </span>
@@ -22,7 +22,7 @@
 
                 <li class="menu-title">Services</li>
 
-                @mobileRechargeFeatureEnabled
+                {{-- @mobileRechargeFeatureEnabled
                 <li>
                     <a href="#myRechargeMenu" data-bs-toggle="collapse">
                         <i data-feather="phone"></i>
@@ -39,7 +39,52 @@
                         </ul>
                     </div>
                 </li>
-                @endmobileRechargeFeatureEnabled
+                @endmobileRechargeFeatureEnabled --}}
+
+                @aadharMobileEmailUpdateFeatureEnabled
+                @endaadharMobileEmailUpdateFeatureEnabled
+
+                <li>
+                    <a href="#myAadharUpdate" data-bs-toggle="collapse">
+                        <i data-feather="check"></i>
+                        <span> Aadhar Update</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myAadharUpdate">
+                        <ul class="nav-second-level">
+                            <li><a href="{{ route('retailer.aadhar-update.create') }}">Apply</a></li>
+                            <li><a href="#">List</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#myAadharToPan" data-bs-toggle="collapse">
+                        <i data-feather="check"></i>
+                        <span> Aadhar To PAN</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myAadharToPan">
+                        <ul class="nav-second-level">
+                            <li><a href="{{ route('retailer.aadhar-to-pan.create') }}">Apply</a></li>
+                            <li><a href="#">List</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#myBirthCertificate" data-bs-toggle="collapse">
+                        <i data-feather="check"></i>
+                        <span> Birth Certificate</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myBirthCertificate">
+                        <ul class="nav-second-level">
+                            <li><a href="{{ route('retailer.birth-certificate.create') }}">Apply</a></li>
+                            <li><a href="#">List</a></li>
+                        </ul>
+                    </div>
+                </li>
 
                 <li class="menu-title">Account</li>
                 <li>
@@ -51,17 +96,17 @@
                     <div class="collapse" id="myWalletMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('retailer.wallet.index')}}">History</a>
+                                <a href="{{ route('retailer.wallet.index') }}">History</a>
                             </li>
                             <li>
-                                <a href="{{route('retailer.wallet-recharge.create')}}">Recharge</a>
+                                <a href="{{ route('retailer.wallet-recharge.create') }}">Recharge</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
                 <li>
-                    <a href="{{route('retailer.myplan.index')}}">
+                    <a href="{{ route('retailer.myplan.index') }}">
                         <i data-feather="list"></i>
                         <span> Plans </span>
                     </a>
@@ -78,13 +123,13 @@
                     <div class="collapse" id="myAccountMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('retailer.account.index')}}">Account</a>
+                                <a href="{{ route('retailer.account.index') }}">Account</a>
                             </li>
                             <li>
-                                <a href="{{route('retailer.account.update')}}">Update Profile</a>
+                                <a href="{{ route('retailer.account.update') }}">Update Profile</a>
                             </li>
                             <li>
-                                <a href="{{route('retailer.account.password')}}">Change Password</a>
+                                <a href="{{ route('retailer.account.password') }}">Change Password</a>
                             </li>
                         </ul>
                     </div>

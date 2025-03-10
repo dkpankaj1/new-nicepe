@@ -25,7 +25,7 @@ class FeatureEnable
         ];
 
         if (!$features[$featureCode]()) {
-            abort(404);
+            abort(404, 'Disable By Site Owner');
         }
 
         return $next($request);

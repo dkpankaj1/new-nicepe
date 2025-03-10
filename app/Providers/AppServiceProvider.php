@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Features\AadharMobileEmailUpdateFeature;
 use App\Features\MobileRechargeFeature;
 use App\Models\BalanceTransfer;
 use App\Models\BrandSetting;
@@ -57,6 +58,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::if('mobileRechargeFeatureEnabled', function () {
             return MobileRechargeFeature::isEnableForUser();
+        });
+
+        Blade::if('aadharMobileEmailUpdateFeatureEnabled', function () {
+            return AadharMobileEmailUpdateFeature::isEnableForUser();
         });
 
     }

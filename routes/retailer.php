@@ -1,5 +1,9 @@
 <?php
 
+use App\Features\AadharMobileEmailUpdateFeature;
+use App\Http\Controllers\Retailer\AadharToPANController;
+use App\Http\Controllers\Retailer\AdharMobileEmailUpdateController;
+use App\Http\Controllers\Retailer\BirthCertificateController;
 use App\Http\Controllers\Retailer\DashboardController;
 use App\Http\Controllers\Retailer\LoginController;
 use App\Http\Controllers\Retailer\MyPlanController;
@@ -27,6 +31,14 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
     Route::group(['middleware' => ['retailer:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        if (AadharMobileEmailUpdateFeature::isEnabled()) {
+            Route::resource('aadhar-update', AdharMobileEmailUpdateController::class)->only(['create']);
+        }
+
+        Route::resource('aadhar-to-pan', AadharToPANController::class);
+
+        Route::resource('birth-certificate', BirthCertificateController::class);
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');
