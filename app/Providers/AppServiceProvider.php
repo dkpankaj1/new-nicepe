@@ -2,8 +2,15 @@
 
 namespace App\Providers;
 
+use App\Features\AadharEmailUpdateFeature;
 use App\Features\AadharMobileEmailUpdateFeature;
+use App\Features\AadharMobileUpdateFeature;
+use App\Features\BirthCertificateFeature;
+use App\Features\CovidCertificateFeature;
+use App\Features\EidToPdfFeature;
 use App\Features\MobileRechargeFeature;
+use App\Features\NsdlPanApplicationFeature;
+use App\Features\PanFindWithAadharFeature;
 use App\Models\BalanceTransfer;
 use App\Models\BrandSetting;
 use App\Models\GeneralSetting;
@@ -56,15 +63,33 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerBladeDirective(): void
     {
-        Blade::if('mobileRechargeFeatureEnabled', function () {
-            return MobileRechargeFeature::isEnableForUser();
-        });
+        $features = [
+            'aadharEmailUpdateFeatureEnabled' => AadharEmailUpdateFeature::class,
+            'aadharMobileUpdateFeatureEnabled' => AadharMobileUpdateFeature::class,
+            'aadharMobileEmailUpdateFeatureEnabled' => AadharMobileEmailUpdateFeature::class,
+            'birthCertificateFeatureEnabled' => BirthCertificateFeature::class,
+            'covidCertificateFeatureEnabled' => CovidCertificateFeature::class,
+            'eidToPdfFeatureEnabled' => EidToPdfFeature::class,
+            'mobileRechargeFeatureEnabled' => MobileRechargeFeature::class,
+            'nsdlPanApplicationFeatureEnabled' => NsdlPanApplicationFeature::class,
+            'panFindWithAadharFeatureEnabled' => PanFindWithAadharFeature::class,
+        ];
 
-        Blade::if('aadharMobileEmailUpdateFeatureEnabled', function () {
-            return AadharMobileEmailUpdateFeature::isEnableForUser();
-        });
+        foreach ($features as $directive => $featureClass) {
+            Blade::if($directive, fn() => $featureClass::isEnableForUser());
+        }
 
+        // Register directive for multiple features
+        Blade::if('anyFeatureEnabled', function (...$directives) use ($features) {
+            foreach ($directives as $directive) {
+                if (isset($features[$directive]) && $features[$directive]::isEnableForUser()) {
+                    return true;
+                }
+            }
+            return false;
+        });
     }
+
     protected function registerViewShare(): void
     {
         View::share('brandSetting', BrandSetting::first());

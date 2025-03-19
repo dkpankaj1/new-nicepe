@@ -6,7 +6,7 @@ use App\Models\Feature;
 
 class MobileRechargeFeature extends BaseFeature
 {
-    protected static $code = 'FTR007';
+    protected static $code = 'FTR009';
 
     public static function finalCharges(float $amount): float
     {

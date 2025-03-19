@@ -19,6 +19,12 @@ abstract class BaseFeature
     {
         return static::$code;
     }
+    public static function getFeatureDetail()
+    {
+        $feature = Feature::where('code', static::$code)->first();
+        return $feature ? $feature : collect([]);
+    }
+
     public static function getActivationFee(): float
     {
         $feature = Feature::where('code', static::$code)->first();
@@ -36,20 +42,31 @@ abstract class BaseFeature
     public static function isActiveForUser(): bool
     {
         return UserActivation::where('user_id', Auth::id())
-            ->where('code', static::$code)
+            ->whereHas('feature', fn($query) => $query->where('code', static::$code))
             ->exists() ?? false;
     }
     public static function isFeatureAvailableForUser(): bool
     {
         $userId = Auth::id();
 
-        return UserActivation::where('user_id', $userId)
-            ->where('code', static::$code)
-            ->exists() &&
-            User::find($userId)?->plan?->planDetails()
-                ->whereHas('feature', function ($query) {
-                    $query->where('code', static::$code)->where('enable', true);
-                })->exists() ?? false;
+        if (
+            !UserActivation::where('user_id', $userId)
+                ->whereHas('feature', fn($query) => $query->where('code', static::$code))
+                ->exists()
+        ) {
+            return false;
+        }
+
+        return User::where('id', $userId)
+            ->whereHas(
+                'plan.planDetails',
+                fn($query) =>
+                $query->whereHas(
+                    'feature',
+                    fn($query) =>
+                    $query->where('code', static::$code)->where('enable', true)
+                )
+            )->exists();
     }
 
 }

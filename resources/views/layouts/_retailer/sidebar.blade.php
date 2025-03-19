@@ -20,71 +20,72 @@
                     </a>
                 </li>
 
-                <li class="menu-title">Services</li>
+                <li class="menu-title"> Services</li>
 
-                {{-- @mobileRechargeFeatureEnabled
-                <li>
-                    <a href="#myRechargeMenu" data-bs-toggle="collapse">
-                        <i data-feather="phone"></i>
-                        <span> Mobile/DTH Recharge</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="myRechargeMenu">
-                        <ul class="nav-second-level">
+                @anyFeatureEnabled('aadharEmailUpdateFeatureEnabled', 'aadharMobileUpdateFeatureEnabled','aadharMobileEmailUpdateFeatureEnabled')
+                    <li>
+                        <a href="#myAadharService" data-bs-toggle="collapse">
+                            <i data-feather="file"></i>
+                            <span> Aadhar Service</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="myAadharService">
+                            <ul class="nav-second-level">
 
-                            <li><a href="{{route('apiclient.recharge')}}">DTH Recharge</a></li>
-                            <li><a href="#">Mobile Recharge</a></li>
-                            <li><a href="#">History</a></li>
+                                @aadharMobileUpdateFeatureEnabled
+                                    <li>
+                                        <a href="#myAadharMobileUpdate" data-bs-toggle="collapse">
+                                            <i data-feather="chevrons-right"></i>
+                                            <span>Mobile Update</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="myAadharMobileUpdate">
+                                            <ul class="nav-second-level">
+                                                <li><a href="{{ route('retailer.aadhar.mobileupdate.create') }}">Apply</a></li>
+                                                <li><a href="{{ route('retailer.aadhar.mobileupdate.index') }}">List</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endaadharMobileUpdateFeatureEnabled
 
-                        </ul>
-                    </div>
-                </li>
-                @endmobileRechargeFeatureEnabled --}}
+                                @aadharEmailUpdateFeatureEnabled
+                                    <li>
+                                        <a href="#myAadharEmailUpdate" data-bs-toggle="collapse">
+                                            <i data-feather="chevrons-right"></i>
+                                            <span> Email Update</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="myAadharEmailUpdate">
+                                            <ul class="nav-second-level">
+                                                <li><a href="{{ route('retailer.aadhar.emailupdate.create') }}">Apply</a></li>
+                                                <li><a href="{{ route('retailer.aadhar.emailupdate.index') }}">List</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endaadharEmailUpdateFeatureEnabled
 
-                @aadharMobileEmailUpdateFeatureEnabled
-                @endaadharMobileEmailUpdateFeatureEnabled
+                                @aadharMobileEmailUpdateFeatureEnabled
+                                    <li>
+                                        <a href="#myAadharemailMobileUpdate" data-bs-toggle="collapse">
+                                            <i data-feather="chevrons-right"></i>
+                                            <span> Email/Mobile Update</span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="myAadharemailMobileUpdate">
+                                            <ul class="nav-second-level">
+                                                <li><a href="{{ route('retailer.aadhar.mobileemailupdate.create') }}">Apply</a>
+                                                </li>
+                                                <li><a href="{{ route('retailer.aadhar.mobileemailupdate.index') }}">List</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endaadharMobileEmailUpdateFeatureEnabled
 
-                <li>
-                    <a href="#myAadharUpdate" data-bs-toggle="collapse">
-                        <i data-feather="check"></i>
-                        <span> Aadhar Update</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="myAadharUpdate">
-                        <ul class="nav-second-level">
-                            <li><a href="{{ route('retailer.aadhar-update.create') }}">Apply</a></li>
-                            <li><a href="#">List</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#myAadharToPan" data-bs-toggle="collapse">
-                        <i data-feather="check"></i>
-                        <span> Aadhar To PAN</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="myAadharToPan">
-                        <ul class="nav-second-level">
-                            <li><a href="{{ route('retailer.aadhar-to-pan.create') }}">Apply</a></li>
-                            <li><a href="#">List</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li>
-                    <a href="#myBirthCertificate" data-bs-toggle="collapse">
-                        <i data-feather="check"></i>
-                        <span> Birth Certificate</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="myBirthCertificate">
-                        <ul class="nav-second-level">
-                            <li><a href="{{ route('retailer.birth-certificate.create') }}">Apply</a></li>
-                            <li><a href="#">List</a></li>
-                        </ul>
-                    </div>
-                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endanyFeatureEnabled
 
                 <li class="menu-title">Account</li>
                 <li>

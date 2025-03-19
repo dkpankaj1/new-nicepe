@@ -19,14 +19,14 @@ class DatabaseSeeder extends Seeder
         // default feature
         Feature::create([
             'code' => "FTR001",
-            'name' => "Mobile Recharge",
+            'name' => "Aadhar Email Update",
             'fee' => 100,
             'description' => fake()->paragraph(),
             'enable' => true,
         ]);
         Feature::create([
             'code' => "FTR002",
-            'name' => "Nsdl PAN Application",
+            'name' => "Aadhar Mobile Number Update",
             'fee' => 120,
             'description' => fake()->paragraph(),
             'enable' => true,
@@ -34,8 +34,50 @@ class DatabaseSeeder extends Seeder
 
         Feature::create([
             'code' => "FTR003",
-            'name' => "Adhar Email/Mobile Update",
+            'name' => "Aadhar Mobile/Email Update",
             'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR004",
+            'name' => "Birth Certificate",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR005",
+            'name' => "Covid Certificate",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR006",
+            'name' => "Eid To PDF",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR007",
+            'name' => "Nsdl PAN Application",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR008",
+            'name' => "PAN Find With Aadhar",
+            'fee' => 120,
+            'description' => fake()->paragraph(),
+            'enable' => true,
+        ]);
+        Feature::create([
+            'code' => "FTR009",
+            'name' => "Mobile Recharge",
+            'fee' => 0,
             'description' => fake()->paragraph(),
             'enable' => true,
         ]);

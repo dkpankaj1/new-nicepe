@@ -4,5 +4,5 @@ namespace App\Features;
 
 class AadharMobileEmailUpdateFeature extends BaseFeature
 {
-    protected static $code = 'FTR002';
+    protected static $code = 'FTR003';
 }

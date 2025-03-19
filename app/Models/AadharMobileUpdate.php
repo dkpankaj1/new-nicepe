@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\UserScope;
 use Illuminate\Database\Eloquent\Model;
 
-class AadharMobileEmailUpdate extends Model
+class AadharMobileUpdate extends Model
 {
     protected $fillable = [
         'user_id',
@@ -26,14 +25,8 @@ class AadharMobileEmailUpdate extends Model
         'remark',
     ];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new UserScope);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

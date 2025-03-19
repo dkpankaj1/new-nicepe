@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Enums\Status;
-use App\Models\AadharMobileEmailUpdate;
+use App\Models\AadharMobileUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdharMobileEmailUpdateService
+class AdharMobileUpdateService
 {
     public function rules(): array
     {
@@ -28,8 +28,8 @@ class AdharMobileEmailUpdateService
     public function store(Request $request)
     {
         try {
-            
-            AadharMobileEmailUpdate::create([
+
+            AadharMobileUpdate::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
                 'parent' => $request->parent,

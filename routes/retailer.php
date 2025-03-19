@@ -1,15 +1,23 @@
 <?php
 
+use App\Features\AadharEmailUpdateFeature;
 use App\Features\AadharMobileEmailUpdateFeature;
+use App\Features\AadharMobileUpdateFeature;
 use App\Http\Controllers\Retailer\AadharToPANController;
 use App\Http\Controllers\Retailer\AdharMobileEmailUpdateController;
 use App\Http\Controllers\Retailer\BirthCertificateController;
 use App\Http\Controllers\Retailer\DashboardController;
+use App\Http\Controllers\Retailer\Feature\AadharEmailUpdateController;
+use App\Http\Controllers\Retailer\Feature\AadharMobileEmailUpdateController;
+use App\Http\Controllers\Retailer\Feature\AadharMobileUpdateController;
 use App\Http\Controllers\Retailer\LoginController;
 use App\Http\Controllers\Retailer\MyPlanController;
 use App\Http\Controllers\Retailer\ProfileController;
 use App\Http\Controllers\Retailer\WalletController;
 use App\Http\Controllers\Retailer\WalletRechargeController;
+use App\Http\Middleware\Feature\AadharEmailUpdateMiddleware;
+use App\Http\Middleware\Feature\AadharMobileEmailUpdateeMiddleware;
+use App\Http\Middleware\Feature\AadharMobileUpdateMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
@@ -32,13 +40,24 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        if (AadharMobileEmailUpdateFeature::isEnabled()) {
-            Route::resource('aadhar-update', AdharMobileEmailUpdateController::class)->only(['create']);
-        }
+        // feature :: BEGIN
 
-        Route::resource('aadhar-to-pan', AadharToPANController::class);
+        Route::group(['prefix' => 'aadhar', 'as' => 'aadhar.'], function () {
+            if (AadharEmailUpdateFeature::isEnabled()) {
+                Route::resource('emailupdate', AadharEmailUpdateController::class)
+                    ->middleware(AadharEmailUpdateMiddleware::class);
+            }
+            if (AadharMobileUpdateFeature::isEnabled()) {
+                Route::resource('mobileupdate', AadharMobileUpdateController::class)
+                    ->middleware(AadharMobileUpdateMiddleware::class);
+            }
+            if (AadharMobileEmailUpdateFeature::isEnabled()) {
+                Route::resource('mobileemailupdate', AadharMobileEmailUpdateController::class)
+                    ->middleware(AadharMobileEmailUpdateeMiddleware::class);
+            }
+        });
 
-        Route::resource('birth-certificate', BirthCertificateController::class);
+        // feature :: END
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');
