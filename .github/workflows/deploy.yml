@@ -5,27 +5,13 @@ on:
     branches: [dev]
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "22"
-      - name: Install Composer Dependencies
-        run: composer install --no-interaction --prefer-dist
-
   deploy:
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - name: Install SSH Key
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H -p ${{ secrets.REMOTE_PORT }} ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
 
@@ -39,8 +25,8 @@ jobs:
           script: |
             cd domains/demopreview.in/public_html/nicepe
             git reset --hard
-            git pull origin stage
-            php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-            php composer.phar install --no-interaction --prefer-dist
-            php artisan migrate:fresh --seed
-            php -r "unlink('composer-setup.php');"
+            git pull origin dev
+            curl -sS https://getcomposer.org/installer | php
+            php composer.phar install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            rm composer.phar
