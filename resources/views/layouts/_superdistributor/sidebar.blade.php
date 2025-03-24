@@ -57,6 +57,44 @@
                     </div>
                 </li>
 
+                <li class="menu-title">Peoples</li>
+
+                <li>
+                    <a href="#distributorMenu" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Distributor </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="distributorMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('superdistributor.distributors.index') }}">List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('superdistributor.distributors.create') }}">Create</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#retailerMenu" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Retailer </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="retailerMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('superdistributor.retailers.index') }}">List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('superdistributor.retailers.create') }}">Create</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
                 <li class="menu-title">Accounts</li>
 

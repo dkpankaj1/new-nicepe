@@ -23,6 +23,25 @@ Breadcrumbs::for('superdistributor.wallet-recharge.create', function (Breadcrumb
     $trail->push('Recharge', route('superdistributor.wallet-recharge.create'));
 });
 
+// distributors::Begin
+Breadcrumbs::for('superdistributor.distributors.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.dashboard');
+    $trail->push('Distributor', route('superdistributor.distributors.index'));
+});
+Breadcrumbs::for('superdistributor.distributors.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.distributors.index');
+    $trail->push('Create', route('superdistributor.distributors.create'));
+});
+Breadcrumbs::for('superdistributor.distributors.show', function (BreadcrumbTrail $trail,$distributors) {
+    $trail->parent('superdistributor.distributors.index');
+    $trail->push('Create', route('superdistributor.distributors.show',$distributors));
+});
+Breadcrumbs::for('superdistributor.distributors.edit', function (BreadcrumbTrail $trail,$distributors) {
+    $trail->parent('superdistributor.distributors.index');
+    $trail->push('Edit', route('superdistributor.distributors.edit',$distributors));
+});
+// distributors::END
+
 
 // plans::Begin
 Breadcrumbs::for('superdistributor.plans.index', function (BreadcrumbTrail $trail) {
@@ -42,6 +61,25 @@ Breadcrumbs::for('superdistributor.plans.edit', function (BreadcrumbTrail $trail
     $trail->push('Edit', route('superdistributor.plans.edit',$plan));
 });
 // plans::END
+
+// retailers::Begin
+Breadcrumbs::for('superdistributor.retailers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.dashboard');
+    $trail->push('Retailer', route('superdistributor.retailers.index'));
+});
+Breadcrumbs::for('superdistributor.retailers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.retailers.index');
+    $trail->push('Create', route('superdistributor.retailers.create'));
+});
+Breadcrumbs::for('superdistributor.retailers.show', function (BreadcrumbTrail $trail,$retailers) {
+    $trail->parent('superdistributor.retailers.index');
+    $trail->push('Create', route('superdistributor.retailers.show',$retailers));
+});
+Breadcrumbs::for('superdistributor.retailers.edit', function (BreadcrumbTrail $trail,$retailers) {
+    $trail->parent('superdistributor.retailers.index');
+    $trail->push('Edit', route('superdistributor.retailers.edit',$retailers));
+});
+// retailers::END
 
 // my-plan
 Breadcrumbs::for('superdistributor.myplan.index', function (BreadcrumbTrail $trail) {

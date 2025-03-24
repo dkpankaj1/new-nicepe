@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\SuperDistributor\DashboardController;
+use App\Http\Controllers\SuperDistributor\DistributorController;
 use App\Http\Controllers\SuperDistributor\LoginController;
 use App\Http\Controllers\SuperDistributor\MyPlanController;
 use App\Http\Controllers\SuperDistributor\PlanController;
 use App\Http\Controllers\SuperDistributor\ProfileController;
+use App\Http\Controllers\SuperDistributor\RetailerController;
 use App\Http\Controllers\SuperDistributor\WalletController;
 use App\Http\Controllers\SuperDistributor\WalletRechargeController;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +29,9 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-
+        Route::resource('distributors', DistributorController::class);
         Route::resource('plans', PlanController::class);
+        Route::resource('retailers', RetailerController::class);
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');

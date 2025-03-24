@@ -38,7 +38,9 @@
                         </ul>
                     </div>
                 </li>
+
                 <li class="menu-title">Scheme</li>
+
                 <li>
                     <a href="#plansMenu" data-bs-toggle="collapse">
                         <i data-feather="sliders"></i>
@@ -52,6 +54,27 @@
                             </li>
                             <li>
                                 <a href="{{ route('distributor.plans.create') }}">Create</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li class="menu-title">Peoples</li>
+
+                <li>
+                    <a href="#retailerMenu" data-bs-toggle="collapse">
+                        <i data-feather="users"></i>
+                        <span> Retailer </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="retailerMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('distributor.retailers.index') }}">List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('distributor.retailers.create') }}">Create</a>
                             </li>
                         </ul>
                     </div>

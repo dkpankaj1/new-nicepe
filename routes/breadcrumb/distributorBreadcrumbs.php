@@ -43,6 +43,25 @@ Breadcrumbs::for('distributor.plans.edit', function (BreadcrumbTrail $trail, $pl
 });
 // plans::END
 
+// retailers::Begin
+Breadcrumbs::for('distributor.retailers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.dashboard');
+    $trail->push('Retailer', route('distributor.retailers.index'));
+});
+Breadcrumbs::for('distributor.retailers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.retailers.index');
+    $trail->push('Create', route('distributor.retailers.create'));
+});
+Breadcrumbs::for('distributor.retailers.show', function (BreadcrumbTrail $trail,$retailers) {
+    $trail->parent('distributor.retailers.index');
+    $trail->push('Create', route('distributor.retailers.show',$retailers));
+});
+Breadcrumbs::for('distributor.retailers.edit', function (BreadcrumbTrail $trail,$retailers) {
+    $trail->parent('distributor.retailers.index');
+    $trail->push('Edit', route('distributor.retailers.edit',$retailers));
+});
+// retailers::END
+
 
 // plan
 Breadcrumbs::for('distributor.myplan.index', function (BreadcrumbTrail $trail) {
