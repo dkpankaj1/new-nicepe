@@ -1,4 +1,4 @@
-<?php 
+<?php
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
@@ -12,9 +12,9 @@ Breadcrumbs::for('superdistributor.wallet.index', function (BreadcrumbTrail $tra
     $trail->parent('superdistributor.dashboard');
     $trail->push('Wallet', route('superdistributor.wallet.index'));
 });
-Breadcrumbs::for('superdistributor.wallet.show', function (BreadcrumbTrail $trail,$transaction) {
+Breadcrumbs::for('superdistributor.wallet.show', function (BreadcrumbTrail $trail, $transaction) {
     $trail->parent('superdistributor.wallet.index');
-    $trail->push('Show', route('superdistributor.wallet.show',$transaction));
+    $trail->push('Show', route('superdistributor.wallet.show', $transaction));
 });
 
 // recharge
@@ -24,14 +24,33 @@ Breadcrumbs::for('superdistributor.wallet-recharge.create', function (Breadcrumb
 });
 
 
-// plan
+// plans::Begin
+Breadcrumbs::for('superdistributor.plans.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.dashboard');
+    $trail->push('Plans', route('superdistributor.plans.index'));
+});
+Breadcrumbs::for('superdistributor.plans.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.plans.index');
+    $trail->push('Create', route('superdistributor.plans.create'));
+});
+Breadcrumbs::for('superdistributor.plans.show', function (BreadcrumbTrail $trail,$plan) {
+    $trail->parent('superdistributor.plans.index');
+    $trail->push('Create', route('superdistributor.plans.show',$plan));
+});
+Breadcrumbs::for('superdistributor.plans.edit', function (BreadcrumbTrail $trail,$plan) {
+    $trail->parent('superdistributor.plans.index');
+    $trail->push('Edit', route('superdistributor.plans.edit',$plan));
+});
+// plans::END
+
+// my-plan
 Breadcrumbs::for('superdistributor.myplan.index', function (BreadcrumbTrail $trail) {
     $trail->parent('superdistributor.dashboard');
     $trail->push('My Plan', route('superdistributor.myplan.index'));
 });
-Breadcrumbs::for('superdistributor.myplan.activation', function (BreadcrumbTrail $trail,$planDetail) {
+Breadcrumbs::for('superdistributor.myplan.activation', function (BreadcrumbTrail $trail, $planDetail) {
     $trail->parent('superdistributor.myplan.index');
-    $trail->push('Activation', route('superdistributor.myplan.activation',$planDetail));
+    $trail->push('Activation', route('superdistributor.myplan.activation', $planDetail));
 });
 
 

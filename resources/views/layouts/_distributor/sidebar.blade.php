@@ -13,14 +13,14 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="{{route('distributor.dashboard')}}">
+                    <a href="{{ route('distributor.dashboard') }}">
                         <i data-feather="home"></i>
                         <span class="badge bg-success rounded-pill float-end">9+</span>
                         <span> Dashboard </span>
                     </a>
                 </li>
 
-                <li class="menu-title">Account</li>
+                <li class="menu-title">Transactions </li>
                 <li>
                     <a href="#myWalletMenu" data-bs-toggle="collapse">
                         <i data-feather="credit-card"></i>
@@ -30,23 +30,42 @@
                     <div class="collapse" id="myWalletMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('distributor.wallet.index')}}">History</a>
+                                <a href="{{ route('distributor.wallet.index') }}">History</a>
                             </li>
                             <li>
-                                <a href="{{route('distributor.wallet-recharge.create')}}">Recharge</a>
+                                <a href="{{ route('distributor.wallet-recharge.create') }}">Recharge</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="menu-title">Scheme</li>
+                <li>
+                    <a href="#plansMenu" data-bs-toggle="collapse">
+                        <i data-feather="sliders"></i>
+                        <span> Plans </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="plansMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('distributor.plans.index') }}">List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('distributor.plans.create') }}">Create</a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
+                <li class="menu-title">Account</li>
+
                 <li>
-                    <a href="{{route('distributor.myplan.index')}}">
+                    <a href="{{ route('distributor.myplan.index') }}">
                         <i data-feather="list"></i>
-                        <span> Plans </span>
+                        <span> My Plan </span>
                     </a>
                 </li>
 
-                <li class="menu-title">Other</li>
 
                 <li>
                     <a href="#myAccountMenu" data-bs-toggle="collapse">
@@ -57,13 +76,13 @@
                     <div class="collapse" id="myAccountMenu">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{route('distributor.account.index')}}">Account</a>
+                                <a href="{{ route('distributor.account.index') }}">Account</a>
                             </li>
                             <li>
-                                <a href="{{route('distributor.account.update')}}">Update Profile</a>
+                                <a href="{{ route('distributor.account.update') }}">Update Profile</a>
                             </li>
                             <li>
-                                <a href="{{route('distributor.account.password')}}">Change Password</a>
+                                <a href="{{ route('distributor.account.password') }}">Change Password</a>
                             </li>
                         </ul>
                     </div>

@@ -16,7 +16,7 @@
                     <p id="user-email" class="mb-1">{{auth()->user()->email}}</p>
                     <p id="user-wallet">Wallet Balance: <strong>{{auth()->user()->wallet}}
                             {{$generalSetting->currency->code}}</strong></p>
-                    <a href="{{route('retailer.wallet-recharge.create')}}" class="btn btn-primary justify-self-end">Add
+                    <a href="{{route('superdistributor.wallet-recharge.create')}}" class="btn btn-primary justify-self-end">Add
                         Money</a>
                 </div>
             </div>

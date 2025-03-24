@@ -3,6 +3,7 @@
 use App\Http\Controllers\Distributor\DashboardController;
 use App\Http\Controllers\Distributor\LoginController;
 use App\Http\Controllers\Distributor\MyPlanController;
+use App\Http\Controllers\Distributor\PlanController as DistributorPlanController;
 use App\Http\Controllers\Distributor\ProfileController;
 use App\Http\Controllers\Distributor\WalletController;
 use App\Http\Controllers\Distributor\WalletRechargeController;
@@ -25,6 +26,8 @@ Route::group(['prefix' => 'distributor', 'as' => 'distributor.'], function () {
     Route::group(['middleware' => ['distributor:auth']], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::resource('plans', DistributorPlanController::class);
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');

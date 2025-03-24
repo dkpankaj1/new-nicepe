@@ -75,4 +75,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class);
     }
+    public function userParent()
+    {
+        return $this->belongsTo(User::class, 'parent', 'id');
+    }
+
+    public function child()
+    {
+        return $this->belongsTo(User::class, 'id', 'parent');
+    }
 }

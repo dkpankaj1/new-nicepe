@@ -37,7 +37,7 @@ class PlanPolicy
      */
     public function update(User $user, Plan $plan): bool
     {
-        return $plan->user_id == $user->id;
+        return $plan->user_id == $user->id && $plan->deleted_at == null;
     }
 
     /**
@@ -45,7 +45,7 @@ class PlanPolicy
      */
     public function delete(User $user, Plan $plan): bool
     {
-        return $plan->user_id == $user->id;
+        return $plan->user_id == $user->id ;
     }
 
     /**

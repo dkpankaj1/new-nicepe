@@ -53,7 +53,8 @@ class MakeDatatable extends Command
         $stub = <<<PHP
         <?php
         namespace $namespace;
-
+        
+        use App\Datatables\BaseDatatable;
         use Yajra\DataTables\DataTableAbstract;
 
         class $className extends BaseDatatable

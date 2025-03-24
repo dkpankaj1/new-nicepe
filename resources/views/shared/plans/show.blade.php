@@ -1,7 +1,9 @@
 <x-app-layout>
-    @section('title', 'Plan Details')
-    @section('page-title', 'Plan Details')
-    @section('breadcrumb', Breadcrumbs::render('admin.plans.show', $plan))
+    @section('title', 'Plan Detail')
+    @section('page-title', 'Plan Detail')
+    @section('breadcrumb')
+        {!! $breadcrumb !!}
+    @endsection
 
     <div class="card">
         <div class="card-body">
@@ -37,8 +39,8 @@
                             <thead>
                                 <tr>
                                     <th>Feature Name</th>
-                                    <th>Current Fee ({{$generalSetting->currency->symbol}})</th>
-                                    <th>Fee ({{$generalSetting->currency->symbol}})</th>
+                                    <th>Current Fee ({{ $generalSetting->currency->symbol }})</th>
+                                    <th>Fee ({{ $generalSetting->currency->symbol }})</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,14 +58,10 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- Back Button -->
-                    <div class="d-flex justify-content-start">
-                        <a href="{{ route('admin.plans.index') }}" class="btn btn-secondary">Back to Plans</a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
-    
+
 </x-app-layout>
