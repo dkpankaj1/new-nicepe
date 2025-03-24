@@ -27,6 +27,6 @@ jobs:
             git reset --hard
             git pull origin dev
             curl -sS https://getcomposer.org/installer | php
-            php composer.phar install --no-dev --optimize-autoloader
+            php composer.phar update --optimize-autoloader
             php artisan migrate:fresh --seed --force
             rm composer.phar
