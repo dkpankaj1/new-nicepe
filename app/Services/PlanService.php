@@ -25,6 +25,7 @@ class PlanService implements PlanServiceInterface
     public function selectPlans(int $userid): ?Collection
     {
         return Plan::where('user_id', $userid)
+            ->where('is_active', true)
             ->where('deleted_at', null)
             ->get();
     }

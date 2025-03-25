@@ -17,6 +17,7 @@ return new class extends Migration {
                 ->onDelete('cascade'); // Ensures plans are deleted when user is deleted
             $table->string('name');
             $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });

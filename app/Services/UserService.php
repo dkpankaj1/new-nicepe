@@ -6,6 +6,7 @@ use App\Enums\TransactionEnum;
 use App\Enums\UserType;
 use App\Helpers\TransactionHelper;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserService implements UserServiceInterface
@@ -24,6 +25,7 @@ class UserService implements UserServiceInterface
             'postal_code' => $data['postal_code'],
             'wallet' => $data['wallet'] ?? 0,
             'type' => $type,
+            'parent' => Auth::id(),
             'plan_id' => $data['plan'],
             'active' => $data['is_active'],
         ]);

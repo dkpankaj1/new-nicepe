@@ -34,7 +34,7 @@ Breadcrumbs::for('superdistributor.distributors.create', function (BreadcrumbTra
 });
 Breadcrumbs::for('superdistributor.distributors.show', function (BreadcrumbTrail $trail,$distributors) {
     $trail->parent('superdistributor.distributors.index');
-    $trail->push('Create', route('superdistributor.distributors.show',$distributors));
+    $trail->push('Show', route('superdistributor.distributors.show',$distributors));
 });
 Breadcrumbs::for('superdistributor.distributors.edit', function (BreadcrumbTrail $trail,$distributors) {
     $trail->parent('superdistributor.distributors.index');
@@ -54,7 +54,7 @@ Breadcrumbs::for('superdistributor.plans.create', function (BreadcrumbTrail $tra
 });
 Breadcrumbs::for('superdistributor.plans.show', function (BreadcrumbTrail $trail,$plan) {
     $trail->parent('superdistributor.plans.index');
-    $trail->push('Create', route('superdistributor.plans.show',$plan));
+    $trail->push('Show', route('superdistributor.plans.show',$plan));
 });
 Breadcrumbs::for('superdistributor.plans.edit', function (BreadcrumbTrail $trail,$plan) {
     $trail->parent('superdistributor.plans.index');
@@ -73,7 +73,7 @@ Breadcrumbs::for('superdistributor.retailers.create', function (BreadcrumbTrail 
 });
 Breadcrumbs::for('superdistributor.retailers.show', function (BreadcrumbTrail $trail,$retailers) {
     $trail->parent('superdistributor.retailers.index');
-    $trail->push('Create', route('superdistributor.retailers.show',$retailers));
+    $trail->push('Show', route('superdistributor.retailers.show',$retailers));
 });
 Breadcrumbs::for('superdistributor.retailers.edit', function (BreadcrumbTrail $trail,$retailers) {
     $trail->parent('superdistributor.retailers.index');

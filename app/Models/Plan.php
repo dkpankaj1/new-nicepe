@@ -12,6 +12,7 @@ class Plan extends Model
         'user_id',
         'name',
         'description',
+        'is_active',
         'deleted_at'
     ];
 

@@ -1,7 +1,7 @@
 <x-app-layout>
 
     @section('title', 'Show Distributor')
-    @section('page-title', 'SHow Distributor')
+    @section('page-title', 'Show Distributor')
     @section('breadcrumb')
         {!! $breadcrumb !!}
     @endsection
