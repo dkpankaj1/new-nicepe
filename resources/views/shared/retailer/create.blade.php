@@ -6,6 +6,6 @@
         {!! $breadcrumb !!}
     @endsection
 
-    <center><h1>Under development !!. Available Soon :)</h1></center>
+    <center><h1>Under development !!. Available Soon... :)</h1></center>
 
 </x-app-layout>
