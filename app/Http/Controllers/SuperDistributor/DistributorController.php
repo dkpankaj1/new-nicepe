@@ -41,7 +41,6 @@ class DistributorController extends Controller
                 'columns' => $datatable->columns()
             ]
         );
-
     }
 
     /**
@@ -56,7 +55,6 @@ class DistributorController extends Controller
                 'country' => Country::with('states')->first(),
                 'plans' => $planService->selectPlans(Auth::user()->id)
             ],
-
         );
     }
 

@@ -6,5 +6,15 @@
         {!! $breadcrumb !!}
     @endsection
 
-    <center><h1>Under development !!. Available Soon :)</h1></center>
+    <div class="card">
+        <div class="card-header d-flex justify-content-end">
+            <a href="{{ $createRetailerUrl }}" class="btn btn-primary">Add Retailer</a>
+        </div>
+        <div class="card-body">
+            <x-datatable id="datatable" ajaxUrl="{{ $ajaxUrl }}" :columns="$columns" />
+        </div>
+    </div>
+
+    <x-confirm-delete />
+
 </x-app-layout>

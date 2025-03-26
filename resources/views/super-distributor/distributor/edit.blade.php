@@ -6,7 +6,6 @@
         {!! $breadcrumb !!}
     @endsection
 
-
     <!-- Start Content-->
     <div class="container-fluid">
         <form action="{{ route('superdistributor.distributors.update', $user) }}" method="post">
@@ -149,7 +148,5 @@
             </div>
         </form>
     </div> <!-- container -->
-
-
 
 </x-app-layout>
