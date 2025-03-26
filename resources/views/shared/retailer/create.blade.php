@@ -8,7 +8,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        <form action="{{ route('superdistributor.retailers.store') }}" method="post">
+        <form action="{{ $action }}" method="post">
             @csrf
             <div class="card">
 

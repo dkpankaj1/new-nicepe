@@ -8,7 +8,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-        <form action="{{ route('superdistributor.retailers.update', $user) }}" method="post">
+        <form action="{{ $action }}" method="post">
             @csrf
             @method('put')
 

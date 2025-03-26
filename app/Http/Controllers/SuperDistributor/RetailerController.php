@@ -45,6 +45,7 @@ class RetailerController extends Controller
     public function create(PlanService $planService)
     {
         return view('shared.retailer.create', [
+            'action' =>route('superdistributor.retailers.store'),
             'breadcrumb' => Breadcrumbs::render('superdistributor.retailers.create'),
             'country' => Country::with('states')->first(),
             'plans' => $planService->selectPlans(Auth::user()->id),
@@ -82,6 +83,7 @@ class RetailerController extends Controller
     {
         return view('shared.retailer.edit', [
             'breadcrumb' => Breadcrumbs::render('superdistributor.retailers.edit', $retailer),
+            'action' => route('superdistributor.retailers.update', $retailer),
             'user' => $retailer,
             'plans' => $planService->selectPlans(Auth::user()->id),
             'country' => Country::with('states')->first(),
