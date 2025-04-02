@@ -15,7 +15,7 @@ class BaseWalletDatatable extends BaseDatatable
         parent::__construct(Transaction::query()
             ->where('user_id', Auth::user()->id)
             ->whereNot('status', TransactionEnum::STATUS_PENDING)
-            ->latest());
+            ->latest('id'));
         $this->showBtnRouteName = $routeName;
     }
 

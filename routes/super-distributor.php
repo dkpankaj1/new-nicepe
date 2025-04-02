@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SuperDistributor\BalanceTranferController;
 use App\Http\Controllers\SuperDistributor\DashboardController;
 use App\Http\Controllers\SuperDistributor\DistributorController;
 use App\Http\Controllers\SuperDistributor\LoginController;
@@ -29,6 +30,7 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        Route::resource('balance-transfers', BalanceTranferController::class);
         Route::resource('distributors', DistributorController::class);
         Route::resource('plans', PlanController::class);
         Route::resource('retailers', RetailerController::class);

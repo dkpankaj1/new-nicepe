@@ -23,6 +23,24 @@ Breadcrumbs::for('superdistributor.wallet-recharge.create', function (Breadcrumb
     $trail->push('Recharge', route('superdistributor.wallet-recharge.create'));
 });
 
+// balance transfer
+Breadcrumbs::for('superdistributor.balance-transfers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.dashboard');
+    $trail->push('Balance Transfer', route('superdistributor.balance-transfers.index'));
+});
+Breadcrumbs::for('superdistributor.balance-transfers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('superdistributor.balance-transfers.index');
+    $trail->push('Create', route('superdistributor.balance-transfers.create'));
+});
+Breadcrumbs::for('superdistributor.balance-transfers.show', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('superdistributor.balance-transfers.index');
+    $trail->push('Show', route('superdistributor.balance-transfers.show', $transfer));
+});
+Breadcrumbs::for('superdistributor.balance-transfers.edit', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('superdistributor.balance-transfers.index');
+    $trail->push('Edit', route('superdistributor.balance-transfers.edit', $transfer));
+});
+
 // distributors::Begin
 Breadcrumbs::for('superdistributor.distributors.index', function (BreadcrumbTrail $trail) {
     $trail->parent('superdistributor.dashboard');
