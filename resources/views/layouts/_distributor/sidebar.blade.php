@@ -22,6 +22,23 @@
 
                 <li class="menu-title">Transactions </li>
                 <li>
+                    <a href="#transfer" data-bs-toggle="collapse">
+                        <i data-feather="arrow-up-circle"></i>
+                        <span> Balance Transfer </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="transfer">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('distributor.balance-transfers.index') }}">List</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('distributor.balance-transfers.create') }}">New Transfer</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
                     <a href="#myWalletMenu" data-bs-toggle="collapse">
                         <i data-feather="credit-card"></i>
                         <span> Wallet </span>

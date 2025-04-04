@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\SuperDistributor;
+namespace App\Http\Controllers\Distributor;
 
-use App\Datatables\SuperDistributor\BalanceTransferDatatable;
+use App\Datatables\Distributor\BalanceTransferDatatable;
 use App\Enums\TransactionEnum;
 use App\Enums\UserType;
 use App\Helpers\TransactionHelper;
@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
-class BalanceTranferController extends Controller
+class BalanceTransferController extends Controller
 {
     public function index(Request $request, BalanceTransferDatatable $balance_transferDatatable)
     {
         return $request->expectsJson()
             ? $balance_transferDatatable->get()
-            : view('super-distributor.balancetransfer.index');
+            : view('distributor.balancetransfer.index');
     }
 
     /**
@@ -29,12 +29,11 @@ class BalanceTranferController extends Controller
      */
     public function create()
     {
-        $users = User::where('type', '!=', UserType::ADMIN->value)
-            ->where('parent', Auth::id())
+        $users = User::where('parent', Auth::id())
             ->where('active', true)
             ->get();
 
-        return view('super-distributor.balancetransfer.create', ['users' => $users]);
+        return view('distributor.balancetransfer.create', ['users' => $users]);
     }
 
     /**
@@ -57,7 +56,7 @@ class BalanceTranferController extends Controller
 
             if ($validatedData['amount'] > Auth::user()->wallet) {
                 ToasterService::error('Low Balance. Please Recharge');
-                return redirect()->route('superdistributor.wallet-recharge.create');
+                return redirect()->route('distributor.wallet-recharge.create');
             }
 
             DB::beginTransaction();
@@ -110,7 +109,7 @@ class BalanceTranferController extends Controller
         $balance_transfer->load(["fromUser", "transaction", "toUser"]);
 
         return view(
-            'super-distributor.balancetransfer.show',
+            'distributor.balancetransfer.show',
             ['balanceTransfer' => $balance_transfer]
         );
     }
@@ -122,7 +121,7 @@ class BalanceTranferController extends Controller
     {
         $balance_transfer->load(["transaction", "toUser"]);
         return view(
-            'super-distributor.balancetransfer.edit',
+            'distributor.balancetransfer.edit',
             ['balanceTransfer' => $balance_transfer]
         );
     }
@@ -150,7 +149,7 @@ class BalanceTranferController extends Controller
             // Check if sufficient balance exists
             if ($fromUser->wallet < $validatedData['amount']) {
                 ToasterService::error('Insufficient funds for transfer');
-                return redirect()->route('superdistributor.wallet-recharge.create');
+                return redirect()->route('distributor.wallet-recharge.create');
             }
 
             // Revert previous transaction if it exists

@@ -43,6 +43,26 @@ Breadcrumbs::for('distributor.plans.edit', function (BreadcrumbTrail $trail, $pl
 });
 // plans::END
 
+
+// balance transfer
+Breadcrumbs::for('distributor.balance-transfers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.dashboard');
+    $trail->push('Balance Transfer', route('distributor.balance-transfers.index'));
+});
+Breadcrumbs::for('distributor.balance-transfers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('distributor.balance-transfers.index');
+    $trail->push('Create', route('distributor.balance-transfers.create'));
+});
+Breadcrumbs::for('distributor.balance-transfers.show', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('distributor.balance-transfers.index');
+    $trail->push('Show', route('distributor.balance-transfers.show', $transfer));
+});
+Breadcrumbs::for('distributor.balance-transfers.edit', function (BreadcrumbTrail $trail, $transfer) {
+    $trail->parent('distributor.balance-transfers.index');
+    $trail->push('Edit', route('distributor.balance-transfers.edit', $transfer));
+});
+
+
 // retailers::Begin
 Breadcrumbs::for('distributor.retailers.index', function (BreadcrumbTrail $trail) {
     $trail->parent('distributor.dashboard');

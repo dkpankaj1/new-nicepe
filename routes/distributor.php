@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Distributor\BalanceTransferController;
 use App\Http\Controllers\Distributor\DashboardController;
 use App\Http\Controllers\Distributor\LoginController;
 use App\Http\Controllers\Distributor\MyPlanController;
@@ -28,9 +29,12 @@ Route::group(['prefix' => 'distributor', 'as' => 'distributor.'], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        Route::resource('balance-transfers', BalanceTransferController::class);
+        
         Route::resource('plans', DistributorPlanController::class);
 
         Route::resource('retailers', RetailerController::class);
+        
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');
