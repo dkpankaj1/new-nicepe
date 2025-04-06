@@ -14,6 +14,7 @@ use App\Services\UserService;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
@@ -80,6 +81,8 @@ class DistributorController extends Controller
      */
     public function show(User $distributor)
     {
+        Gate::authorize('view', $distributor);
+
         return view('super-distributor.distributor.show', [
             'breadcrumb' => Breadcrumbs::render('superdistributor.distributors.show', $distributor)
         ]);
@@ -90,6 +93,8 @@ class DistributorController extends Controller
      */
     public function edit(User $distributor, PlanService $planService)
     {
+        Gate::authorize('update', $distributor);
+
         return view('super-distributor.distributor.edit', [
             'breadcrumb' => Breadcrumbs::render('superdistributor.distributors.edit', $distributor),
             'user' => $distributor,
@@ -103,6 +108,8 @@ class DistributorController extends Controller
      */
     public function update(Request $request, User $distributor)
     {
+        Gate::authorize('update', $distributor);
+
         $data = $request->validate($this->rules($distributor->id));
         try {
             $this->userService->updateUser($distributor, $data);
@@ -119,6 +126,8 @@ class DistributorController extends Controller
      */
     public function destroy(User $distributor)
     {
+        Gate::authorize('delete', $distributor);
+
         try {
             $this->userService->deleteUser($distributor);
             return response()->json([

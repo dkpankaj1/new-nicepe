@@ -13,6 +13,7 @@ use App\Services\UserService;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
@@ -72,6 +73,8 @@ class RetailerController extends Controller
 
     public function show(User $retailer)
     {
+        Gate::authorize('view', $retailer);
+
         return view('shared.retailer.show', ['breadcrumb' => Breadcrumbs::render('distributor.retailers.show', $retailer)]);
     }
 
@@ -80,6 +83,8 @@ class RetailerController extends Controller
      */
     public function edit(User $retailer, PlanService $planService)
     {
+        Gate::authorize('update', $retailer);
+
         return view('shared.retailer.edit', [
             'breadcrumb' => Breadcrumbs::render('distributor.retailers.edit', $retailer),
             'action' => route('distributor.retailers.update', $retailer),
@@ -94,6 +99,8 @@ class RetailerController extends Controller
      */
     public function update(Request $request, User $retailer)
     {
+        Gate::authorize('update', $retailer);
+
         $data = $request->validate($this->rules($retailer->id));
 
         try {
@@ -111,6 +118,8 @@ class RetailerController extends Controller
      */
     public function destroy(User $retailer)
     {
+        Gate::authorize('delete', $retailer);
+
         try {
             $this->userService->deleteUser($retailer);
             return response()->json([
