@@ -115,7 +115,7 @@
                             <h1 class="mb-4">
                                 Maecenas Vitae <br>
                                 Consectetur Led <br>
-                                <span class="accent-text">Vestibulum Ante</span>
+                                <span class="accent-text">Vestibulum Ante...</span>
                             </h1>
 
                             <div class="hero-buttons">
