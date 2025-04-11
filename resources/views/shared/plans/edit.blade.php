@@ -46,25 +46,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($plan->planDetails as $detail)
+                                        @foreach ($planDetails as $plan)
                                             <tr>
                                                 <td>
                                                     <input type="text"
-                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}"
-                                                        value="{{ $detail->feature->name }}" disabled
-                                                        title="{{ $detail->feature->enable ? '' : 'This feature is disabled.' }}">
+                                                        class="form-control {{ $plan->feature_enabled ? '' : 'text-danger' }}"
+                                                        value="{{ $plan->name }}" disabled
+                                                        title="{{  $plan->feature_enabled ? '' : 'This feature is disabled.' }}">
                                                 </td>
                                                 <td>
                                                     <input type="number"
-                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }}"
-                                                        value="{{ $detail->feature->fee }}" disabled>
+                                                        class="form-control {{ $plan->feature_enabled ? '' : 'text-danger' }}"
+                                                        value="{{ $plan->current_fee }}" disabled>
                                                 </td>
                                                 <td>
                                                     <input type="number" step="0.01"
-                                                        class="form-control {{ $detail->feature->enable ? '' : 'text-danger' }} @error("detail.{$detail->id}.fee") is-invalid @enderror"
-                                                        name="detail[{{ $detail->id }}][fee]"
-                                                        value="{{ old("detail.{$detail->id}.fee", $detail->fee ?? 0) }}">
-                                                    @error("detail.{$detail->id}.fee")
+                                                        class="form-control {{ $plan->feature_enabled ? '' : 'text-danger' }} @error("detail.{$plan->id}.fee") is-invalid @enderror"
+                                                        name="detail[{{ $plan->id }}][fee]"
+                                                        value="{{ old("detail.{$plan->id}.fee", $plan->fee ?? 0) }}">
+                                                    @error("detail.{$plan->id}.fee")
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </td>

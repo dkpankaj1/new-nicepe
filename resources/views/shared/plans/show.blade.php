@@ -44,24 +44,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($plan->planDetails as $detail)
+                                    @foreach ($planDetails as $plan)
                                     <tr>
-                                        <td>{{ $detail->feature->name }}</td>
-                                        <td>{{ $detail->feature->fee }}</td>
-                                        <td>{{ number_format($detail->fee, 2) }}</td>
+                                        <td>{{ $plan->name }}</td>
+                                        <td>{{ number_format($plan->current_fee, 2) }}</td>
+                                        <td>{{ number_format($plan->fee, 2) }}</td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="text-center">No features available for this plan.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                    @endforeach
+{{-- 
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center">No features available for this plan.</td>
+                                        </tr>
+                                    @endforelse --}}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
-                    
                 </div>
             </div>
         </div>
-    </div>
 
-</x-app-layout>
+    </x-app-layout>

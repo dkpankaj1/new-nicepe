@@ -5,6 +5,7 @@ use App\Contracts\UserServiceInterface;
 use App\Enums\TransactionEnum;
 use App\Enums\UserType;
 use App\Helpers\TransactionHelper;
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -49,13 +50,13 @@ class UserService implements UserServiceInterface
                 "processed_at" => now(),
             ]);
         }
-        
+
         return $user;
     }
 
     public function updateUser(User $user, array $data): User
     {
-        $user->update([
+        $updatedData = [
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
@@ -64,9 +65,16 @@ class UserService implements UserServiceInterface
             'state' => $data['state'],
             'country' => $data['country'],
             'postal_code' => $data['postal_code'],
-            'plan_id' => $data['plan'],
             'active' => $data['is_active'],
-        ]);
+        ];
+
+        if ($user->plan_id !== $data['plan']) {
+            Plan::where(['user_id' => $user->id])
+                ->update(['is_active' => false]);
+            $updatedData['plan_id'] = $data['plan'];
+        }
+
+        $user->update($updatedData);
 
         return $user;
     }

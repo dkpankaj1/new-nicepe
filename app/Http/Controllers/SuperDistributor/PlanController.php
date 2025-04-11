@@ -128,8 +128,21 @@ class PlanController extends Controller
     public function show(Plan $plan)
     {
         Gate::authorize('view', $plan);
+
+        $planDetails = $plan->planDetails->map(function ($planDetail) use($plan) {
+            return (object) [
+                "id" => $planDetail->id,
+                "plan_id" => $plan->id,
+                "feature_id" => $planDetail->feature->id,
+                'name' => $planDetail->feature->name,
+                'feature_enabled' => $planDetail->feature->enable,
+                'current_fee' => $plan->user->plan->planDetails()->where('feature_id', $planDetail->feature->id)->first()->fee,
+                'fee' => $planDetail->fee,
+            ]  ?? collect();
+        });
         return view('shared.plans.show', [
             'plan' => $plan,
+            'planDetails' =>  $planDetails,
             'breadcrumb' => Breadcrumbs::render('superdistributor.plans.show', $plan)
         ]);
     }
@@ -139,12 +152,28 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
+
         Gate::authorize('update', $plan);
+
+        $planDetails = $plan->planDetails->map(function ($planDetail) use($plan) {
+            return (object) [
+                "id" => $planDetail->id,
+                "plan_id" => $plan->id,
+                "feature_id" => $planDetail->feature->id,
+                'name' => $planDetail->feature->name,
+                'feature_enabled' => $planDetail->feature->enable,
+                'current_fee' => $plan->user->plan->planDetails()->where('feature_id', $planDetail->feature->id)->first()->fee,
+                'fee' => $planDetail->fee,
+            ]  ?? collect();
+        });
+
         return view('shared.plans.edit', [
             'plan' => $plan,
+            'planDetails' => $planDetails,
             'breadcrumb' => Breadcrumbs::render('superdistributor.plans.edit', $plan),
             'actionUrl' => route('superdistributor.plans.update', $plan->id),
         ]);
+
     }
 
     /**

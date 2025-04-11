@@ -94,6 +94,7 @@ class SuperDistributorController extends Controller
             ToasterService::success('Update success');
             return redirect()->back();
         } catch (\Exception $e) {
+            dd($e->getMessage());
             ToasterService::error('Something went wrong.Please try again.');
             return redirect()->back();
         }
