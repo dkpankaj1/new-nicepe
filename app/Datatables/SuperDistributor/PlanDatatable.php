@@ -17,13 +17,18 @@ class PlanDatatable extends BaseDatatable
         return $datatable
             ->addIndexColumn()
 
+            ->addColumn('status', fn($plan) => $plan->is_active
+                ? view('components.badges', ['type' => 'success', 'text' => 'active'])
+                : view('components.badges', ['type' => 'danger', 'text' => 'in-active']))
+
             ->addColumn('created_at', fn($plan) => $plan->created_at->diffForHumans())
 
             ->addColumn('updated_at', fn($plan) => $plan->updated_at->diffForHumans())
 
-            ->addColumn('status', fn($plan) => $plan->deleted_at == null
+            ->addColumn('deleted_at', fn($plan) => $plan->deleted_at == null
                 ? view('components.badges', ['type' => 'success', 'text' => 'active'])
                 : view('components.badges', ['type' => 'danger', 'text' => 'deleted']))
+
 
             ->addColumn('action', function ($plan) {
                 $action = view('components.link', ['href' => route('superdistributor.plans.show', $plan->id), 'label' => 'show', 'class' => 'btn btn-sm btn-info']);
