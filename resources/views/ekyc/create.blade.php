@@ -54,11 +54,21 @@
                         <p class="text-center text-muted mb-4">Complete the form below to initiate your E-KYC process.
                         </p>
                         @include('ekyc.varification')
+                        <hr />
+                        <button type="button" class="btn btn-secondary px-4"
+                            onclick="document.getElementById('userLogoutForm').submit()">Logout</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+    <form action="{{ route('retailer.logout') }}" method="post" id="userLogoutForm">
+        @csrf
+    </form>
+
 
 
 

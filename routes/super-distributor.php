@@ -29,11 +29,13 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
 
     });
 
-    Route::group(['middleware' => ['retailer:auth']], function () {
+    Route::group(['middleware' => ['superdistributor:auth']], function () {
         Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
         // Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
         // Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
         // Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
+
+        Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
     });
 
     Route::group(['middleware' => ['superdistributor:auth', EkycMiddleware::class]], function () {
@@ -84,7 +86,6 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
             Route::patch('/password', [ProfileController::class, 'passwordUpdate']);
         });
 
-        Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
     });
 
