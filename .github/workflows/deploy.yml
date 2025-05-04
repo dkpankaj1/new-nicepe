@@ -25,6 +25,7 @@ jobs:
           script: |
             cd domains/demopreview.in/public_html/nicepe
             git reset --hard
+            git checkout dev
             git pull https://${{ secrets.SECRET_PAT }}@github.com/dkpankaj1/new-nicepe.git dev
             curl -sS https://getcomposer.org/installer | php
             php composer.phar update --optimize-autoloader
