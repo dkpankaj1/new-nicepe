@@ -25,10 +25,9 @@ class AdharMobileUpdateService
         ];
     }
 
-    public function store(Request $request)
+    public function store(Request $request,$transaction)
     {
         try {
-
             AadharMobileUpdate::create([
                 'user_id' => Auth::user()->id,
                 'name' => $request->name,
@@ -42,15 +41,17 @@ class AdharMobileUpdateService
                 'fingerprint4' => $request->fingerprint4,
                 'fingerprint5' => $request->fingerprint5,
                 'status' => Status::PENDING->value,
+                'forward_transaction' => $transaction->id,
                 'remark' => "status is pending",
             ]);
-
             return true;
-
         } catch (\Exception $e) {
-
             return false;
-
         }
+    }
+    public function hasSufficientBalance(): bool
+    {
+        $user = Auth::user();
+        return $user->balance;
     }
 }

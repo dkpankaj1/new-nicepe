@@ -3,6 +3,7 @@
 use App\Http\Controllers\SuperDistributor\BalanceTransferController;
 use App\Http\Controllers\SuperDistributor\DashboardController;
 use App\Http\Controllers\SuperDistributor\DistributorController;
+use App\Http\Controllers\SuperDistributor\EkycController;
 use App\Http\Controllers\SuperDistributor\LoginController;
 use App\Http\Controllers\SuperDistributor\MyPlanController;
 use App\Http\Controllers\SuperDistributor\PlanController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SuperDistributor\ProfileController;
 use App\Http\Controllers\SuperDistributor\RetailerController;
 use App\Http\Controllers\SuperDistributor\WalletController;
 use App\Http\Controllers\SuperDistributor\WalletRechargeController;
+use App\Http\Middleware\SuperDistributor\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], function () {
@@ -26,9 +28,31 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
         });
 
     });
-    Route::group(['middleware' => ['superdistributor:auth']], function () {
+
+    Route::group(['middleware' => ['retailer:auth']], function () {
+        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
+        // Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
+        // Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
+        // Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
+    });
+
+    Route::group(['middleware' => ['superdistributor:auth', EkycMiddleware::class]], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Route::group(['prefix' => 'aadhar', 'as' => 'aadhar.'], function () {
+        //     Route::resource('emailupdate', AadharEmailUpdateController::class)
+        //         ->middleware(AadharEmailUpdateMiddleware::class);
+
+        //     Route::resource('mobileupdate', AadharMobileUpdateController::class)
+        //         ->middleware(AadharMobileUpdateMiddleware::class);
+
+        //     Route::resource('mobileemailupdate', AadharMobileEmailUpdateController::class)
+        //         ->middleware(AadharMobileEmailUpdateMiddleware::class);
+
+        // });
+
+
 
         Route::resource('balance-transfers', BalanceTransferController::class);
         Route::resource('distributors', DistributorController::class);

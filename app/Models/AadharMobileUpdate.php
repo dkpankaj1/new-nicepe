@@ -21,7 +21,12 @@ class AadharMobileUpdate extends Model
         'fingerprint5',
 
         'status',
+
+        'forward_transaction',
+        'refund_transaction',
+
         'recept',
+
         'remark',
     ];
 

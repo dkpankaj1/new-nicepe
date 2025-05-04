@@ -3,10 +3,8 @@
 use App\Features\AadharEmailUpdateFeature;
 use App\Features\AadharMobileEmailUpdateFeature;
 use App\Features\AadharMobileUpdateFeature;
-use App\Http\Controllers\Retailer\AadharToPANController;
-use App\Http\Controllers\Retailer\AdharMobileEmailUpdateController;
-use App\Http\Controllers\Retailer\BirthCertificateController;
 use App\Http\Controllers\Retailer\DashboardController;
+use App\Http\Controllers\Retailer\EkycController;
 use App\Http\Controllers\Retailer\Feature\AadharEmailUpdateController;
 use App\Http\Controllers\Retailer\Feature\AadharMobileEmailUpdateController;
 use App\Http\Controllers\Retailer\Feature\AadharMobileUpdateController;
@@ -15,9 +13,10 @@ use App\Http\Controllers\Retailer\MyPlanController;
 use App\Http\Controllers\Retailer\ProfileController;
 use App\Http\Controllers\Retailer\WalletController;
 use App\Http\Controllers\Retailer\WalletRechargeController;
-use App\Http\Middleware\Feature\AadharEmailUpdateMiddleware;
-use App\Http\Middleware\Feature\AadharMobileEmailUpdateeMiddleware;
-use App\Http\Middleware\Feature\AadharMobileUpdateMiddleware;
+use App\Http\Middleware\Retailer\AadharEmailUpdateMiddleware;
+use App\Http\Middleware\Retailer\AadharMobileEmailUpdateMiddleware;
+use App\Http\Middleware\Retailer\AadharMobileUpdateMiddleware;
+use App\Http\Middleware\Retailer\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
@@ -36,25 +35,30 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
 
 
     });
+
     Route::group(['middleware' => ['retailer:auth']], function () {
+        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
+        Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
+        Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
+        Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
+    });
+
+    Route::group(['middleware' => ['retailer:auth', EkycMiddleware::class]], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // feature :: BEGIN
 
         Route::group(['prefix' => 'aadhar', 'as' => 'aadhar.'], function () {
-            if (AadharEmailUpdateFeature::isEnabled()) {
-                Route::resource('emailupdate', AadharEmailUpdateController::class)
-                    ->middleware(AadharEmailUpdateMiddleware::class);
-            }
-            if (AadharMobileUpdateFeature::isEnabled()) {
-                Route::resource('mobileupdate', AadharMobileUpdateController::class)
-                    ->middleware(AadharMobileUpdateMiddleware::class);
-            }
-            if (AadharMobileEmailUpdateFeature::isEnabled()) {
-                Route::resource('mobileemailupdate', AadharMobileEmailUpdateController::class)
-                    ->middleware(AadharMobileEmailUpdateeMiddleware::class);
-            }
+            Route::resource('emailupdate', AadharEmailUpdateController::class)
+                ->middleware(AadharEmailUpdateMiddleware::class);
+
+            Route::resource('mobileupdate', AadharMobileUpdateController::class)
+                ->middleware(AadharMobileUpdateMiddleware::class);
+
+            Route::resource('mobileemailupdate', AadharMobileEmailUpdateController::class)
+                ->middleware(AadharMobileEmailUpdateMiddleware::class);
+
         });
 
         // feature :: END

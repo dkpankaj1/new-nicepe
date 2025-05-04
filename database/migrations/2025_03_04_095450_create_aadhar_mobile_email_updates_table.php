@@ -30,6 +30,10 @@ return new class extends Migration {
             $table->string('status')->default(Status::PENDING->value);
 
             $table->string('recept')->nullable();
+
+            $table->foreignId('forward_transaction')->nullable()->constrained('transactions')->onDelete('set null');
+            $table->foreignId('refund_transaction')->nullable()->constrained('transactions')->onDelete('set null');
+
             $table->string('remark')->nullable();
 
             $table->timestamps();

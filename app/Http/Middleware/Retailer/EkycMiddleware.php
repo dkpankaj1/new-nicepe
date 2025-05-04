@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Middleware\Feature;
+namespace App\Http\Middleware\Retailer;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class PanFindWithAadharMiddleware
+class EkycMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,6 +16,12 @@ class PanFindWithAadharMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $user = Auth::user();
+
+        if ($user && $user->ekyc === 0) {
+            return redirect()->route('retailer.ekyc.create');
+        }
+
         return $next($request);
     }
 }

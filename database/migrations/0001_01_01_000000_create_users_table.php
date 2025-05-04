@@ -31,7 +31,8 @@ return new class extends Migration {
             $table->string('type')->default(UserType::RETAILER); // Assuming UserRole::RETAILER is a valid constant
             $table->boolean('active')->default(true);
             $table->foreignId('parent')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('plan_id')->nullable()->constrained('plans')->nullOnDelete();
+            // $table->foreignId('plan_id')->nullable()->constrained('plans')->nullOnDelete();
+            $table->unsignedBigInteger('plan_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

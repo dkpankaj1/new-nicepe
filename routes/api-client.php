@@ -2,11 +2,13 @@
 
 use App\Features\MobileRechargeFeature;
 use App\Http\Controllers\ApiClient\DashboardController;
+use App\Http\Controllers\ApiClient\EkycController;
 use App\Http\Controllers\ApiClient\LoginController;
 use App\Http\Controllers\ApiClient\MyPlanController;
 use App\Http\Controllers\ApiClient\ProfileController;
 use App\Http\Controllers\ApiClient\WalletController;
 use App\Http\Controllers\ApiClient\WalletRechargeController;
+use App\Http\Middleware\ApiClient\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
@@ -23,7 +25,15 @@ Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
         });
 
     });
-    Route::group(['middleware' => ['apiclinet:auth']], function () {
+
+    Route::group(['middleware' => ['retailer:auth']], function () {
+        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
+        // Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
+        // Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
+        // Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
+    });
+
+    Route::group(['middleware' => ['apiclinet:auth',EkycMiddleware::class]], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

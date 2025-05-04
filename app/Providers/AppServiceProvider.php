@@ -25,8 +25,10 @@ use App\Policies\TransactionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Exception;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,9 +37,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Blade::if('featureEnabled', function () {
-            return false;
-        });
+        try {
+            Blade::if('featureEnabled', function () {
+                return false;
+            });
+        } catch (Exception $e) {
+            Log::error('Failed to register Blade directive: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -45,20 +51,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // boot policy ------------------
-        Gate::policy(BalanceTransfer::class, BalanceTransferPolicy::class);
-        Gate::policy(Plan::class, PlanPolicy::class);
-        Gate::policy(PlanDetail::class, PlanDetailPolicy::class);
-        Gate::policy(User::class, UserPolicy::class);
-        Gate::policy(Transaction::class, TransactionPolicy::class);
-        // ------------------------------
+        try {
+            // boot policy ------------------
+            Gate::policy(BalanceTransfer::class, BalanceTransferPolicy::class);
+            Gate::policy(Plan::class, PlanPolicy::class);
+            Gate::policy(PlanDetail::class, PlanDetailPolicy::class);
+            Gate::policy(User::class, UserPolicy::class);
+            Gate::policy(Transaction::class, TransactionPolicy::class);
+            // ------------------------------
 
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('superAdmin') ? true : null;
-        });
+            Gate::before(function ($user, $ability) {
+                return $user->hasRole('superAdmin') ? true : null;
+            });
 
-        $this->registerBladeDirective();
-        $this->registerViewShare();
+            $this->registerBladeDirective();
+            $this->registerViewShare();
+        } catch (Exception $e) {
+            Log::error('Error in AppServiceProvider boot: ' . $e->getMessage());
+        }
     }
 
     protected function registerBladeDirective(): void
@@ -76,23 +86,49 @@ class AppServiceProvider extends ServiceProvider
         ];
 
         foreach ($features as $directive => $featureClass) {
-            Blade::if($directive, fn() => $featureClass::isEnableForUser());
+            try {
+                Blade::if($directive, function () use ($featureClass) {
+                    try {
+                        return $featureClass::isEnableForUser();
+                    } catch (Exception $e) {
+                        Log::error("Error checking feature {$featureClass}: " . $e->getMessage());
+                        return false;
+                    }
+                });
+            } catch (Exception $e) {
+                Log::error("Error registering Blade directive {$directive}: " . $e->getMessage());
+            }
         }
 
         // Register directive for multiple features
-        Blade::if('anyFeatureEnabled', function (...$directives) use ($features) {
-            foreach ($directives as $directive) {
-                if (isset($features[$directive]) && $features[$directive]::isEnableForUser()) {
-                    return true;
+        try {
+            Blade::if('anyFeatureEnabled', function (...$directives) use ($features) {
+                foreach ($directives as $directive) {
+                    try {
+                        if (isset($features[$directive]) && $features[$directive]::isEnableForUser()) {
+                            return true;
+                        }
+                    } catch (Exception $e) {
+                        Log::error("Error checking feature in anyFeatureEnabled {$directive}: " . $e->getMessage());
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            });
+        } catch (Exception $e) {
+            Log::error('Error registering anyFeatureEnabled directive: ' . $e->getMessage());
+        }
     }
 
     protected function registerViewShare(): void
     {
-        View::share('brandSetting', BrandSetting::first());
-        View::share('generalSetting', GeneralSetting::first());
+        try {
+            View::share('brandSetting', BrandSetting::first());
+            View::share('generalSetting', GeneralSetting::first());
+        } catch (Exception $e) {
+            Log::error('Error sharing view data: ' . $e->getMessage());
+            // Share null values to prevent undefined variable errors
+            View::share('brandSetting', null);
+            View::share('generalSetting', null);
+        }
     }
 }

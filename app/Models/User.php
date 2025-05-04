@@ -33,6 +33,8 @@ class User extends Authenticatable
         'wallet',
         'api_key',
         'api_secret',
+        'ekyc_status',
+        'ekyc_verified_at',
         'type',
         'active',
         'parent',
@@ -87,5 +89,13 @@ class User extends Authenticatable
     public function child()
     {
         return $this->belongsTo(User::class, 'id', 'parent');
+    }
+    public function getFeeForFeature($feature){
+        $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
+        return $planDetail->fee;
+    }
+    public function hasSufficientBalance($feature){
+        $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
+        return $planDetail->fee <= $this->wallet;
     }
 }
