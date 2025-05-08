@@ -39,7 +39,26 @@ class User extends Authenticatable
         'active',
         'parent',
         'plan_id',
-        'deleted_at'
+        'deleted_at',
+
+        'ekyc',
+        'aadhaarName',
+        'ekycLLAadhaarName',
+        'dob',
+        'genderEng',
+        'genderHindi',
+        'ekycCo',
+        'ekycLoc',
+        'ekycLLLoc',
+        'ekycVtc',
+        'ekycLLVtc',
+        'ekycDist',
+        'ekycLLDist',
+        'ekycState',
+        'ekycLLState',
+        'ekycPincode',
+        'ekycLLPincode',
+        'photoBase64'
     ];
 
     /**
@@ -90,11 +109,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'id', 'parent');
     }
-    public function getFeeForFeature($feature){
+    public function getFeeForFeature($feature)
+    {
         $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
         return $planDetail->fee;
     }
-    public function hasSufficientBalance($feature){
+    public function hasSufficientBalance($feature)
+    {
         $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
         return $planDetail->fee <= $this->wallet;
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\SuperDistributor\ProfileController;
 use App\Http\Controllers\SuperDistributor\RetailerController;
 use App\Http\Controllers\SuperDistributor\WalletController;
 use App\Http\Controllers\SuperDistributor\WalletRechargeController;
+use App\Http\Middleware\SuperDistributor\EkycCompleteMiddleware;
 use App\Http\Middleware\SuperDistributor\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -30,13 +31,16 @@ Route::group(['prefix' => 'super-distributor', 'as' => 'superdistributor.'], fun
     });
 
     Route::group(['middleware' => ['superdistributor:auth']], function () {
-        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
-        // Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
-        // Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
-        // Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
-
         Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
     });
+
+    Route::group(['middleware' => ['superdistributor:auth', EkycCompleteMiddleware::class]], function () {
+        Route::get('ekyc', [EkycController::class, 'showEkycForm'])->name('ekyc.request');
+        Route::post('ekyc', [EkycController::class, 'sendEkycOtp']);
+        Route::get('ekyc/otp-validate', [EkycController::class, 'showOtpValidationForm'])->name('ekyc.validate');
+        Route::post('ekyc/otp-validate', [EkycController::class, 'validateOtp']);
+    });
+
 
     Route::group(['middleware' => ['superdistributor:auth', EkycMiddleware::class]], function () {
 

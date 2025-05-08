@@ -32,6 +32,10 @@ class RetailerDatatable extends BaseDatatable
 
             ->addColumn('plan', fn($user) => $user->plan->name ?? 'no-plan')
 
+            ->addColumn('ekyc', fn($user) => $user->ekyc == 1
+            ? view('components.badges', ['type' => 'success', 'text' => 'verified'])
+            : view('components.badges', ['type' => 'danger', 'text' => 'unverified']))
+
             ->addColumn('created_at', function ($user) {
                 return $user->updated_at ? $user->created_at->diffForHumans() : 'N/A';
             })

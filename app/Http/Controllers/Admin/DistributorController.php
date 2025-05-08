@@ -65,9 +65,9 @@ class DistributorController extends Controller
 
     }
 
-    public function show(User $user)
+    public function show(User $distributor)
     {
-        return view('admin.distributor.show', ['user' => $user]);
+        return view('admin.distributor.show', ['distributor' => $distributor]);
     }
 
     /**

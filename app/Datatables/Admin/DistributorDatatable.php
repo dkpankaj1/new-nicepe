@@ -22,8 +22,8 @@ class DistributorDatatable extends BaseDatatable
         return $datatable
             ->addIndexColumn()
 
-            ->addColumn('avatar',fn($user) => view('components.user-avatar',['src' => $user->avatar]))
-            
+            ->addColumn('avatar', fn($user) => view('components.user-avatar', ['src' => $user->avatar]))
+
             ->addColumn('status', fn($user) => $user->active == 1
                 ? view('components.badges', ['type' => 'success', 'text' => 'active'])
                 : view('components.badges', ['type' => 'danger', 'text' => 'in-active']))
@@ -31,6 +31,10 @@ class DistributorDatatable extends BaseDatatable
             ->addColumn('wallet', fn($user) => number_format($user->wallet, 2))
 
             ->addColumn('plan', fn($user) => $user->plan->name ?? 'no-plan')
+
+            ->addColumn('ekyc', fn($user) => $user->ekyc == 1
+                ? view('components.badges', ['type' => 'success', 'text' => 'verified'])
+                : view('components.badges', ['type' => 'danger', 'text' => 'unverified']))
 
             ->addColumn('created_at', function ($user) {
                 return $user->updated_at ? $user->created_at->diffForHumans() : 'N/A';

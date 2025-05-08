@@ -26,7 +26,6 @@ class EkycService
     public function requestOtp(string $aadhaarNumber): array
     {
         $response = Http::withHeaders([
-            'Authorization' => $this->bearerToken,
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ])->get("{$this->baseUrl}/requestEKycOtp", [
@@ -68,7 +67,6 @@ class EkycService
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => $this->bearerToken,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/validateOtpAndGetEkycData", $postData);
 

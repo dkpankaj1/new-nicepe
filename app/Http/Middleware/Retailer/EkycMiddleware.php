@@ -19,7 +19,7 @@ class EkycMiddleware
         $user = Auth::user();
 
         if ($user && $user->ekyc === 0) {
-            return redirect()->route('retailer.ekyc.create');
+            return redirect()->route('retailer.ekyc.request');
         }
 
         return $next($request);

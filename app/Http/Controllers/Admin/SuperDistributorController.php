@@ -67,9 +67,9 @@ class SuperDistributorController extends Controller
         }
     }
 
-    public function show(user $user)
+    public function show(user $super_distributor)
     {
-        return view('admin.superdistributor.show', ['user' => $user]);
+        return view('admin.superdistributor.show', ['superDistributors' => $super_distributor]);
     }
 
     /**

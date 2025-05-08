@@ -19,7 +19,7 @@ class EkycMiddleware
         $user = Auth::user();
 
         if ($user && $user->ekyc === 0) {
-            return redirect()->route('superdistributor.ekyc.create');
+            return redirect()->route('superdistributor.ekyc.request');
         }
 
         return $next($request);

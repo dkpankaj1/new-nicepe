@@ -23,6 +23,7 @@
         ['data' => 'city', 'name' => 'city', 'title' => 'City'],
         ['data' => 'wallet', 'name' => 'wallet', 'title' => 'Wallet ( ' . $generalSetting->currency->symbol . ' )'],
         ['data' => 'plan', 'name' => 'plan', 'title' => 'Plan'],
+        ['data' => 'ekyc', 'name' => 'ekyc', 'title' => 'eKYC'],
         ['data' => 'state', 'name' => 'state', 'title' => 'State'],
         ['data' => 'status', 'name' => 'status', 'title' => 'Status'],
         ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Create At'],

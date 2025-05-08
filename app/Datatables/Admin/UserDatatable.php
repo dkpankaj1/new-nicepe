@@ -27,8 +27,6 @@ class UserDatatable extends BaseDatatable
 
             ->addColumn('role', fn($user) => $user->getRoleNames()[0] ?? "No Role")
 
-            // ->addColumn('wallet', fn($user) => number_format($user->wallet, 2))
-
             // ->addColumn('avatar', fn($user) => view('components.user-avatar', ['src' => $user->avatar]))
 
             ->addColumn('created_at', function ($user) {

@@ -66,9 +66,9 @@ class RetailerController extends Controller
 
     }
 
-    public function show(user $user)
+    public function show(user $retailer)
     {
-        return view('admin.retailer.show', ['user' => $user]);
+        return view('admin.retailer.show', ['retailer' => $retailer]);
     }
 
     /**

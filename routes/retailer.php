@@ -16,6 +16,7 @@ use App\Http\Controllers\Retailer\WalletRechargeController;
 use App\Http\Middleware\Retailer\AadharEmailUpdateMiddleware;
 use App\Http\Middleware\Retailer\AadharMobileEmailUpdateMiddleware;
 use App\Http\Middleware\Retailer\AadharMobileUpdateMiddleware;
+use App\Http\Middleware\Retailer\EkycCompleteMiddleware;
 use App\Http\Middleware\Retailer\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -27,26 +28,23 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
         Route::get('login', [LoginController::class, 'create'])->name('login');
         Route::post('login', [LoginController::class, 'store']);
 
-
         Route::group(['prefix' => 'wallet-recharge', 'as' => 'wallet-recharge.'], function () {
             Route::any('nicepe/redirect', [WalletRechargeController::class, 'response'])
                 ->withoutMiddleware(['web'])->name('nicepe.redirect');
         });
 
-
     });
 
     Route::group(['middleware' => ['retailer:auth']], function () {
-
-
-        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
-        Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
-        Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
-        Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
-
-
         Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
-        
+    });
+
+    Route::group(['middleware' => ['retailer:auth', EkycCompleteMiddleware::class]], function () {
+        Route::get('ekyc', [EkycController::class, 'showEkycForm'])->name('ekyc.request');
+        Route::post('ekyc', [EkycController::class, 'sendEkycOtp']);
+        Route::get('ekyc/otp-validate', [EkycController::class, 'showOtpValidationForm'])->name('ekyc.validate');
+        Route::post('ekyc/otp-validate', [EkycController::class, 'validateOtp']);
+      
     });
 
     Route::group(['middleware' => ['retailer:auth', EkycMiddleware::class]], function () {
@@ -93,7 +91,7 @@ Route::group(['prefix' => 'retailer', 'as' => 'retailer.'], function () {
             Route::patch('/password', [ProfileController::class, 'passwordUpdate']);
         });
 
-       
+
     });
 
 });

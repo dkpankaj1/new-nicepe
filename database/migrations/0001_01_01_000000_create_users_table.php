@@ -33,6 +33,26 @@ return new class extends Migration {
             $table->foreignId('parent')->nullable()->constrained('users')->nullOnDelete();
             // $table->foreignId('plan_id')->nullable()->constrained('plans')->nullOnDelete();
             $table->unsignedBigInteger('plan_id')->nullable();
+
+            $table->boolean('ekyc')->default(0);
+            $table->string('aadhaarName')->default('N/A');
+            $table->string('ekycLLAadhaarName')->default('N/A');
+            $table->string('dob')->default('N/A');
+            $table->string('genderEng')->default('N/A');
+            $table->string('genderHindi')->default('N/A');
+            $table->string('ekycCo')->default('N/A');
+            $table->string('ekycLoc')->default('N/A');
+            $table->string('ekycLLLoc')->default('N/A');
+            $table->string('ekycVtc')->default('N/A');
+            $table->string('ekycLLVtc')->default('N/A');
+            $table->string('ekycDist')->default('N/A');
+            $table->string('ekycLLDist')->default('N/A');
+            $table->string('ekycState')->default('N/A');
+            $table->string('ekycLLState')->default('N/A');
+            $table->string('ekycPincode')->default('N/A');
+            $table->string('ekycLLPincode')->default('N/A');
+            $table->text('photoBase64')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();

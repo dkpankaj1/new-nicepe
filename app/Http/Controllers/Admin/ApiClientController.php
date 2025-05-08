@@ -65,9 +65,9 @@ class ApiClientController extends Controller
 
     }
 
-    public function show(user $user)
+    public function show(user $api_client)
     {
-        return view('admin.apiclient.show', ['user' => $user]);
+        return view('admin.apiclient.show', ['client' => $api_client]);
     }
 
     /**

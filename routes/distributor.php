@@ -10,6 +10,7 @@ use App\Http\Controllers\Distributor\ProfileController;
 use App\Http\Controllers\Distributor\RetailerController;
 use App\Http\Controllers\Distributor\WalletController;
 use App\Http\Controllers\Distributor\WalletRechargeController;
+use App\Http\Middleware\Distributor\EkycCompleteMiddleware;
 use App\Http\Middleware\Distributor\EkycMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -29,15 +30,17 @@ Route::group(['prefix' => 'distributor', 'as' => 'distributor.'], function () {
     });
 
     Route::group(['middleware' => ['distributor:auth']], function () {
-        Route::get('ekyc', [EkycController::class, 'ekyc'])->name('ekyc.create');
-        // Route::post('ekyc/otp-request', [EkycController::class, 'ekycOtp'])->name('ekyc.otp');
-        // Route::post('ekyc/otp-validate', [EkycController::class, 'ekycValidateOtp'])->name('ekyc.validate');
-        // Route::post('ekyc/submit', [EkycController::class, 'ekycStore'])->name('ekyc.submit');
-
         Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
     });
 
-    Route::group(['middleware' => ['distributor:auth',EkycMiddleware::class]], function () {
+    Route::group(['middleware' => ['distributor:auth', EkycCompleteMiddleware::class]], function () {
+        Route::get('ekyc', [EkycController::class, 'showEkycForm'])->name('ekyc.request');
+        Route::post('ekyc', [EkycController::class, 'sendEkycOtp']);
+        Route::get('ekyc/otp-validate', [EkycController::class, 'showOtpValidationForm'])->name('ekyc.validate');
+        Route::post('ekyc/otp-validate', [EkycController::class, 'validateOtp']);
+    });
+
+    Route::group(['middleware' => ['distributor:auth', EkycMiddleware::class]], function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -57,11 +60,11 @@ Route::group(['prefix' => 'distributor', 'as' => 'distributor.'], function () {
 
 
         Route::resource('balance-transfers', BalanceTransferController::class);
-        
+
         Route::resource('plans', DistributorPlanController::class);
 
         Route::resource('retailers', RetailerController::class);
-        
+
 
         Route::prefix('my-plan')->name('myplan.')->group(function () {
             Route::get('/', [MyPlanController::class, 'index'])->name('index');
@@ -87,7 +90,7 @@ Route::group(['prefix' => 'distributor', 'as' => 'distributor.'], function () {
             Route::patch('/password', [ProfileController::class, 'passwordUpdate']);
         });
 
-    
+
     });
 });
 
