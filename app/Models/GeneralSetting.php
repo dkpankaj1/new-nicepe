@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class GeneralSetting extends Model
+{
+    protected $fillable = [
+        "date_format",
+        "default_currency",
+        "timezone",
+        "language",
+        "session_timeout",
+        "copyright",
+        "developed_by",
+    ];
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'default_currency');
+    }
+}

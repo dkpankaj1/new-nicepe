@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +21,44 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
+        'phone',
+        'address',
+        'city',
+        'state',
+        'country',
+        'postal_code',
+        'avatar',
+        'wallet',
+        'api_key',
+        'api_secret',
+        'ekyc_status',
+        'ekyc_verified_at',
+        'type',
+        'active',
+        'parent',
+        'plan_id',
+        'deleted_at',
+
+        'ekyc',
+        'aadhaarName',
+        'ekycLLAadhaarName',
+        'dob',
+        'genderEng',
+        'genderHindi',
+        'ekycCo',
+        'ekycLoc',
+        'ekycLLLoc',
+        'ekycVtc',
+        'ekycLLVtc',
+        'ekycDist',
+        'ekycLLDist',
+        'ekycState',
+        'ekycLLState',
+        'ekycPincode',
+        'ekycLLPincode',
+        'photoBase64'
     ];
 
     /**
@@ -43,6 +81,42 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'deleted_at' => 'datetime',
         ];
+    }
+    public function getAvatarAttribute($attribute)
+    {
+        return $attribute ? asset('storage/' . $attribute) : 'https://placehold.co/200x200';
+    }
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+    public function userParent()
+    {
+        return $this->belongsTo(User::class, 'parent', 'id');
+    }
+
+    public function child()
+    {
+        return $this->belongsTo(User::class, 'id', 'parent');
+    }
+    public function getFeeForFeature($feature)
+    {
+        $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
+        return $planDetail->fee;
+    }
+    public function hasSufficientBalance($feature)
+    {
+        $planDetail = $this->plan->planDetails()->where('feature_id', $feature->id)->first();
+        return $planDetail->fee <= $this->wallet;
     }
 }

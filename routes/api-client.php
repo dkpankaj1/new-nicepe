@@ -1,0 +1,83 @@
+<?php
+
+use App\Features\MobileRechargeFeature;
+use App\Http\Controllers\ApiClient\DashboardController;
+use App\Http\Controllers\ApiClient\EkycController;
+use App\Http\Controllers\ApiClient\LoginController;
+use App\Http\Controllers\ApiClient\MyPlanController;
+use App\Http\Controllers\ApiClient\ProfileController;
+use App\Http\Controllers\ApiClient\WalletController;
+use App\Http\Controllers\ApiClient\WalletRechargeController;
+use App\Http\Middleware\ApiCLient\EkycCompleteMiddleware;
+use App\Http\Middleware\ApiClient\EkycMiddleware;
+use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => 'apiclient', 'as' => 'apiclient.'], function () {
+
+    Route::group(['middleware' => ['apiclinet:guest']], function () {
+
+        Route::get('/', fn() => redirect()->route('apiclient.login'));
+        Route::get('login', [LoginController::class, 'create'])->name('login');
+        Route::post('login', [LoginController::class, 'store']);
+
+        Route::group(['prefix' => 'wallet-recharge', 'as' => 'wallet-recharge.'], function () {
+            Route::any('nicepe/redirect', [WalletRechargeController::class, 'response'])
+                ->withoutMiddleware(['web'])->name('nicepe.redirect');
+        });
+
+    });
+
+    Route::group(['middleware' => ['apiclinet:auth']], function () {
+        Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+    });
+
+    Route::group(['middleware' => ['apiclinet:auth', EkycCompleteMiddleware::class]], function () {
+        Route::get('ekyc', [EkycController::class, 'showEkycForm'])->name('ekyc.request');
+        Route::post('ekyc', [EkycController::class, 'sendEkycOtp']);
+        Route::get('ekyc/otp-validate', [EkycController::class, 'showOtpValidationForm'])->name('ekyc.validate');
+        Route::post('ekyc/otp-validate', [EkycController::class, 'validateOtp']);
+    });
+
+
+    Route::group(['middleware' => ['apiclinet:auth',EkycMiddleware::class]], function () {
+
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        if (MobileRechargeFeature::isEnabled()) {
+            Route::get('recharge', function () {
+                return "ok";
+            })->name('recharge')
+                ->middleware('feature.enable:FTR001')
+                ->middleware('feature.active:FTR001');
+        }
+
+        Route::prefix('my-plan')->name('myplan.')->group(function () {
+            Route::get('/', [MyPlanController::class, 'index'])->name('index');
+            Route::get('{planDetail}/activation', [MyPlanController::class, 'activation'])->name('activation');
+            Route::put('{planDetail}/activation', [MyPlanController::class, 'processActivation'])->name('processActivation');
+        });
+
+
+        Route::group(['prefix' => 'wallet', 'as' => 'wallet.'], function () {
+            Route::get('/', [WalletController::class, 'index'])->name('index');
+            Route::get('{transaction}/show', [WalletController::class, 'show'])->name('show');
+        });
+
+        Route::group(['prefix' => 'wallet-recharge', 'as' => 'wallet-recharge.'], function () {
+            Route::get('/', [WalletRechargeController::class, 'create'])->name('create');
+            Route::post('/', [WalletRechargeController::class, 'store'])->name('store');
+        });
+
+
+        Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::get('update', [ProfileController::class, 'account'])->name('update');
+            Route::put('update', [ProfileController::class, 'accountUpdate']);
+            Route::get('password', [ProfileController::class, 'password'])->name('password');
+            Route::patch('password', [ProfileController::class, 'passwordUpdate']);
+        });
+
+    });
+
+});
+
